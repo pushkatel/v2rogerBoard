@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run dev` — Start Vite dev server with HMR
 - `npm run build` — Type-check with `tsc -b` then build with Vite
 - `npm run lint` — Run ESLint across the project
+- `npm run knip` — Find unused imports, exports, and dependencies
 - `npm run preview` — Preview the production build locally
 
 ## Architecture

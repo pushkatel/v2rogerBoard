@@ -1,5 +1,5 @@
+import { AppShell, Button,Group, MantineProvider } from '@mantine/core'
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
-import { MantineProvider, AppShell, Group, Button } from '@mantine/core'
 
 export const Route = createRootRoute({
   component: RootLayout,
