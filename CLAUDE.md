@@ -30,6 +30,10 @@ React 19 + TypeScript app scaffolded with Vite 7.
 - Two tsconfig project references: `tsconfig.app.json` (src code) and `tsconfig.node.json` (tooling config)
 - Target: ES2022, JSX transform: `react-jsx`
 
+## Conventions
+
+- React components are written as **arrow functions** (`const Foo = () => { ... }`), not `function` declarations. Define components before the `Route` export in route files to avoid hoisting issues.
+
 ## Linting & Code Quality
 
 ESLint 9 flat config (`eslint.config.js`) with:
