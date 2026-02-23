@@ -22,11 +22,7 @@
   "lint-staged": {
     "*.{ts,tsx}": "eslint --fix"
   },
-  "knip": {
-    "ignoreDependencies": [
-      "@mantine/form"
-    ]
-  },
+  "knip": {},
   "devDependencies": {
     "@commitlint/cli": "^20.4.2",
     "@commitlint/config-conventional": "^20.4.2",
