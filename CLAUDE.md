@@ -33,6 +33,14 @@ React 19 + TypeScript app scaffolded with Vite 7.
 ## Conventions
 
 - React components are written as **arrow functions** (`const Foo = () => { ... }`), not `function` declarations. Define components before the `Route` export in route files to avoid hoisting issues.
+- **Commit messages** use [Conventional Commits](https://www.conventionalcommits.org/) format: `type: description`
+  - `feat` — new feature
+  - `fix` — bug fix
+  - `style` — formatting, whitespace, missing semicolons (no code change)
+  - `refactor` — code restructuring without behavior change
+  - `docs` — documentation only
+  - `chore` — tooling, deps, config, build (no app code change)
+  - `test` — adding or updating tests
 
 ## Linting & Code Quality
 
