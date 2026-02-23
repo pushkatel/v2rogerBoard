@@ -30,10 +30,21 @@ React 19 + TypeScript app scaffolded with Vite 7.
 - Two tsconfig project references: `tsconfig.app.json` (src code) and `tsconfig.node.json` (tooling config)
 - Target: ES2022, JSX transform: `react-jsx`
 
-## Linting
+## Linting & Code Quality
 
 ESLint 9 flat config (`eslint.config.js`) with:
 - `typescript-eslint` recommended rules
 - `eslint-plugin-react-hooks` (recommended)
 - `eslint-plugin-react-refresh` (Vite)
+- `eslint-plugin-simple-import-sort` — auto-sorts imports/exports
 - Only lints `**/*.{ts,tsx}` files; `dist/` is ignored
+
+**Knip** (`npm run knip`) detects unused imports, exports, and dependencies. Config in `package.json` under `"knip"`.
+
+## Pre-commit Hooks
+
+Husky + lint-staged run automatically on every commit:
+1. **lint-staged**: runs `eslint --fix` on staged `*.{ts,tsx}` files (sorts imports, fixes lint errors)
+2. **knip**: checks the full project for unused imports, exports, and dependencies
+
+If either check fails, the commit is blocked.

@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+# v2rogerBoard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19 + TypeScript app built with Vite 7.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework**: React 19 + TypeScript (strict mode)
+- **Build**: Vite 7
+- **Routing**: TanStack Router (file-based, auto-generated route tree)
+- **UI**: Mantine (`@mantine/core`, `@mantine/hooks`, `@mantine/form`)
+- **Linting**: ESLint 9 + import sorting (`eslint-plugin-simple-import-sort`)
+- **Unused code detection**: Knip
+- **Pre-commit hooks**: Husky + lint-staged (ESLint auto-fix + knip)
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start Vite dev server with HMR |
+| `npm run build` | Type-check and build for production |
+| `npm run lint` | Run ESLint |
+| `npm run knip` | Find unused imports, exports, and dependencies |
+| `npm run preview` | Preview production build |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+
 ```
+src/
+  main.tsx              # Entry point — creates router, renders app
+  index.css             # Global styles
+  routes/
+    __root.tsx           # Root layout (MantineProvider, AppShell, nav)
+    index.tsx            # Home page (/)
+    pages.$id.tsx        # Dynamic page (/pages/:id)
+  routeTree.gen.ts       # Auto-generated — do not edit
+```
+
+## Adding Routes
+
+Create a new file in `src/routes/`. The Vite plugin auto-generates the route tree on save.
+
+- `src/routes/about.tsx` → `/about`
+- `src/routes/users.$id.tsx` → `/users/:id`
+- `src/routes/settings/index.tsx` → `/settings`
+
+See [TanStack Router docs](https://tanstack.com/router/latest/docs/framework/react/guide/file-based-routing) for more patterns.
