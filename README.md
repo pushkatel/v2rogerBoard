@@ -31,16 +31,7 @@ npm run dev
 
 ## Project Structure
 
-```
-src/
-  main.tsx              # Entry point — creates router, renders app
-  index.css             # Global styles
-  routes/
-    __root.tsx           # Root layout (MantineProvider, AppShell, nav)
-    index.tsx            # Home page (/)
-    pages.$id.tsx        # Dynamic page (/pages/:id)
-  routeTree.gen.ts       # Auto-generated — do not edit
-```
+Route files in `src/routes/` are thin wrappers that define the route and import the corresponding page component. Page components live in `src/components/pages/<page>/`, organized one folder per page. Shared components like `DataTable` live in `src/components/shared/`. App state is managed via React Context in `src/data/`.
 
 ## Adding Routes
 
