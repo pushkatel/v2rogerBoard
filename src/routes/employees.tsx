@@ -1,20 +1,20 @@
-import {
-  ActionIcon,
-  Button,
-  Group,
-  Modal,
-  Stack,
-  Table,
-  TextInput,
-  Title,
-} from "@mantine/core";
+import { Button, Group, Modal, Stack, TextInput, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
+import { DataTable } from "../components/DataTable";
 import { useAppContext } from "../data/AppContext";
 import type { Employee } from "../types";
+
+const columns = [
+  { header: "Name", accessor: "name" as const },
+  { header: "Role", accessor: "role" as const },
+  { header: "Department", accessor: "department" as const },
+  { header: "Email", accessor: "email" as const },
+  { header: "Phone", accessor: "phone" as const },
+];
 
 const EmployeesPage = () => {
   const { employees, addEmployee, updateEmployee, deleteEmployee } = useAppContext();
@@ -72,44 +72,12 @@ const EmployeesPage = () => {
         <Title order={2}>Employees</Title>
         <Button onClick={() => handleOpen()}>Add Employee</Button>
       </Group>
-      <Table striped highlightOnHover>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Name</Table.Th>
-            <Table.Th>Role</Table.Th>
-            <Table.Th>Department</Table.Th>
-            <Table.Th>Email</Table.Th>
-            <Table.Th>Phone</Table.Th>
-            <Table.Th>Actions</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          {employees.map((emp) => (
-            <Table.Tr key={emp.id}>
-              <Table.Td>{emp.name}</Table.Td>
-              <Table.Td>{emp.role}</Table.Td>
-              <Table.Td>{emp.department}</Table.Td>
-              <Table.Td>{emp.email}</Table.Td>
-              <Table.Td>{emp.phone}</Table.Td>
-              <Table.Td>
-                <Group gap="xs">
-                  <ActionIcon variant="subtle" onClick={() => handleOpen(emp)}>
-                    Edit
-                  </ActionIcon>
-                  <ActionIcon
-                    variant="subtle"
-                    color="red"
-                    onClick={() => deleteEmployee(emp.id)}
-                  >
-                    Del
-                  </ActionIcon>
-                </Group>
-              </Table.Td>
-            </Table.Tr>
-          ))}
-        </Table.Tbody>
-      </Table>
-
+      <DataTable
+        columns={columns}
+        data={employees}
+        onEdit={handleOpen}
+        onDelete={deleteEmployee}
+      />
       <Modal opened={opened} onClose={handleClose} title={editing ? "Edit Employee" : "Add Employee"}>
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Stack>

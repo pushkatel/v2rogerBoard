@@ -1,12 +1,10 @@
 import {
-  ActionIcon,
   Badge,
   Button,
   Group,
   Modal,
   Select,
   Stack,
-  Table,
   Textarea,
   TextInput,
   Title,
@@ -14,8 +12,10 @@ import {
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
+import type { Column } from "../components/DataTable";
+import { DataTable } from "../components/DataTable";
 import { useAppContext } from "../data/AppContext";
 import type { Ticket, TicketPriority, TicketStatus, TicketType } from "../types";
 import { ticketPriorityColor, ticketStatusColor, ticketTypeColor } from "../utils";
@@ -25,6 +25,45 @@ const TicketsPage = () => {
     useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<Ticket | null>(null);
+
+  const columns: Column<Ticket>[] = useMemo(
+    () => [
+      { header: "Title", accessor: "title" },
+      {
+        header: "Type",
+        accessor: (t) => <Badge color={ticketTypeColor[t.type]}>{t.type}</Badge>,
+        sortValue: (t) => t.type,
+      },
+      {
+        header: "Status",
+        accessor: (t) => <Badge color={ticketStatusColor[t.status]}>{t.status}</Badge>,
+        sortValue: (t) => t.status,
+      },
+      {
+        header: "Priority",
+        accessor: (t) => (
+          <Badge color={ticketPriorityColor[t.priority]}>{t.priority}</Badge>
+        ),
+        sortValue: (t) => t.priority,
+      },
+      {
+        header: "Assigned To",
+        accessor: (t) =>
+          employees.find((e) => e.id === t.assignedEmployeeId)?.name ?? "—",
+        sortValue: (t) =>
+          employees.find((e) => e.id === t.assignedEmployeeId)?.name ?? "",
+      },
+      {
+        header: "Machine",
+        accessor: (t) =>
+          machines.find((m) => m.id === t.relatedMachineId)?.name ?? "—",
+        sortValue: (t) =>
+          machines.find((m) => m.id === t.relatedMachineId)?.name ?? "",
+      },
+      { header: "Created", accessor: "createdAt" },
+    ],
+    [employees, machines],
+  );
 
   const form = useForm({
     initialValues: {
@@ -79,65 +118,18 @@ const TicketsPage = () => {
     handleClose();
   };
 
-  const employeeName = (id: string | null) =>
-    employees.find((e) => e.id === id)?.name ?? "—";
-  const machineName = (id: string | null) =>
-    machines.find((m) => m.id === id)?.name ?? "—";
-
   return (
     <Stack>
       <Group justify="space-between">
         <Title order={2}>Tickets</Title>
         <Button onClick={() => handleOpen()}>New Ticket</Button>
       </Group>
-      <Table striped highlightOnHover>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Title</Table.Th>
-            <Table.Th>Type</Table.Th>
-            <Table.Th>Status</Table.Th>
-            <Table.Th>Priority</Table.Th>
-            <Table.Th>Assigned To</Table.Th>
-            <Table.Th>Machine</Table.Th>
-            <Table.Th>Created</Table.Th>
-            <Table.Th>Actions</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          {tickets.map((t) => (
-            <Table.Tr key={t.id}>
-              <Table.Td>{t.title}</Table.Td>
-              <Table.Td>
-                <Badge color={ticketTypeColor[t.type]}>{t.type}</Badge>
-              </Table.Td>
-              <Table.Td>
-                <Badge color={ticketStatusColor[t.status]}>{t.status}</Badge>
-              </Table.Td>
-              <Table.Td>
-                <Badge color={ticketPriorityColor[t.priority]}>{t.priority}</Badge>
-              </Table.Td>
-              <Table.Td>{employeeName(t.assignedEmployeeId)}</Table.Td>
-              <Table.Td>{machineName(t.relatedMachineId)}</Table.Td>
-              <Table.Td>{t.createdAt}</Table.Td>
-              <Table.Td>
-                <Group gap="xs">
-                  <ActionIcon variant="subtle" onClick={() => handleOpen(t)}>
-                    Edit
-                  </ActionIcon>
-                  <ActionIcon
-                    variant="subtle"
-                    color="red"
-                    onClick={() => deleteTicket(t.id)}
-                  >
-                    Del
-                  </ActionIcon>
-                </Group>
-              </Table.Td>
-            </Table.Tr>
-          ))}
-        </Table.Tbody>
-      </Table>
-
+      <DataTable
+        columns={columns}
+        data={tickets}
+        onEdit={handleOpen}
+        onDelete={deleteTicket}
+      />
       <Modal
         opened={opened}
         onClose={handleClose}

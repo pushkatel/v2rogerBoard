@@ -1,12 +1,10 @@
 import {
-  ActionIcon,
   Badge,
   Button,
   Group,
   Modal,
   Select,
   Stack,
-  Table,
   TextInput,
   Title,
 } from "@mantine/core";
@@ -15,9 +13,22 @@ import { useDisclosure } from "@mantine/hooks";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
+import type { Column } from "../components/DataTable";
+import { DataTable } from "../components/DataTable";
 import { useAppContext } from "../data/AppContext";
 import type { Machine, MachineStatus } from "../types";
 import { machineStatusColor } from "../utils";
+
+const columns: Column<Machine>[] = [
+  { header: "Name", accessor: "name" },
+  { header: "Category", accessor: "category" },
+  { header: "Location", accessor: "location" },
+  {
+    header: "Status",
+    accessor: (m) => <Badge color={machineStatusColor[m.status]}>{m.status}</Badge>,
+    sortValue: (m) => m.status,
+  },
+];
 
 const MachinesPage = () => {
   const { machines, addMachine, updateMachine, deleteMachine } = useAppContext();
@@ -73,44 +84,12 @@ const MachinesPage = () => {
         <Title order={2}>Machines</Title>
         <Button onClick={() => handleOpen()}>Add Machine</Button>
       </Group>
-      <Table striped highlightOnHover>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Name</Table.Th>
-            <Table.Th>Category</Table.Th>
-            <Table.Th>Location</Table.Th>
-            <Table.Th>Status</Table.Th>
-            <Table.Th>Actions</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          {machines.map((m) => (
-            <Table.Tr key={m.id}>
-              <Table.Td>{m.name}</Table.Td>
-              <Table.Td>{m.category}</Table.Td>
-              <Table.Td>{m.location}</Table.Td>
-              <Table.Td>
-                <Badge color={machineStatusColor[m.status]}>{m.status}</Badge>
-              </Table.Td>
-              <Table.Td>
-                <Group gap="xs">
-                  <ActionIcon variant="subtle" onClick={() => handleOpen(m)}>
-                    Edit
-                  </ActionIcon>
-                  <ActionIcon
-                    variant="subtle"
-                    color="red"
-                    onClick={() => deleteMachine(m.id)}
-                  >
-                    Del
-                  </ActionIcon>
-                </Group>
-              </Table.Td>
-            </Table.Tr>
-          ))}
-        </Table.Tbody>
-      </Table>
-
+      <DataTable
+        columns={columns}
+        data={machines}
+        onEdit={handleOpen}
+        onDelete={deleteMachine}
+      />
       <Modal opened={opened} onClose={handleClose} title={editing ? "Edit Machine" : "Add Machine"}>
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Stack>
