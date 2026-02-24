@@ -16,7 +16,7 @@ const columns = [
   { header: "Phone", accessor: "phone" as const },
 ];
 
-const EmployeesPage = () => {
+const AdminPage = () => {
   const { employees, addEmployee, updateEmployee, deleteEmployee } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<Employee | null>(null);
@@ -68,8 +68,9 @@ const EmployeesPage = () => {
 
   return (
     <Stack>
+      <Title order={2}>Admin</Title>
       <Group justify="space-between">
-        <Title order={2}>Employees</Title>
+        <Title order={3}>Employees</Title>
         <Button onClick={() => handleOpen()}>Add Employee</Button>
       </Group>
       <DataTable
@@ -94,6 +95,6 @@ const EmployeesPage = () => {
   );
 };
 
-export const Route = createFileRoute("/employees")({
-  component: EmployeesPage,
+export const Route = createFileRoute("/admin")({
+  component: AdminPage,
 });
