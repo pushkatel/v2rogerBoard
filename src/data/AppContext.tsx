@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
-import type { Employee, Machine, Ticket } from "../types";
+import type { Employee, Machine, Ticket } from "@/types";
+
 import { seedEmployees, seedMachines, seedTickets } from "./seed";
 
 interface AppContextValue {

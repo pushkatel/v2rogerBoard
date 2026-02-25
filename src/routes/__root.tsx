@@ -1,7 +1,7 @@
 import { AppShell, Button, Group, MantineProvider, Title } from "@mantine/core";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 
-import { AppProvider } from "../data/AppContext";
+import { AppProvider } from "@/data/AppContext";
 
 const RootLayout = () => {
   return (

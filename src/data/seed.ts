@@ -1,4 +1,4 @@
-import type { Employee, Machine, Ticket } from "../types";
+import type { Employee, Machine, Ticket } from "@/types";
 
 export const seedEmployees: Employee[] = [
   {

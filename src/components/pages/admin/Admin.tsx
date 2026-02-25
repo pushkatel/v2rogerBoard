@@ -3,9 +3,9 @@ import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
-import { useAppContext } from "../../../data/AppContext";
-import type { Employee } from "../../../types";
-import { DataTable } from "../../shared/DataTable";
+import { DataTable } from "@/components/shared/DataTable";
+import { useAppContext } from "@/data/AppContext";
+import type { Employee } from "@/types";
 
 const columns = [
   { header: "Name", accessor: "name" as const },

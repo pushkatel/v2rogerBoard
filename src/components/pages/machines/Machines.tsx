@@ -12,11 +12,11 @@ import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
-import { useAppContext } from "../../../data/AppContext";
-import type { Machine, MachineStatus } from "../../../types";
-import { machineStatusColor } from "../../../utils";
-import type { Column } from "../../shared/DataTable";
-import { DataTable } from "../../shared/DataTable";
+import type { Column } from "@/components/shared/DataTable";
+import { DataTable } from "@/components/shared/DataTable";
+import { useAppContext } from "@/data/AppContext";
+import type { Machine, MachineStatus } from "@/types";
+import { machineStatusColor } from "@/utils";
 
 const columns: Column<Machine>[] = [
   { header: "Name", accessor: "name" },

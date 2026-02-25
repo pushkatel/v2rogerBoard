@@ -1,6 +1,6 @@
 import { Card, Group, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 
-import { useAppContext } from "../../../data/AppContext";
+import { useAppContext } from "@/data/AppContext";
 
 export const Dashboard = () => {
   const { tickets, machines, employees } = useAppContext();

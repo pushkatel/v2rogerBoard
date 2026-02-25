@@ -13,20 +13,15 @@ import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useMemo, useState } from "react";
 
-import { useAppContext } from "../../../data/AppContext";
-import type {
-  Ticket,
-  TicketPriority,
-  TicketStatus,
-  TicketType,
-} from "../../../types";
+import type { Column } from "@/components/shared/DataTable";
+import { DataTable } from "@/components/shared/DataTable";
+import { useAppContext } from "@/data/AppContext";
+import type { Ticket, TicketPriority, TicketStatus, TicketType } from "@/types";
 import {
   ticketPriorityColor,
   ticketStatusColor,
   ticketTypeColor,
-} from "../../../utils";
-import type { Column } from "../../shared/DataTable";
-import { DataTable } from "../../shared/DataTable";
+} from "@/utils";
 
 export const Tickets = () => {
   const {
