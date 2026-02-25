@@ -1,27 +1,27 @@
 import { createContext, useContext, useState } from "react";
 
-import type { Area, Department, Employee, Machine, Ticket } from "@/types";
+import type { Area, Department, Employee, Equipment, Ticket } from "@/types";
 
 import {
   seedAreas,
   seedDepartments,
   seedEmployees,
-  seedMachines,
+  seedEquipment,
   seedTickets,
 } from "./seed";
 
 interface AppContextValue {
   tickets: Ticket[];
-  machines: Machine[];
+  equipment: Equipment[];
   employees: Employee[];
   departments: Department[];
   areas: Area[];
   addTicket: (ticket: Ticket) => void;
   updateTicket: (ticket: Ticket) => void;
   deleteTicket: (id: string) => void;
-  addMachine: (machine: Machine) => void;
-  updateMachine: (machine: Machine) => void;
-  deleteMachine: (id: string) => void;
+  addEquipment: (item: Equipment) => void;
+  updateEquipment: (item: Equipment) => void;
+  deleteEquipment: (id: string) => void;
   addEmployee: (employee: Employee) => void;
   updateEmployee: (employee: Employee) => void;
   deleteEmployee: (id: string) => void;
@@ -44,7 +44,7 @@ export const useAppContext = () => {
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [tickets, setTickets] = useState<Ticket[]>(seedTickets);
-  const [machines, setMachines] = useState<Machine[]>(seedMachines);
+  const [equipment, setEquipment] = useState<Equipment[]>(seedEquipment);
   const [employees, setEmployees] = useState<Employee[]>(seedEmployees);
   const [departments, setDepartments] = useState<Department[]>(seedDepartments);
   const [areas, setAreas] = useState<Area[]>(seedAreas);
@@ -55,11 +55,11 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const deleteTicket = (id: string) =>
     setTickets((prev) => prev.filter((t) => t.id !== id));
 
-  const addMachine = (machine: Machine) => setMachines((prev) => [...prev, machine]);
-  const updateMachine = (machine: Machine) =>
-    setMachines((prev) => prev.map((m) => (m.id === machine.id ? machine : m)));
-  const deleteMachine = (id: string) =>
-    setMachines((prev) => prev.filter((m) => m.id !== id));
+  const addEquipment = (item: Equipment) => setEquipment((prev) => [...prev, item]);
+  const updateEquipment = (item: Equipment) =>
+    setEquipment((prev) => prev.map((e) => (e.id === item.id ? item : e)));
+  const deleteEquipment = (id: string) =>
+    setEquipment((prev) => prev.filter((e) => e.id !== id));
 
   const addEmployee = (employee: Employee) => setEmployees((prev) => [...prev, employee]);
   const updateEmployee = (employee: Employee) =>
@@ -83,16 +83,16 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     <AppContext.Provider
       value={{
         tickets,
-        machines,
+        equipment,
         employees,
         departments,
         areas,
         addTicket,
         updateTicket,
         deleteTicket,
-        addMachine,
-        updateMachine,
-        deleteMachine,
+        addEquipment,
+        updateEquipment,
+        deleteEquipment,
         addEmployee,
         updateEmployee,
         deleteEmployee,

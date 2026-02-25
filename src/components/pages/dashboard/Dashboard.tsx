@@ -3,13 +3,13 @@ import { Card, Group, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import { useAppContext } from "@/data/AppContext";
 
 export const Dashboard = () => {
-  const { tickets, machines, employees } = useAppContext();
+  const { tickets, equipment, employees } = useAppContext();
 
   const openTickets = tickets.filter((t) => t.status === "open").length;
   const inProgressTickets = tickets.filter((t) => t.status === "in-progress").length;
-  const operational = machines.filter((m) => m.status === "operational").length;
-  const maintenance = machines.filter((m) => m.status === "maintenance").length;
-  const offline = machines.filter((m) => m.status === "offline").length;
+  const operational = equipment.filter((e) => e.status === "operational").length;
+  const maintenance = equipment.filter((e) => e.status === "maintenance").length;
+  const offline = equipment.filter((e) => e.status === "offline").length;
 
   return (
     <Stack>
@@ -27,7 +27,7 @@ export const Dashboard = () => {
           </Group>
         </Card>
         <Card shadow="sm" padding="lg" radius="md" withBorder>
-          <Title order={3}>Machines</Title>
+          <Title order={3}>Equipment</Title>
           <Group mt="sm" gap="xl">
             <Text>
               <Text span fw={700} c="green">{operational}</Text> operational

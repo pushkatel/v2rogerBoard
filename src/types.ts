@@ -1,7 +1,7 @@
 export type TicketType = "engineering" | "customer";
 export type TicketStatus = "open" | "in-progress" | "closed";
 export type TicketPriority = "low" | "medium" | "high";
-export type MachineStatus = "operational" | "maintenance" | "offline";
+export type EquipmentStatus = "operational" | "maintenance" | "offline";
 
 export interface Department {
   id: string;
@@ -22,17 +22,17 @@ export interface Ticket {
   status: TicketStatus;
   priority: TicketPriority;
   assignedEmployeeId: string | null;
-  relatedMachineId: string | null;
+  relatedEquipmentId: string | null;
   createdAt: string;
 }
 
-export interface Machine {
+export interface Equipment {
   id: string;
   name: string;
   serialNumber: string;
   category: string;
   areaId: string;
-  status: MachineStatus;
+  status: EquipmentStatus;
   purchaseDate: string;
   installDate: string;
   warrantyDate: string;

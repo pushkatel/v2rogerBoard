@@ -1,4 +1,4 @@
-import type { MachineStatus, TicketPriority, TicketStatus, TicketType } from "./types";
+import type { EquipmentStatus, TicketPriority, TicketStatus, TicketType } from "./types";
 
 export const ticketStatusColor: Record<TicketStatus, string> = {
   open: "blue",
@@ -17,7 +17,7 @@ export const ticketTypeColor: Record<TicketType, string> = {
   customer: "teal",
 };
 
-export const machineStatusColor: Record<MachineStatus, string> = {
+export const equipmentStatusColor: Record<EquipmentStatus, string> = {
   operational: "green",
   maintenance: "yellow",
   offline: "red",

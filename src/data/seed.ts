@@ -1,4 +1,4 @@
-import type { Area, Department, Employee, Machine, Ticket } from "@/types";
+import type { Area, Department, Employee, Equipment, Ticket } from "@/types";
 
 export const seedDepartments: Department[] = [
   { id: "dept-1", name: "Engineering" },
@@ -92,7 +92,7 @@ export const seedEmployees: Employee[] = [
   },
 ];
 
-export const seedMachines: Machine[] = [
+export const seedEquipment: Equipment[] = [
   {
     id: "mach-1",
     name: "Schmoll MDI-6L CNC Drill",
@@ -249,7 +249,7 @@ export const seedTickets: Ticket[] = [
     status: "open",
     priority: "high",
     assignedEmployeeId: "emp-3",
-    relatedMachineId: "mach-1",
+    relatedEquipmentId: "mach-1",
     createdAt: "2026-02-22",
   },
   {
@@ -261,7 +261,7 @@ export const seedTickets: Ticket[] = [
     status: "in-progress",
     priority: "high",
     assignedEmployeeId: "emp-4",
-    relatedMachineId: "mach-5",
+    relatedEquipmentId: "mach-5",
     createdAt: "2026-02-20",
   },
   {
@@ -273,7 +273,7 @@ export const seedTickets: Ticket[] = [
     status: "open",
     priority: "high",
     assignedEmployeeId: "emp-5",
-    relatedMachineId: "mach-8",
+    relatedEquipmentId: "mach-8",
     createdAt: "2026-02-23",
   },
   {
@@ -285,7 +285,7 @@ export const seedTickets: Ticket[] = [
     status: "in-progress",
     priority: "medium",
     assignedEmployeeId: "emp-7",
-    relatedMachineId: "mach-7",
+    relatedEquipmentId: "mach-7",
     createdAt: "2026-02-18",
   },
   {
@@ -297,7 +297,7 @@ export const seedTickets: Ticket[] = [
     status: "open",
     priority: "medium",
     assignedEmployeeId: "emp-6",
-    relatedMachineId: "mach-11",
+    relatedEquipmentId: "mach-11",
     createdAt: "2026-02-21",
   },
   {
@@ -309,7 +309,7 @@ export const seedTickets: Ticket[] = [
     status: "closed",
     priority: "low",
     assignedEmployeeId: "emp-7",
-    relatedMachineId: "mach-12",
+    relatedEquipmentId: "mach-12",
     createdAt: "2026-02-10",
   },
   {
@@ -321,7 +321,7 @@ export const seedTickets: Ticket[] = [
     status: "open",
     priority: "medium",
     assignedEmployeeId: null,
-    relatedMachineId: null,
+    relatedEquipmentId: null,
     createdAt: "2026-02-24",
   },
   {
@@ -333,7 +333,7 @@ export const seedTickets: Ticket[] = [
     status: "open",
     priority: "medium",
     assignedEmployeeId: "emp-7",
-    relatedMachineId: "mach-4",
+    relatedEquipmentId: "mach-4",
     createdAt: "2026-02-23",
   },
 ];

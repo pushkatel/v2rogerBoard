@@ -27,7 +27,7 @@ export const Tickets = () => {
   const {
     tickets,
     employees,
-    machines,
+    equipment,
     addTicket,
     updateTicket,
     deleteTicket,
@@ -67,15 +67,15 @@ export const Tickets = () => {
           employees.find((e) => e.id === t.assignedEmployeeId)?.name ?? "",
       },
       {
-        header: "Machine",
+        header: "Equipment",
         accessor: (t) =>
-          machines.find((m) => m.id === t.relatedMachineId)?.name ?? "—",
+          equipment.find((e) => e.id === t.relatedEquipmentId)?.name ?? "—",
         sortValue: (t) =>
-          machines.find((m) => m.id === t.relatedMachineId)?.name ?? "",
+          equipment.find((e) => e.id === t.relatedEquipmentId)?.name ?? "",
       },
       { header: "Created", accessor: "createdAt" },
     ],
-    [employees, machines],
+    [employees, equipment],
   );
 
   const form = useForm({
@@ -86,7 +86,7 @@ export const Tickets = () => {
       status: "open" as TicketStatus,
       priority: "medium" as TicketPriority,
       assignedEmployeeId: null as string | null,
-      relatedMachineId: null as string | null,
+      relatedEquipmentId: null as string | null,
     },
   });
 
@@ -99,7 +99,7 @@ export const Tickets = () => {
         status: editing.status,
         priority: editing.priority,
         assignedEmployeeId: editing.assignedEmployeeId,
-        relatedMachineId: editing.relatedMachineId,
+        relatedEquipmentId: editing.relatedEquipmentId,
       });
     } else {
       form.reset();
@@ -199,10 +199,10 @@ export const Tickets = () => {
               {...form.getInputProps("assignedEmployeeId")}
             />
             <Select
-              label="Related Machine"
+              label="Related Equipment"
               clearable
-              data={machines.map((m) => ({ value: m.id, label: m.name }))}
-              {...form.getInputProps("relatedMachineId")}
+              data={equipment.map((e) => ({ value: e.id, label: e.name }))}
+              {...form.getInputProps("relatedEquipmentId")}
             />
             <Button type="submit">{editing ? "Update" : "Create"}</Button>
           </Stack>

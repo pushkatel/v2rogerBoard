@@ -19,7 +19,7 @@ React 19 + TypeScript app scaffolded with Vite 7.
   - `src/routes/__root.tsx` — Root layout with MantineProvider + AppShell + nav
   - `src/routes/index.tsx` — Dashboard (`/`)
   - `src/routes/tickets.tsx` — Tickets (`/tickets`)
-  - `src/routes/machines.tsx` — Machines (`/machines`)
+  - `src/routes/equipment.tsx` — Equipment (`/equipment`)
   - `src/routes/admin.tsx` — Admin / employee management (`/admin`)
 - **Page components**: Live in `src/components/pages/<page>/`, one folder per page. Route files import and re-export these.
 - **Shared components**: Live in `src/components/shared/` (e.g. `DataTable`).

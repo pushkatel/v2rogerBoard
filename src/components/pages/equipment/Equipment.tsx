@@ -16,30 +16,30 @@ import { useEffect, useState } from "react";
 import type { Column } from "@/components/shared/DataTable";
 import { DataTable } from "@/components/shared/DataTable";
 import { useAppContext } from "@/data/AppContext";
-import type { Machine, MachineStatus } from "@/types";
-import { machineStatusColor } from "@/utils";
+import type { Equipment as EquipmentType, EquipmentStatus } from "@/types";
+import { equipmentStatusColor } from "@/utils";
 
-export const Machines = () => {
-  const { areas, departments, machines, addMachine, updateMachine, deleteMachine } =
+export const Equipment = () => {
+  const { areas, departments, equipment, addEquipment, updateEquipment, deleteEquipment } =
     useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
-  const [editing, setEditing] = useState<Machine | null>(null);
+  const [editing, setEditing] = useState<EquipmentType | null>(null);
 
-  const columns: Column<Machine>[] = [
+  const columns: Column<EquipmentType>[] = [
     { header: "Name", accessor: "name" },
     { header: "Serial Number", accessor: "serialNumber" },
     { header: "Category", accessor: "category" },
     {
       header: "Area",
-      accessor: (m) => areas.find((a) => a.id === m.areaId)?.name ?? "—",
-      sortValue: (m) => areas.find((a) => a.id === m.areaId)?.name ?? "",
+      accessor: (e) => areas.find((a) => a.id === e.areaId)?.name ?? "—",
+      sortValue: (e) => areas.find((a) => a.id === e.areaId)?.name ?? "",
     },
     {
       header: "Status",
-      accessor: (m) => (
-        <Badge color={machineStatusColor[m.status]}>{m.status}</Badge>
+      accessor: (e) => (
+        <Badge color={equipmentStatusColor[e.status]}>{e.status}</Badge>
       ),
-      sortValue: (m) => m.status,
+      sortValue: (e) => e.status,
     },
   ];
 
@@ -50,7 +50,7 @@ export const Machines = () => {
       category: "",
       departmentId: "",
       areaId: "",
-      status: "operational" as MachineStatus,
+      status: "operational" as EquipmentStatus,
       purchaseDate: "",
       installDate: "",
       warrantyDate: "",
@@ -85,8 +85,8 @@ export const Machines = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editing]);
 
-  const handleOpen = (machine?: Machine) => {
-    setEditing(machine ?? null);
+  const handleOpen = (item?: EquipmentType) => {
+    setEditing(item ?? null);
     open();
   };
 
@@ -97,12 +97,12 @@ export const Machines = () => {
   };
 
   const handleSubmit = (values: typeof form.values) => {
-    const { departmentId, ...machineValues } = values;
+    const { departmentId, ...equipmentValues } = values;
     void departmentId;
     if (editing) {
-      updateMachine({ ...editing, ...machineValues });
+      updateEquipment({ ...editing, ...equipmentValues });
     } else {
-      addMachine({ id: `mach-${Date.now()}`, ...machineValues });
+      addEquipment({ id: `equip-${Date.now()}`, ...equipmentValues });
     }
     handleClose();
   };
@@ -112,19 +112,19 @@ export const Machines = () => {
   return (
     <Stack>
       <Group justify="space-between">
-        <Title order={2}>Machines</Title>
-        <Button onClick={() => handleOpen()}>Add Machine</Button>
+        <Title order={2}>Equipment</Title>
+        <Button onClick={() => handleOpen()}>Add Equipment</Button>
       </Group>
       <DataTable
         columns={columns}
-        data={machines}
+        data={equipment}
         onEdit={handleOpen}
-        onDelete={deleteMachine}
+        onDelete={deleteEquipment}
       />
       <Modal
         opened={opened}
         onClose={handleClose}
-        title={editing ? "Edit Machine" : "Add Machine"}
+        title={editing ? "Edit Equipment" : "Add Equipment"}
       >
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Stack>

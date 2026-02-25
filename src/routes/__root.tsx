@@ -18,8 +18,8 @@ const RootLayout = () => {
                 <Link to="/tickets">
                   <Button variant="subtle">Tickets</Button>
                 </Link>
-                <Link to="/machines">
-                  <Button variant="subtle">Machines</Button>
+                <Link to="/equipment">
+                  <Button variant="subtle">Equipment</Button>
                 </Link>
                 <Link to="/admin">
                   <Button variant="subtle">Admin</Button>
