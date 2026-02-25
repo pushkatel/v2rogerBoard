@@ -48,7 +48,6 @@ export const Equipment = () => {
       name: "",
       serialNumber: "",
       category: "",
-      departmentId: "",
       areaId: "",
       status: "operational" as EquipmentStatus,
       purchaseDate: "",
@@ -58,20 +57,19 @@ export const Equipment = () => {
     },
   });
 
-  const selectedDeptId = form.values.departmentId;
-
-  const filteredAreaOptions = areas
-    .filter((a) => a.departmentId === selectedDeptId)
-    .map((a) => ({ value: a.id, label: a.name }));
+  const areaOptions = departments.map((dept) => ({
+    group: dept.name,
+    items: areas
+      .filter((a) => a.departmentId === dept.id)
+      .map((a) => ({ value: a.id, label: a.name })),
+  }));
 
   useEffect(() => {
     if (editing) {
-      const area = areas.find((a) => a.id === editing.areaId);
       form.setValues({
         name: editing.name,
         serialNumber: editing.serialNumber,
         category: editing.category,
-        departmentId: area?.departmentId ?? "",
         areaId: editing.areaId,
         status: editing.status,
         purchaseDate: editing.purchaseDate,
@@ -97,17 +95,13 @@ export const Equipment = () => {
   };
 
   const handleSubmit = (values: typeof form.values) => {
-    const { departmentId, ...equipmentValues } = values;
-    void departmentId;
     if (editing) {
-      updateEquipment({ ...editing, ...equipmentValues });
+      updateEquipment({ ...editing, ...values });
     } else {
-      addEquipment({ id: `equip-${Date.now()}`, ...equipmentValues });
+      addEquipment({ id: `equip-${Date.now()}`, ...values });
     }
     handleClose();
   };
-
-  const deptOptions = departments.map((d) => ({ value: d.id, label: d.name }));
 
   return (
     <Stack>
@@ -140,21 +134,10 @@ export const Equipment = () => {
               {...form.getInputProps("category")}
             />
             <Select
-              label="Department"
-              required
-              data={deptOptions}
-              {...form.getInputProps("departmentId")}
-              onChange={(value) => {
-                form.setFieldValue("departmentId", value ?? "");
-                form.setFieldValue("areaId", "");
-              }}
-            />
-            <Select
               label="Area"
               required
-              data={filteredAreaOptions}
-              disabled={!selectedDeptId}
-              placeholder={selectedDeptId ? "Select area" : "Select a department first"}
+              data={areaOptions}
+              searchable
               {...form.getInputProps("areaId")}
             />
             <Select
