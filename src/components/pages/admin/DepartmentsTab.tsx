@@ -1,12 +1,15 @@
-import { Badge, Button, Group, Modal, Stack, TagsInput, TextInput, Title } from "@mantine/core";
+import { Badge, Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
 import type { Column } from "@/components/shared/DataTable";
 import { DataTable } from "@/components/shared/DataTable";
+import { ModalButton } from "@/components/shared/ModalButton";
 import { useAppContext } from "@/data/AppContext";
 import type { Department } from "@/types";
+
+import { DepartmentForm } from "./DepartmentForm";
 
 export const DepartmentsTab = () => {
   const { departments, areas, addDepartment, updateDepartment, deleteDepartment, addArea, deleteArea } =
@@ -93,7 +96,20 @@ export const DepartmentsTab = () => {
     <Stack>
       <Group justify="space-between">
         <Title order={3}>Departments</Title>
-        <Button onClick={() => handleOpen()}>Add Department</Button>
+        <ModalButton
+          label="Add Department"
+          onClick={() => handleOpen()}
+          modalTitle={editing ? "Edit Department" : "Add Department"}
+          opened={opened}
+          onClose={handleClose}
+          content={
+            <DepartmentForm
+              form={form}
+              onSubmit={form.onSubmit(handleSubmit)}
+              editing={!!editing}
+            />
+          }
+        />
       </Group>
       <DataTable
         columns={columns}
@@ -101,23 +117,6 @@ export const DepartmentsTab = () => {
         onEdit={handleOpen}
         onDelete={deleteDepartment}
       />
-      <Modal
-        opened={opened}
-        onClose={handleClose}
-        title={editing ? "Edit Department" : "Add Department"}
-      >
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Stack>
-            <TextInput label="Name" required {...form.getInputProps("name")} />
-            <TagsInput
-              label="Areas"
-              placeholder="Type and press Enter to add"
-              {...form.getInputProps("areaNames")}
-            />
-            <Button type="submit">{editing ? "Update" : "Create"}</Button>
-          </Stack>
-        </form>
-      </Modal>
     </Stack>
   );
 };

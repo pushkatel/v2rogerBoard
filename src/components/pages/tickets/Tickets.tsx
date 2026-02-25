@@ -1,23 +1,16 @@
-import {
-  Badge,
-  Button,
-  Group,
-  Modal,
-  Select,
-  Stack,
-  Textarea,
-  TextInput,
-  Title,
-} from "@mantine/core";
+import { Badge, Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useMemo, useState } from "react";
 
 import type { Column } from "@/components/shared/DataTable";
 import { DataTable } from "@/components/shared/DataTable";
+import { ModalButton } from "@/components/shared/ModalButton";
 import { useAppContext } from "@/data/AppContext";
 import type { Ticket, TicketPriority, TicketStatus, TicketType } from "@/types";
 import { ticketPriorityColor, ticketStatusColor, ticketTypeColor } from "@/utils";
+
+import { TicketForm } from "./TicketForm";
 
 export const Tickets = () => {
   const {
@@ -131,7 +124,23 @@ export const Tickets = () => {
     <Stack>
       <Group justify="space-between">
         <Title order={2}>Tickets</Title>
-        <Button onClick={() => handleOpen()}>New Ticket</Button>
+        <ModalButton
+          label="New Ticket"
+          onClick={() => handleOpen()}
+          modalTitle={editing ? "Edit Ticket" : "New Ticket"}
+          opened={opened}
+          onClose={handleClose}
+          modalSize="lg"
+          content={
+            <TicketForm
+              form={form}
+              onSubmit={form.onSubmit(handleSubmit)}
+              editing={!!editing}
+              employeeOptions={employees.map((e) => ({ value: e.id, label: e.name }))}
+              equipmentOptions={equipment.map((e) => ({ value: e.id, label: e.name }))}
+            />
+          }
+        />
       </Group>
       <DataTable
         columns={columns}
@@ -139,77 +148,6 @@ export const Tickets = () => {
         onEdit={handleOpen}
         onDelete={deleteTicket}
       />
-      <Modal
-        opened={opened}
-        onClose={handleClose}
-        title={editing ? "Edit Ticket" : "New Ticket"}
-        size="lg"
-      >
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Stack>
-            <TextInput
-              label="Title"
-              required
-              {...form.getInputProps("title")}
-            />
-            <Textarea
-              label="Description"
-              required
-              autosize
-              minRows={3}
-              {...form.getInputProps("description")}
-            />
-            <Select
-              label="Type"
-              required
-              data={ticketTypeOptions}
-              {...form.getInputProps("type")}
-            />
-            <Select
-              label="Status"
-              required
-              data={ticketStatusOptions}
-              {...form.getInputProps("status")}
-            />
-            <Select
-              label="Priority"
-              required
-              data={ticketPriorityOptions}
-              {...form.getInputProps("priority")}
-            />
-            <Select
-              label="Assigned Employee"
-              clearable
-              data={employees.map((e) => ({ value: e.id, label: e.name }))}
-              {...form.getInputProps("assignedEmployeeId")}
-            />
-            <Select
-              label="Related Equipment"
-              clearable
-              data={equipment.map((e) => ({ value: e.id, label: e.name }))}
-              {...form.getInputProps("relatedEquipmentId")}
-            />
-            <Button type="submit">{editing ? "Update" : "Create"}</Button>
-          </Stack>
-        </form>
-      </Modal>
     </Stack>
   );
 };
-
-const ticketTypeOptions: { value: TicketType; label: string }[] = [
-  { value: "engineering", label: "Engineering" },
-  { value: "customer", label: "Customer" },
-];
-
-const ticketStatusOptions: { value: TicketStatus; label: string }[] = [
-  { value: "open", label: "Open" },
-  { value: "in-progress", label: "In Progress" },
-  { value: "closed", label: "Closed" },
-];
-
-const ticketPriorityOptions: { value: TicketPriority; label: string }[] = [
-  { value: "low", label: "Low" },
-  { value: "medium", label: "Medium" },
-  { value: "high", label: "High" },
-];

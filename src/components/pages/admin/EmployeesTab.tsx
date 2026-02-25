@@ -1,12 +1,15 @@
-import { Button, Group, Modal, Select, Stack, TextInput, Title } from "@mantine/core";
+import { Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
 import type { Column } from "@/components/shared/DataTable";
 import { DataTable } from "@/components/shared/DataTable";
+import { ModalButton } from "@/components/shared/ModalButton";
 import { useAppContext } from "@/data/AppContext";
 import type { Employee } from "@/types";
+
+import { EmployeeForm } from "./EmployeeForm";
 
 export const EmployeesTab = () => {
   const { departments, employees, addEmployee, updateEmployee, deleteEmployee } =
@@ -83,7 +86,21 @@ export const EmployeesTab = () => {
     <Stack>
       <Group justify="space-between">
         <Title order={3}>Employees</Title>
-        <Button onClick={() => handleOpen()}>Add Employee</Button>
+        <ModalButton
+          label="Add Employee"
+          onClick={() => handleOpen()}
+          modalTitle={editing ? "Edit Employee" : "Add Employee"}
+          opened={opened}
+          onClose={handleClose}
+          content={
+            <EmployeeForm
+              form={form}
+              onSubmit={form.onSubmit(handleSubmit)}
+              editing={!!editing}
+              deptOptions={deptOptions}
+            />
+          }
+        />
       </Group>
       <DataTable
         columns={columns}
@@ -91,31 +108,6 @@ export const EmployeesTab = () => {
         onEdit={handleOpen}
         onDelete={deleteEmployee}
       />
-      <Modal
-        opened={opened}
-        onClose={handleClose}
-        title={editing ? "Edit Employee" : "Add Employee"}
-      >
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Stack>
-            <TextInput label="Name" required {...form.getInputProps("name")} />
-            <TextInput label="Role" required {...form.getInputProps("role")} />
-            <Select
-              label="Department"
-              required
-              data={deptOptions}
-              {...form.getInputProps("departmentId")}
-            />
-            <TextInput
-              label="Email"
-              required
-              {...form.getInputProps("email")}
-            />
-            <TextInput label="Phone" required {...form.getInputProps("phone")} />
-            <Button type="submit">{editing ? "Update" : "Create"}</Button>
-          </Stack>
-        </form>
-      </Modal>
     </Stack>
   );
 };

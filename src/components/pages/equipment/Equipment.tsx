@@ -1,23 +1,16 @@
-import {
-  Badge,
-  Button,
-  Group,
-  Modal,
-  Select,
-  Stack,
-  Textarea,
-  TextInput,
-  Title,
-} from "@mantine/core";
+import { Badge, Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
 import type { Column } from "@/components/shared/DataTable";
 import { DataTable } from "@/components/shared/DataTable";
+import { ModalButton } from "@/components/shared/ModalButton";
 import { useAppContext } from "@/data/AppContext";
 import type { Equipment as EquipmentType, EquipmentStatus } from "@/types";
 import { equipmentStatusColor } from "@/utils";
+
+import { EquipmentForm } from "./EquipmentForm";
 
 export const Equipment = () => {
   const { areas, departments, equipment, addEquipment, updateEquipment, deleteEquipment } =
@@ -107,7 +100,21 @@ export const Equipment = () => {
     <Stack>
       <Group justify="space-between">
         <Title order={2}>Equipment</Title>
-        <Button onClick={() => handleOpen()}>Add Equipment</Button>
+        <ModalButton
+          label="Add Equipment"
+          onClick={() => handleOpen()}
+          modalTitle={editing ? "Edit Equipment" : "Add Equipment"}
+          opened={opened}
+          onClose={handleClose}
+          content={
+            <EquipmentForm
+              form={form}
+              onSubmit={form.onSubmit(handleSubmit)}
+              editing={!!editing}
+              areaOptions={areaOptions}
+            />
+          }
+        />
       </Group>
       <DataTable
         columns={columns}
@@ -115,68 +122,6 @@ export const Equipment = () => {
         onEdit={handleOpen}
         onDelete={deleteEquipment}
       />
-      <Modal
-        opened={opened}
-        onClose={handleClose}
-        title={editing ? "Edit Equipment" : "Add Equipment"}
-      >
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Stack>
-            <TextInput label="Name" required {...form.getInputProps("name")} />
-            <TextInput
-              label="Serial Number"
-              required
-              {...form.getInputProps("serialNumber")}
-            />
-            <TextInput
-              label="Category"
-              required
-              {...form.getInputProps("category")}
-            />
-            <Select
-              label="Area"
-              required
-              data={areaOptions}
-              searchable
-              {...form.getInputProps("areaId")}
-            />
-            <Select
-              label="Status"
-              required
-              data={equipmentStatusOptions}
-              {...form.getInputProps("status")}
-            />
-            <TextInput
-              label="Purchase Date"
-              type="date"
-              {...form.getInputProps("purchaseDate")}
-            />
-            <TextInput
-              label="Installation Date"
-              type="date"
-              {...form.getInputProps("installDate")}
-            />
-            <TextInput
-              label="Warranty Expiry Date"
-              type="date"
-              {...form.getInputProps("warrantyDate")}
-            />
-            <Textarea
-              label="Maintenance Cycle Details"
-              autosize
-              minRows={2}
-              {...form.getInputProps("maintenanceCycleNotes")}
-            />
-            <Button type="submit">{editing ? "Update" : "Create"}</Button>
-          </Stack>
-        </form>
-      </Modal>
     </Stack>
   );
 };
-
-const equipmentStatusOptions: { value: EquipmentStatus; label: string }[] = [
-  { value: "operational", label: "Operational" },
-  { value: "maintenance", label: "Maintenance" },
-  { value: "offline", label: "Offline" },
-];
