@@ -17,11 +17,7 @@ import type { Column } from "@/components/shared/DataTable";
 import { DataTable } from "@/components/shared/DataTable";
 import { useAppContext } from "@/data/AppContext";
 import type { Ticket, TicketPriority, TicketStatus, TicketType } from "@/types";
-import {
-  ticketPriorityColor,
-  ticketStatusColor,
-  ticketTypeColor,
-} from "@/utils";
+import { ticketPriorityColor, ticketStatusColor, ticketTypeColor } from "@/utils";
 
 export const Tickets = () => {
   const {
@@ -166,30 +162,19 @@ export const Tickets = () => {
             <Select
               label="Type"
               required
-              data={[
-                { value: "engineering", label: "Engineering" },
-                { value: "customer", label: "Customer" },
-              ]}
+              data={ticketTypeOptions}
               {...form.getInputProps("type")}
             />
             <Select
               label="Status"
               required
-              data={[
-                { value: "open", label: "Open" },
-                { value: "in-progress", label: "In Progress" },
-                { value: "closed", label: "Closed" },
-              ]}
+              data={ticketStatusOptions}
               {...form.getInputProps("status")}
             />
             <Select
               label="Priority"
               required
-              data={[
-                { value: "low", label: "Low" },
-                { value: "medium", label: "Medium" },
-                { value: "high", label: "High" },
-              ]}
+              data={ticketPriorityOptions}
               {...form.getInputProps("priority")}
             />
             <Select
@@ -211,3 +196,20 @@ export const Tickets = () => {
     </Stack>
   );
 };
+
+const ticketTypeOptions: { value: TicketType; label: string }[] = [
+  { value: "engineering", label: "Engineering" },
+  { value: "customer", label: "Customer" },
+];
+
+const ticketStatusOptions: { value: TicketStatus; label: string }[] = [
+  { value: "open", label: "Open" },
+  { value: "in-progress", label: "In Progress" },
+  { value: "closed", label: "Closed" },
+];
+
+const ticketPriorityOptions: { value: TicketPriority; label: string }[] = [
+  { value: "low", label: "Low" },
+  { value: "medium", label: "Medium" },
+  { value: "high", label: "High" },
+];

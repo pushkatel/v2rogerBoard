@@ -22,3 +22,4 @@ export const equipmentStatusColor: Record<EquipmentStatus, string> = {
   maintenance: "yellow",
   offline: "red",
 };
+

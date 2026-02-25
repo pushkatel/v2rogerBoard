@@ -143,11 +143,7 @@ export const Equipment = () => {
             <Select
               label="Status"
               required
-              data={[
-                { value: "operational", label: "Operational" },
-                { value: "maintenance", label: "Maintenance" },
-                { value: "offline", label: "Offline" },
-              ]}
+              data={equipmentStatusOptions}
               {...form.getInputProps("status")}
             />
             <TextInput
@@ -178,3 +174,9 @@ export const Equipment = () => {
     </Stack>
   );
 };
+
+const equipmentStatusOptions: { value: EquipmentStatus; label: string }[] = [
+  { value: "operational", label: "Operational" },
+  { value: "maintenance", label: "Maintenance" },
+  { value: "offline", label: "Offline" },
+];
