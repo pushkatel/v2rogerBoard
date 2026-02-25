@@ -5,6 +5,7 @@ import {
   Modal,
   Select,
   Stack,
+  Textarea,
   TextInput,
   Title,
 } from "@mantine/core";
@@ -26,6 +27,7 @@ export const Machines = () => {
 
   const columns: Column<Machine>[] = [
     { header: "Name", accessor: "name" },
+    { header: "Serial Number", accessor: "serialNumber" },
     { header: "Category", accessor: "category" },
     {
       header: "Area",
@@ -44,19 +46,38 @@ export const Machines = () => {
   const form = useForm({
     initialValues: {
       name: "",
+      serialNumber: "",
       category: "",
+      departmentId: "",
       areaId: "",
       status: "operational" as MachineStatus,
+      purchaseDate: "",
+      installDate: "",
+      warrantyDate: "",
+      maintenanceCycleNotes: "",
     },
   });
 
+  const selectedDeptId = form.values.departmentId;
+
+  const filteredAreaOptions = areas
+    .filter((a) => a.departmentId === selectedDeptId)
+    .map((a) => ({ value: a.id, label: a.name }));
+
   useEffect(() => {
     if (editing) {
+      const area = areas.find((a) => a.id === editing.areaId);
       form.setValues({
         name: editing.name,
+        serialNumber: editing.serialNumber,
         category: editing.category,
+        departmentId: area?.departmentId ?? "",
         areaId: editing.areaId,
         status: editing.status,
+        purchaseDate: editing.purchaseDate,
+        installDate: editing.installDate,
+        warrantyDate: editing.warrantyDate,
+        maintenanceCycleNotes: editing.maintenanceCycleNotes,
       });
     } else {
       form.reset();
@@ -76,18 +97,17 @@ export const Machines = () => {
   };
 
   const handleSubmit = (values: typeof form.values) => {
+    const { departmentId, ...machineValues } = values;
+    void departmentId;
     if (editing) {
-      updateMachine({ ...editing, ...values });
+      updateMachine({ ...editing, ...machineValues });
     } else {
-      addMachine({ id: `mach-${Date.now()}`, ...values });
+      addMachine({ id: `mach-${Date.now()}`, ...machineValues });
     }
     handleClose();
   };
 
-  const areaOptions = areas.map((a) => {
-    const deptName = departments.find((d) => d.id === a.departmentId)?.name;
-    return { value: a.id, label: deptName ? `${a.name} (${deptName})` : a.name };
-  });
+  const deptOptions = departments.map((d) => ({ value: d.id, label: d.name }));
 
   return (
     <Stack>
@@ -110,14 +130,31 @@ export const Machines = () => {
           <Stack>
             <TextInput label="Name" required {...form.getInputProps("name")} />
             <TextInput
+              label="Serial Number"
+              required
+              {...form.getInputProps("serialNumber")}
+            />
+            <TextInput
               label="Category"
               required
               {...form.getInputProps("category")}
             />
             <Select
+              label="Department"
+              required
+              data={deptOptions}
+              {...form.getInputProps("departmentId")}
+              onChange={(value) => {
+                form.setFieldValue("departmentId", value ?? "");
+                form.setFieldValue("areaId", "");
+              }}
+            />
+            <Select
               label="Area"
               required
-              data={areaOptions}
+              data={filteredAreaOptions}
+              disabled={!selectedDeptId}
+              placeholder={selectedDeptId ? "Select area" : "Select a department first"}
               {...form.getInputProps("areaId")}
             />
             <Select
@@ -129,6 +166,27 @@ export const Machines = () => {
                 { value: "offline", label: "Offline" },
               ]}
               {...form.getInputProps("status")}
+            />
+            <TextInput
+              label="Purchase Date"
+              type="date"
+              {...form.getInputProps("purchaseDate")}
+            />
+            <TextInput
+              label="Installation Date"
+              type="date"
+              {...form.getInputProps("installDate")}
+            />
+            <TextInput
+              label="Warranty Expiry Date"
+              type="date"
+              {...form.getInputProps("warrantyDate")}
+            />
+            <Textarea
+              label="Maintenance Cycle Details"
+              autosize
+              minRows={2}
+              {...form.getInputProps("maintenanceCycleNotes")}
             />
             <Button type="submit">{editing ? "Update" : "Create"}</Button>
           </Stack>

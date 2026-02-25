@@ -29,9 +29,14 @@ export interface Ticket {
 export interface Machine {
   id: string;
   name: string;
+  serialNumber: string;
   category: string;
   areaId: string;
   status: MachineStatus;
+  purchaseDate: string;
+  installDate: string;
+  warrantyDate: string;
+  maintenanceCycleNotes: string;
 }
 
 export interface Employee {
