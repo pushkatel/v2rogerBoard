@@ -1,11 +1,25 @@
-import type { Employee, Machine, Ticket } from "@/types";
+import type { Area, Department, Employee, Machine, Ticket } from "@/types";
+
+export const seedDepartments: Department[] = [
+  { id: "dept-1", name: "Engineering" },
+  { id: "dept-2", name: "Maintenance" },
+  { id: "dept-3", name: "Quality" },
+  { id: "dept-4", name: "Operations" },
+];
+
+export const seedAreas: Area[] = [
+  { id: "area-1", name: "Building A", departmentId: "dept-1" },
+  { id: "area-2", name: "Building B", departmentId: "dept-2" },
+  { id: "area-3", name: "Building C", departmentId: "dept-3" },
+  { id: "area-4", name: "Warehouse", departmentId: "dept-4" },
+];
 
 export const seedEmployees: Employee[] = [
   {
     id: "emp-1",
     name: "Alice Johnson",
     role: "Lead Engineer",
-    department: "Engineering",
+    departmentId: "dept-1",
     email: "alice@factory.com",
     phone: "555-0101",
   },
@@ -13,7 +27,7 @@ export const seedEmployees: Employee[] = [
     id: "emp-2",
     name: "Bob Martinez",
     role: "Maintenance Tech",
-    department: "Maintenance",
+    departmentId: "dept-2",
     email: "bob@factory.com",
     phone: "555-0102",
   },
@@ -21,7 +35,7 @@ export const seedEmployees: Employee[] = [
     id: "emp-3",
     name: "Carol Chen",
     role: "Quality Inspector",
-    department: "Quality",
+    departmentId: "dept-3",
     email: "carol@factory.com",
     phone: "555-0103",
   },
@@ -29,7 +43,7 @@ export const seedEmployees: Employee[] = [
     id: "emp-4",
     name: "Dan Wilson",
     role: "Operations Manager",
-    department: "Operations",
+    departmentId: "dept-4",
     email: "dan@factory.com",
     phone: "555-0104",
   },
@@ -40,35 +54,35 @@ export const seedMachines: Machine[] = [
     id: "mach-1",
     name: "CNC Mill #1",
     category: "CNC",
-    location: "Building A",
+    areaId: "area-1",
     status: "operational",
   },
   {
     id: "mach-2",
     name: "Hydraulic Press #3",
     category: "Press",
-    location: "Building B",
+    areaId: "area-2",
     status: "maintenance",
   },
   {
     id: "mach-3",
     name: "Conveyor Line 7",
     category: "Conveyor",
-    location: "Building A",
+    areaId: "area-1",
     status: "operational",
   },
   {
     id: "mach-4",
     name: "Welding Robot R2",
     category: "Robotics",
-    location: "Building C",
+    areaId: "area-3",
     status: "operational",
   },
   {
     id: "mach-5",
     name: "Packaging Unit P1",
     category: "Packaging",
-    location: "Building B",
+    areaId: "area-2",
     status: "offline",
   },
 ];

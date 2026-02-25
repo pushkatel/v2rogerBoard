@@ -18,30 +18,34 @@ import { useAppContext } from "@/data/AppContext";
 import type { Machine, MachineStatus } from "@/types";
 import { machineStatusColor } from "@/utils";
 
-const columns: Column<Machine>[] = [
-  { header: "Name", accessor: "name" },
-  { header: "Category", accessor: "category" },
-  { header: "Location", accessor: "location" },
-  {
-    header: "Status",
-    accessor: (m) => (
-      <Badge color={machineStatusColor[m.status]}>{m.status}</Badge>
-    ),
-    sortValue: (m) => m.status,
-  },
-];
-
 export const Machines = () => {
-  const { machines, addMachine, updateMachine, deleteMachine } =
+  const { areas, departments, machines, addMachine, updateMachine, deleteMachine } =
     useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<Machine | null>(null);
+
+  const columns: Column<Machine>[] = [
+    { header: "Name", accessor: "name" },
+    { header: "Category", accessor: "category" },
+    {
+      header: "Area",
+      accessor: (m) => areas.find((a) => a.id === m.areaId)?.name ?? "—",
+      sortValue: (m) => areas.find((a) => a.id === m.areaId)?.name ?? "",
+    },
+    {
+      header: "Status",
+      accessor: (m) => (
+        <Badge color={machineStatusColor[m.status]}>{m.status}</Badge>
+      ),
+      sortValue: (m) => m.status,
+    },
+  ];
 
   const form = useForm({
     initialValues: {
       name: "",
       category: "",
-      location: "",
+      areaId: "",
       status: "operational" as MachineStatus,
     },
   });
@@ -51,7 +55,7 @@ export const Machines = () => {
       form.setValues({
         name: editing.name,
         category: editing.category,
-        location: editing.location,
+        areaId: editing.areaId,
         status: editing.status,
       });
     } else {
@@ -80,6 +84,11 @@ export const Machines = () => {
     handleClose();
   };
 
+  const areaOptions = areas.map((a) => {
+    const deptName = departments.find((d) => d.id === a.departmentId)?.name;
+    return { value: a.id, label: deptName ? `${a.name} (${deptName})` : a.name };
+  });
+
   return (
     <Stack>
       <Group justify="space-between">
@@ -105,10 +114,11 @@ export const Machines = () => {
               required
               {...form.getInputProps("category")}
             />
-            <TextInput
-              label="Location"
+            <Select
+              label="Area"
               required
-              {...form.getInputProps("location")}
+              data={areaOptions}
+              {...form.getInputProps("areaId")}
             />
             <Select
               label="Status"

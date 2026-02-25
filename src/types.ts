@@ -3,6 +3,17 @@ export type TicketStatus = "open" | "in-progress" | "closed";
 export type TicketPriority = "low" | "medium" | "high";
 export type MachineStatus = "operational" | "maintenance" | "offline";
 
+export interface Department {
+  id: string;
+  name: string;
+}
+
+export interface Area {
+  id: string;
+  name: string;
+  departmentId: string;
+}
+
 export interface Ticket {
   id: string;
   title: string;
@@ -19,7 +30,7 @@ export interface Machine {
   id: string;
   name: string;
   category: string;
-  location: string;
+  areaId: string;
   status: MachineStatus;
 }
 
@@ -27,7 +38,7 @@ export interface Employee {
   id: string;
   name: string;
   role: string;
-  department: string;
+  departmentId: string;
   email: string;
   phone: string;
 }
