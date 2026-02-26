@@ -3,6 +3,7 @@ import type { UseFormReturnType } from "@mantine/form";
 import type { FormEventHandler } from "react";
 
 import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
+import { EquipmentSelect } from "@/components/shared/form-fields/EquipmentSelect";
 import type { MaintenanceCategory, Priority, TicketStatus } from "@/types";
 import { maintenanceCategoryOptions, priorityOptions, statusOptions } from "@/utils";
 
@@ -21,22 +22,18 @@ interface MaintenanceFormProps {
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
-  equipmentOptions: { value: string; label: string }[];
 }
 
 export const MaintenanceForm = ({
   form,
   onSubmit,
   editing,
-  equipmentOptions,
 }: MaintenanceFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack>
-      <Select
+      <EquipmentSelect
         label="Equipment"
         required
-        data={equipmentOptions}
-        searchable
         {...form.getInputProps("equipmentId")}
       />
       <EmployeeSelect

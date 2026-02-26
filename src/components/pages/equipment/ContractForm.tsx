@@ -1,8 +1,9 @@
-import { Button, Select, Stack, Textarea, TextInput } from "@mantine/core";
+import { Button, Stack, Textarea, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import type { FormEventHandler } from "react";
 
 import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
+import { EquipmentSelect } from "@/components/shared/form-fields/EquipmentSelect";
 
 interface ContractFormProps {
   form: UseFormReturnType<{
@@ -20,22 +21,18 @@ interface ContractFormProps {
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
-  equipmentOptions: { value: string; label: string }[];
 }
 
 export const ContractForm = ({
   form,
   onSubmit,
   editing,
-  equipmentOptions,
 }: ContractFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack>
-      <Select
+      <EquipmentSelect
         label="Equipment"
         required
-        data={equipmentOptions}
-        searchable
         {...form.getInputProps("equipmentId")}
       />
       <TextInput
