@@ -1,10 +1,11 @@
 import { createContext, useContext, useState } from "react";
 
-import type { Area, Department, Employee, Equipment, Ticket } from "@/types";
+import type { Area, Department, ECN, Employee, Equipment, Ticket } from "@/types";
 
 import {
   seedAreas,
   seedDepartments,
+  seedECNs,
   seedEmployees,
   seedEquipment,
   seedTickets,
@@ -31,6 +32,10 @@ interface AppContextValue {
   addArea: (area: Area) => void;
   updateArea: (area: Area) => void;
   deleteArea: (id: string) => void;
+  ecns: ECN[];
+  addECN: (ecn: ECN) => void;
+  updateECN: (ecn: ECN) => void;
+  deleteECN: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -48,6 +53,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [employees, setEmployees] = useState<Employee[]>(seedEmployees);
   const [departments, setDepartments] = useState<Department[]>(seedDepartments);
   const [areas, setAreas] = useState<Area[]>(seedAreas);
+  const [ecns, setECNs] = useState<ECN[]>(seedECNs);
 
   const addTicket = (ticket: Ticket) => setTickets((prev) => [...prev, ticket]);
   const updateTicket = (ticket: Ticket) =>
@@ -79,6 +85,11 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setAreas((prev) => prev.map((a) => (a.id === area.id ? area : a)));
   const deleteArea = (id: string) => setAreas((prev) => prev.filter((a) => a.id !== id));
 
+  const addECN = (ecn: ECN) => setECNs((prev) => [...prev, ecn]);
+  const updateECN = (ecn: ECN) =>
+    setECNs((prev) => prev.map((e) => (e.id === ecn.id ? ecn : e)));
+  const deleteECN = (id: string) => setECNs((prev) => prev.filter((e) => e.id !== id));
+
   return (
     <AppContext.Provider
       value={{
@@ -102,6 +113,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         addArea,
         updateArea,
         deleteArea,
+        ecns,
+        addECN,
+        updateECN,
+        deleteECN,
       }}
     >
       {children}

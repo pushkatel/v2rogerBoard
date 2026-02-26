@@ -1,4 +1,11 @@
-import type { EquipmentStatus, TicketPriority, TicketStatus, TicketType } from "./types";
+import type {
+  ECNPriority,
+  ECNStatus,
+  EquipmentStatus,
+  TicketPriority,
+  TicketStatus,
+  TicketType,
+} from "./types";
 
 export const ticketStatusColor: Record<TicketStatus, string> = {
   open: "blue",
@@ -21,5 +28,19 @@ export const equipmentStatusColor: Record<EquipmentStatus, string> = {
   operational: "green",
   maintenance: "yellow",
   offline: "red",
+};
+
+export const ecnStatusColor: Record<ECNStatus, string> = {
+  draft: "gray",
+  open: "blue",
+  "in-review": "yellow",
+  approved: "green",
+  closed: "red",
+};
+
+export const ecnPriorityColor: Record<ECNPriority, string> = {
+  low: "gray",
+  medium: "orange",
+  high: "red",
 };
 

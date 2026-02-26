@@ -1,4 +1,4 @@
-import type { Area, Department, Employee, Equipment, Ticket } from "@/types";
+import type { Area, Department, ECN, Employee, Equipment, Ticket } from "@/types";
 
 export const seedDepartments: Department[] = [
   { id: "dept-1", name: "Engineering" },
@@ -335,5 +335,48 @@ export const seedTickets: Ticket[] = [
     assignedEmployeeId: "emp-7",
     relatedEquipmentId: "mach-4",
     createdAt: "2026-02-23",
+  },
+];
+
+export const seedECNs: ECN[] = [
+  {
+    id: "ecn-1",
+    customer: "Northrop Grumman",
+    openDate: "2026-02-10",
+    releaseNumber: "REL-2026-0041",
+    jobNumber: "JOB-8820",
+    status: "open",
+    priority: "high",
+    assignedEmployeeIds: ["emp-5", "emp-2"],
+  },
+  {
+    id: "ecn-2",
+    customer: "Raytheon Technologies",
+    openDate: "2026-02-15",
+    releaseNumber: "REL-2026-0053",
+    jobNumber: "JOB-8835",
+    status: "in-review",
+    priority: "medium",
+    assignedEmployeeIds: ["emp-6"],
+  },
+  {
+    id: "ecn-3",
+    customer: "L3Harris",
+    openDate: "2026-02-18",
+    releaseNumber: "REL-2026-0060",
+    jobNumber: "JOB-8841",
+    status: "draft",
+    priority: "low",
+    assignedEmployeeIds: [],
+  },
+  {
+    id: "ecn-4",
+    customer: "BAE Systems",
+    openDate: "2026-01-28",
+    releaseNumber: "REL-2026-0029",
+    jobNumber: "JOB-8790",
+    status: "approved",
+    priority: "high",
+    assignedEmployeeIds: ["emp-5", "emp-8"],
   },
 ];

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TicketsRouteImport } from './routes/tickets'
+import { Route as QualityRouteImport } from './routes/quality'
 import { Route as EquipmentRouteImport } from './routes/equipment'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const TicketsRoute = TicketsRouteImport.update({
   id: '/tickets',
   path: '/tickets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QualityRoute = QualityRouteImport.update({
+  id: '/quality',
+  path: '/quality',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EquipmentRoute = EquipmentRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/equipment': typeof EquipmentRoute
+  '/quality': typeof QualityRoute
   '/tickets': typeof TicketsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/equipment': typeof EquipmentRoute
+  '/quality': typeof QualityRoute
   '/tickets': typeof TicketsRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/equipment': typeof EquipmentRoute
+  '/quality': typeof QualityRoute
   '/tickets': typeof TicketsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/equipment' | '/tickets'
+  fullPaths: '/' | '/admin' | '/equipment' | '/quality' | '/tickets'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/equipment' | '/tickets'
-  id: '__root__' | '/' | '/admin' | '/equipment' | '/tickets'
+  to: '/' | '/admin' | '/equipment' | '/quality' | '/tickets'
+  id: '__root__' | '/' | '/admin' | '/equipment' | '/quality' | '/tickets'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   EquipmentRoute: typeof EquipmentRoute
+  QualityRoute: typeof QualityRoute
   TicketsRoute: typeof TicketsRoute
 }
 
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/tickets'
       fullPath: '/tickets'
       preLoaderRoute: typeof TicketsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quality': {
+      id: '/quality'
+      path: '/quality'
+      fullPath: '/quality'
+      preLoaderRoute: typeof QualityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/equipment': {
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   EquipmentRoute: EquipmentRoute,
+  QualityRoute: QualityRoute,
   TicketsRoute: TicketsRoute,
 }
 export const routeTree = rootRouteImport

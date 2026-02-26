@@ -47,3 +47,17 @@ export interface Employee {
   email: string;
   phone: string;
 }
+
+export type ECNStatus = "draft" | "open" | "in-review" | "approved" | "closed";
+export type ECNPriority = "low" | "medium" | "high";
+
+export interface ECN {
+  id: string;
+  customer: string;
+  openDate: string;
+  releaseNumber: string;
+  jobNumber: string;
+  status: ECNStatus;
+  priority: ECNPriority;
+  assignedEmployeeIds: string[];
+}
