@@ -1,8 +1,7 @@
 import type {
-  ECNPriority,
   ECNStatus,
   EquipmentStatus,
-  TicketPriority,
+  Priority,
   TicketStatus,
   TicketType,
 } from "./types";
@@ -13,11 +12,19 @@ export const ticketStatusColor: Record<TicketStatus, string> = {
   closed: "green",
 };
 
-export const ticketPriorityColor: Record<TicketPriority, string> = {
-  low: "gray",
-  medium: "orange",
-  high: "red",
+export const priorityColor: Record<Priority, string> = {
+  low: "blue",
+  medium: "green",
+  high: "orange",
+  critical: "red",
 };
+
+export const priorityOptions: { value: Priority; label: string }[] = [
+  { value: "low", label: "Low" },
+  { value: "medium", label: "Medium" },
+  { value: "high", label: "High" },
+  { value: "critical", label: "Critical" },
+];
 
 export const ticketTypeColor: Record<TicketType, string> = {
   engineering: "violet",
@@ -38,9 +45,4 @@ export const ecnStatusColor: Record<ECNStatus, string> = {
   closed: "red",
 };
 
-export const ecnPriorityColor: Record<ECNPriority, string> = {
-  low: "gray",
-  medium: "orange",
-  high: "red",
-};
 

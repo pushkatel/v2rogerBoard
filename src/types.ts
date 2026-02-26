@@ -1,6 +1,6 @@
 export type TicketType = "engineering" | "customer";
 export type TicketStatus = "open" | "in-progress" | "closed";
-export type TicketPriority = "low" | "medium" | "high";
+export type Priority = "low" | "medium" | "high" | "critical";
 export type EquipmentStatus = "operational" | "maintenance" | "offline";
 
 export interface Department {
@@ -20,7 +20,7 @@ export interface Ticket {
   description: string;
   type: TicketType;
   status: TicketStatus;
-  priority: TicketPriority;
+  priority: Priority;
   assignedEmployeeIds: string[];
   relatedEquipmentId: string | null;
   createdAt: string;
@@ -49,8 +49,6 @@ export interface Employee {
 }
 
 export type ECNStatus = "draft" | "open" | "in-review" | "approved" | "closed";
-export type ECNPriority = "low" | "medium" | "high";
-
 export interface ECN {
   id: string;
   customer: string;
@@ -58,6 +56,6 @@ export interface ECN {
   releaseNumber: string;
   jobNumber: string;
   status: ECNStatus;
-  priority: ECNPriority;
+  priority: Priority;
   assignedEmployeeIds: string[];
 }

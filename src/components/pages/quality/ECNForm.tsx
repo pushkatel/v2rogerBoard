@@ -3,7 +3,8 @@ import type { UseFormReturnType } from "@mantine/form";
 import type { FormEventHandler } from "react";
 
 import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
-import type { ECNPriority, ECNStatus } from "@/types";
+import type { ECNStatus, Priority } from "@/types";
+import { priorityOptions } from "@/utils";
 
 interface ECNFormProps {
   form: UseFormReturnType<{
@@ -12,7 +13,7 @@ interface ECNFormProps {
     releaseNumber: string;
     jobNumber: string;
     status: ECNStatus;
-    priority: ECNPriority;
+    priority: Priority;
     assignedEmployeeIds: string[];
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
@@ -52,7 +53,7 @@ export const ECNForm = ({ form, onSubmit, editing }: ECNFormProps) => (
       <Select
         label="Priority"
         required
-        data={ecnPriorityOptions}
+        data={priorityOptions}
         {...form.getInputProps("priority")}
       />
       <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
@@ -67,10 +68,4 @@ const ecnStatusOptions: { value: ECNStatus; label: string }[] = [
   { value: "in-review", label: "In Review" },
   { value: "approved", label: "Approved" },
   { value: "closed", label: "Closed" },
-];
-
-const ecnPriorityOptions: { value: ECNPriority; label: string }[] = [
-  { value: "low", label: "Low" },
-  { value: "medium", label: "Medium" },
-  { value: "high", label: "High" },
 ];

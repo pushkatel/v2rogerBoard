@@ -3,7 +3,8 @@ import type { UseFormReturnType } from "@mantine/form";
 import type { FormEventHandler } from "react";
 
 import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
-import type { TicketPriority, TicketStatus, TicketType } from "@/types";
+import type { Priority, TicketStatus, TicketType } from "@/types";
+import { priorityOptions } from "@/utils";
 
 interface TicketFormProps {
   form: UseFormReturnType<{
@@ -11,7 +12,7 @@ interface TicketFormProps {
     description: string;
     type: TicketType;
     status: TicketStatus;
-    priority: TicketPriority;
+    priority: Priority;
     assignedEmployeeIds: string[];
     relatedEquipmentId: string | null;
   }>;
@@ -55,7 +56,7 @@ export const TicketForm = ({
       <Select
         label="Priority"
         required
-        data={ticketPriorityOptions}
+        data={priorityOptions}
         {...form.getInputProps("priority")}
       />
       <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
@@ -81,8 +82,3 @@ const ticketStatusOptions: { value: TicketStatus; label: string }[] = [
   { value: "closed", label: "Closed" },
 ];
 
-const ticketPriorityOptions: { value: TicketPriority; label: string }[] = [
-  { value: "low", label: "Low" },
-  { value: "medium", label: "Medium" },
-  { value: "high", label: "High" },
-];

@@ -259,7 +259,7 @@ export const seedTickets: Ticket[] = [
       "Plating thickness measured at 0.15 mil vs. 0.25 mil target on panel lot #6140. Chemistry analysis shows palladium activator concentration is low. Line is down for replenishment and re-qualification.",
     type: "engineering",
     status: "in-progress",
-    priority: "high",
+    priority: "critical",
     assignedEmployeeIds: ["emp-4"],
     relatedEquipmentId: "mach-5",
     createdAt: "2026-02-20",
@@ -346,7 +346,7 @@ export const seedECNs: ECN[] = [
     releaseNumber: "REL-2026-0041",
     jobNumber: "JOB-8820",
     status: "open",
-    priority: "high",
+    priority: "critical",
     assignedEmployeeIds: ["emp-5", "emp-2"],
   },
   {

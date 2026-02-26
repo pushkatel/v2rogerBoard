@@ -7,8 +7,8 @@ import type { Column } from "@/components/shared/DataTable";
 import { DataTable } from "@/components/shared/DataTable";
 import { ModalButton } from "@/components/shared/ModalButton";
 import { useAppContext } from "@/data/AppContext";
-import type { ECN, ECNPriority, ECNStatus } from "@/types";
-import { ecnPriorityColor, ecnStatusColor } from "@/utils";
+import type { ECN, ECNStatus, Priority } from "@/types";
+import { ecnStatusColor, priorityColor } from "@/utils";
 
 import { ECNForm } from "./ECNForm";
 
@@ -33,7 +33,7 @@ export const Quality = () => {
       {
         header: "Priority",
         accessor: (e) => (
-          <Badge color={ecnPriorityColor[e.priority]}>{e.priority}</Badge>
+          <Badge color={priorityColor[e.priority]}>{e.priority}</Badge>
         ),
         sortValue: (e) => e.priority,
       },
@@ -60,7 +60,7 @@ export const Quality = () => {
       releaseNumber: "",
       jobNumber: "",
       status: "draft" as ECNStatus,
-      priority: "medium" as ECNPriority,
+      priority: "medium" as Priority,
       assignedEmployeeIds: [] as string[],
     },
   });
