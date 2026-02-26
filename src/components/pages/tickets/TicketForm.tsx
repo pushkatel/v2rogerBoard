@@ -2,6 +2,7 @@ import { Button, Select, Stack, Textarea, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import type { FormEventHandler } from "react";
 
+import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
 import type { TicketPriority, TicketStatus, TicketType } from "@/types";
 
 interface TicketFormProps {
@@ -11,12 +12,11 @@ interface TicketFormProps {
     type: TicketType;
     status: TicketStatus;
     priority: TicketPriority;
-    assignedEmployeeId: string | null;
+    assignedEmployeeIds: string[];
     relatedEquipmentId: string | null;
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
-  employeeOptions: { value: string; label: string }[];
   equipmentOptions: { value: string; label: string }[];
 }
 
@@ -24,7 +24,6 @@ export const TicketForm = ({
   form,
   onSubmit,
   editing,
-  employeeOptions,
   equipmentOptions,
 }: TicketFormProps) => (
   <form onSubmit={onSubmit}>
@@ -59,12 +58,7 @@ export const TicketForm = ({
         data={ticketPriorityOptions}
         {...form.getInputProps("priority")}
       />
-      <Select
-        label="Assigned Employee"
-        clearable
-        data={employeeOptions}
-        {...form.getInputProps("assignedEmployeeId")}
-      />
+      <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
       <Select
         label="Related Equipment"
         clearable

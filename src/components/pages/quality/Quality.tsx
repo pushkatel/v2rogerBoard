@@ -120,7 +120,6 @@ export const Quality = () => {
               form={form}
               onSubmit={form.onSubmit(handleSubmit)}
               editing={!!editing}
-              employeeOptions={employees.map((e) => ({ value: e.id, label: e.name }))}
             />
           }
         />

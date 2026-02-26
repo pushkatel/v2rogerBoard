@@ -21,7 +21,7 @@ export interface Ticket {
   type: TicketType;
   status: TicketStatus;
   priority: TicketPriority;
-  assignedEmployeeId: string | null;
+  assignedEmployeeIds: string[];
   relatedEquipmentId: string | null;
   createdAt: string;
 }

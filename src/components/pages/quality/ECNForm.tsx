@@ -1,7 +1,8 @@
-import { Button, Checkbox, Group, MultiSelect, Select, Stack, TextInput } from "@mantine/core";
+import { Button, Select, Stack, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import type { FormEventHandler } from "react";
 
+import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
 import type { ECNPriority, ECNStatus } from "@/types";
 
 interface ECNFormProps {
@@ -16,15 +17,9 @@ interface ECNFormProps {
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
-  employeeOptions: { value: string; label: string }[];
 }
 
-export const ECNForm = ({
-  form,
-  onSubmit,
-  editing,
-  employeeOptions,
-}: ECNFormProps) => (
+export const ECNForm = ({ form, onSubmit, editing }: ECNFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack>
       <TextInput
@@ -60,18 +55,7 @@ export const ECNForm = ({
         data={ecnPriorityOptions}
         {...form.getInputProps("priority")}
       />
-      <MultiSelect
-        label="Assigned Employees"
-        data={employeeOptions}
-        searchable
-        renderOption={({ option, checked }) => (
-          <Group gap="sm">
-            <Checkbox checked={checked} onChange={() => {}} tabIndex={-1} readOnly />
-            {option.label}
-          </Group>
-        )}
-        {...form.getInputProps("assignedEmployeeIds")}
-      />
+      <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
       <Button type="submit">{editing ? "Update" : "Create"}</Button>
     </Stack>
   </form>

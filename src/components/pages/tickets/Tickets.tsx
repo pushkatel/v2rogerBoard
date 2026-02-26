@@ -51,9 +51,14 @@ export const Tickets = () => {
       {
         header: "Assigned To",
         accessor: (t) =>
-          employees.find((e) => e.id === t.assignedEmployeeId)?.name ?? "—",
+          t.assignedEmployeeIds
+            .map((id) => employees.find((e) => e.id === id)?.name)
+            .filter(Boolean)
+            .join(", ") || "—",
         sortValue: (t) =>
-          employees.find((e) => e.id === t.assignedEmployeeId)?.name ?? "",
+          t.assignedEmployeeIds
+            .map((id) => employees.find((e) => e.id === id)?.name ?? "")
+            .join(", "),
       },
       {
         header: "Equipment",
@@ -74,7 +79,7 @@ export const Tickets = () => {
       type: "engineering" as TicketType,
       status: "open" as TicketStatus,
       priority: "medium" as TicketPriority,
-      assignedEmployeeId: null as string | null,
+      assignedEmployeeIds: [] as string[],
       relatedEquipmentId: null as string | null,
     },
   });
@@ -87,7 +92,7 @@ export const Tickets = () => {
         type: editing.type,
         status: editing.status,
         priority: editing.priority,
-        assignedEmployeeId: editing.assignedEmployeeId,
+        assignedEmployeeIds: editing.assignedEmployeeIds,
         relatedEquipmentId: editing.relatedEquipmentId,
       });
     } else {
@@ -136,7 +141,6 @@ export const Tickets = () => {
               form={form}
               onSubmit={form.onSubmit(handleSubmit)}
               editing={!!editing}
-              employeeOptions={employees.map((e) => ({ value: e.id, label: e.name }))}
               equipmentOptions={equipment.map((e) => ({ value: e.id, label: e.name }))}
             />
           }
