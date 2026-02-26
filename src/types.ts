@@ -49,6 +49,25 @@ export interface Employee {
 }
 
 export type ECNStatus = "draft" | "open" | "in-review" | "approved" | "closed";
+export type ICARStatus = "draft" | "open" | "in-review" | "approved" | "closed";
+
+export interface ICAR {
+  id: string;
+  customer: string;
+  openDate: string;
+  jobNumber: string;
+  releaseNumber: string;
+  panelsAffected: number;
+  departmentId: string;
+  problemTitle: string;
+  problemDescription: string;
+  whereOccurred: string;
+  rootCause: string;
+  containmentAction: string;
+  status: ICARStatus;
+  priority: Priority;
+}
+
 export interface ECN {
   id: string;
   customer: string;

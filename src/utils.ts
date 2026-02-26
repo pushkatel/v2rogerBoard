@@ -1,6 +1,7 @@
 import type {
   ECNStatus,
   EquipmentStatus,
+  ICARStatus,
   Priority,
   TicketStatus,
   TicketType,
@@ -45,4 +46,10 @@ export const ecnStatusColor: Record<ECNStatus, string> = {
   closed: "red",
 };
 
-
+export const icarStatusColor: Record<ICARStatus, string> = {
+  draft: "gray",
+  open: "blue",
+  "in-review": "yellow",
+  approved: "green",
+  closed: "red",
+};

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-import type { Area, Department, ECN, Employee, Equipment, Ticket } from "@/types";
+import type { Area, Department, ECN, Employee, Equipment, ICAR, Ticket } from "@/types";
 
 import {
   seedAreas,
@@ -8,6 +8,7 @@ import {
   seedECNs,
   seedEmployees,
   seedEquipment,
+  seedICARs,
   seedTickets,
 } from "./seed";
 
@@ -36,6 +37,10 @@ interface AppContextValue {
   addECN: (ecn: ECN) => void;
   updateECN: (ecn: ECN) => void;
   deleteECN: (id: string) => void;
+  icars: ICAR[];
+  addICAR: (icar: ICAR) => void;
+  updateICAR: (icar: ICAR) => void;
+  deleteICAR: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -54,6 +59,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [departments, setDepartments] = useState<Department[]>(seedDepartments);
   const [areas, setAreas] = useState<Area[]>(seedAreas);
   const [ecns, setECNs] = useState<ECN[]>(seedECNs);
+  const [icars, setICARs] = useState<ICAR[]>(seedICARs);
 
   const addTicket = (ticket: Ticket) => setTickets((prev) => [...prev, ticket]);
   const updateTicket = (ticket: Ticket) =>
@@ -90,6 +96,11 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setECNs((prev) => prev.map((e) => (e.id === ecn.id ? ecn : e)));
   const deleteECN = (id: string) => setECNs((prev) => prev.filter((e) => e.id !== id));
 
+  const addICAR = (icar: ICAR) => setICARs((prev) => [...prev, icar]);
+  const updateICAR = (icar: ICAR) =>
+    setICARs((prev) => prev.map((i) => (i.id === icar.id ? icar : i)));
+  const deleteICAR = (id: string) => setICARs((prev) => prev.filter((i) => i.id !== id));
+
   return (
     <AppContext.Provider
       value={{
@@ -117,6 +128,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         addECN,
         updateECN,
         deleteECN,
+        icars,
+        addICAR,
+        updateICAR,
+        deleteICAR,
       }}
     >
       {children}

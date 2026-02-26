@@ -1,4 +1,4 @@
-import type { Area, Department, ECN, Employee, Equipment, Ticket } from "@/types";
+import type { Area, Department, ECN, Employee, Equipment, ICAR, Ticket } from "@/types";
 
 export const seedDepartments: Department[] = [
   { id: "dept-1", name: "Engineering" },
@@ -335,6 +335,77 @@ export const seedTickets: Ticket[] = [
     assignedEmployeeIds: ["emp-7"],
     relatedEquipmentId: "mach-4",
     createdAt: "2026-02-23",
+  },
+];
+
+export const seedICARs: ICAR[] = [
+  {
+    id: "icar-1",
+    customer: "Northrop Grumman",
+    openDate: "2026-02-12",
+    jobNumber: "JOB-8820",
+    releaseNumber: "REL-2026-0041",
+    panelsAffected: 24,
+    departmentId: "dept-2",
+    problemTitle: "Copper plating voids on inner layers",
+    problemDescription:
+      "Customer reported intermittent open circuits on inner layer 3. Cross-section analysis revealed copper plating voids at barrel wall, likely caused by insufficient cleaning before electroless copper deposition.",
+    whereOccurred: "Plating Line",
+    rootCause: "Desmear process underperforming — permanganate concentration dropped below minimum threshold between replenishment cycles.",
+    containmentAction: "Quarantined remaining panels from lot #6200. Increased desmear chemistry monitoring to every 4 hours. Re-processed affected panels through full desmear and re-plate cycle.",
+    status: "open",
+    priority: "critical",
+  },
+  {
+    id: "icar-2",
+    customer: "Raytheon Technologies",
+    openDate: "2026-02-18",
+    jobNumber: "JOB-8835",
+    releaseNumber: "REL-2026-0053",
+    panelsAffected: 8,
+    departmentId: "dept-3",
+    problemTitle: "Solder mask bleed on fine-pitch pads",
+    problemDescription:
+      "Solder mask bleeding into 6-mil pad openings on QFN footprint. Customer assembly house unable to achieve reliable solder paste deposition.",
+    whereOccurred: "Solder Mask Line",
+    rootCause: "Exposure energy too low for the fine-pitch feature resolution required. LDI settings were using standard recipe instead of high-resolution profile.",
+    containmentAction: "Switched to high-resolution LDI profile for all jobs with pad openings below 8 mil. Reworked affected panels with strip and re-coat.",
+    status: "in-review",
+    priority: "high",
+  },
+  {
+    id: "icar-3",
+    customer: "L3Harris",
+    openDate: "2026-02-22",
+    jobNumber: "JOB-8841",
+    releaseNumber: "REL-2026-0060",
+    panelsAffected: 50,
+    departmentId: "dept-2",
+    problemTitle: "Board warpage exceeding IPC spec",
+    problemDescription:
+      "Delivered boards showing 0.9% bow/twist vs. 0.75% IPC-6012 Class 3 limit. Customer rejected full shipment.",
+    whereOccurred: "Lamination Area",
+    rootCause: "",
+    containmentAction: "",
+    status: "draft",
+    priority: "high",
+  },
+  {
+    id: "icar-4",
+    customer: "BAE Systems",
+    openDate: "2026-01-30",
+    jobNumber: "JOB-8790",
+    releaseNumber: "REL-2026-0029",
+    panelsAffected: 12,
+    departmentId: "dept-3",
+    problemTitle: "Impedance out of tolerance on controlled lines",
+    problemDescription:
+      "TDR measurements on controlled impedance coupons showed 53 ohms vs. 50 ±5% target on differential pairs. Affected lot #6450.",
+    whereOccurred: "Test Lab",
+    rootCause: "Prepreg resin content variation between material lots caused dielectric constant shift. Incoming material inspection did not flag the deviation.",
+    containmentAction: "Added incoming Dk verification step for all controlled-impedance jobs. Adjusted trace width compensation in CAM to account for material variation. Scrapped affected panels and re-fabricated.",
+    status: "closed",
+    priority: "medium",
   },
 ];
 
