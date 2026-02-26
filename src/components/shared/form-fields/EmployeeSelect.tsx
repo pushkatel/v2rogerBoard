@@ -1,11 +1,28 @@
-import { Checkbox, Group, MultiSelect, type MultiSelectProps } from "@mantine/core";
+import {
+  Checkbox,
+  Group,
+  MultiSelect,
+  type MultiSelectProps,
+  Select,
+  type SelectProps,
+} from "@mantine/core";
 import { useMemo } from "react";
 
 import { useAppContext } from "@/data/AppContext";
 
-type EmployeeSelectProps = Omit<MultiSelectProps, "data" | "renderOption">;
+/**
+ * Department-grouped employee picker. Data is pulled from `AppContext`.
+ *
+ * - `multiple` omitted/`true` (default): `MultiSelect` with checkboxes, defaults label to "Assigned Employees"
+ * - `multiple={false}`: `Select` — pass your own `label`
+ *
+ * All other props are forwarded to the underlying Mantine component.
+ */
+type EmployeeSelectProps =
+  | ({ multiple?: true } & Omit<MultiSelectProps, "data" | "renderOption">)
+  | ({ multiple: false } & Omit<SelectProps, "data">);
 
-export const EmployeeSelect = (props: EmployeeSelectProps) => {
+export const EmployeeSelect = ({ multiple, ...rest }: EmployeeSelectProps) => {
   const { employees, departments } = useAppContext();
 
   const employeeOptions = useMemo(() => {
@@ -19,6 +36,12 @@ export const EmployeeSelect = (props: EmployeeSelectProps) => {
     return Array.from(grouped, ([group, items]) => ({ group, items }));
   }, [employees, departments]);
 
+  if (multiple === false) {
+    const selectProps = rest as Omit<SelectProps, "data">;
+    return <Select data={employeeOptions} searchable {...selectProps} />;
+  }
+
+  const multiProps = rest as Omit<MultiSelectProps, "data" | "renderOption">;
   return (
     <MultiSelect
       label="Assigned Employees"
@@ -30,7 +53,7 @@ export const EmployeeSelect = (props: EmployeeSelectProps) => {
           {option.label}
         </Group>
       )}
-      {...props}
+      {...multiProps}
     />
   );
 };

@@ -22,7 +22,6 @@ interface MaintenanceFormProps {
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
   equipmentOptions: { value: string; label: string }[];
-  employeeOptions: { value: string; label: string }[];
 }
 
 export const MaintenanceForm = ({
@@ -30,7 +29,6 @@ export const MaintenanceForm = ({
   onSubmit,
   editing,
   equipmentOptions,
-  employeeOptions,
 }: MaintenanceFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack>
@@ -41,11 +39,10 @@ export const MaintenanceForm = ({
         searchable
         {...form.getInputProps("equipmentId")}
       />
-      <Select
+      <EmployeeSelect
+        multiple={false}
         label="Reported By"
         required
-        data={employeeOptions}
-        searchable
         {...form.getInputProps("reportedBy")}
       />
       <TextInput

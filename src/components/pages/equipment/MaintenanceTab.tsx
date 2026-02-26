@@ -65,7 +65,6 @@ export const MaintenanceTab = () => {
   });
 
   const equipmentOptions = equipment.map((e) => ({ value: e.id, label: e.name }));
-  const employeeOptions = employees.map((e) => ({ value: e.id, label: e.name }));
 
   useEffect(() => {
     if (editing) {
@@ -123,7 +122,6 @@ export const MaintenanceTab = () => {
               onSubmit={form.onSubmit(handleSubmit)}
               editing={!!editing}
               equipmentOptions={equipmentOptions}
-              employeeOptions={employeeOptions}
             />
           }
         />
