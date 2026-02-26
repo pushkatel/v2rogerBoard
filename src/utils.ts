@@ -28,10 +28,10 @@ export const priorityColor: Record<Priority, string> = {
 };
 
 export const priorityOptions: { value: Priority; label: string }[] = [
-  { value: "low", label: "Low" },
-  { value: "medium", label: "Medium" },
-  { value: "high", label: "High" },
   { value: "critical", label: "Critical" },
+  { value: "high", label: "High" },
+  { value: "medium", label: "Medium" },
+  { value: "low", label: "Low" },
 ];
 
 export const equipmentStatusColor: Record<EquipmentStatus, string> = {
@@ -39,4 +39,13 @@ export const equipmentStatusColor: Record<EquipmentStatus, string> = {
   maintenance: "yellow",
   offline: "red",
 };
+
+export const equipmentStatusOptions: {
+  value: EquipmentStatus;
+  label: string;
+}[] = [
+  { value: "operational", label: "Operational" },
+  { value: "maintenance", label: "Maintenance" },
+  { value: "offline", label: "Offline" },
+];
 
