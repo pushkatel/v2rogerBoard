@@ -1,5 +1,6 @@
 import { Stack, Tabs, Title } from "@mantine/core";
 
+import { ContractsTab } from "./ContractsTab";
 import { EquipmentTab } from "./EquipmentTab";
 import { MaintenanceTab } from "./MaintenanceTab";
 
@@ -11,12 +12,16 @@ export const Equipment = () => {
         <Tabs.List>
           <Tabs.Tab value="equipment">Equipment</Tabs.Tab>
           <Tabs.Tab value="maintenance">Maintenance</Tabs.Tab>
+          <Tabs.Tab value="contracts">Contracts</Tabs.Tab>
         </Tabs.List>
         <Tabs.Panel value="equipment" pt="md">
           <EquipmentTab />
         </Tabs.Panel>
         <Tabs.Panel value="maintenance" pt="md">
           <MaintenanceTab />
+        </Tabs.Panel>
+        <Tabs.Panel value="contracts" pt="md">
+          <ContractsTab />
         </Tabs.Panel>
       </Tabs>
     </Stack>

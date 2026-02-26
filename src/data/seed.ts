@@ -1,4 +1,4 @@
-import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceTicket } from "@/types";
+import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceContract, MaintenanceTicket } from "@/types";
 
 export const seedDepartments: Department[] = [
   { id: "dept-1", name: "Engineering" },
@@ -368,6 +368,57 @@ export const seedECNs: ECN[] = [
     correctiveChanges:
       "Switch solder mask material from LPI-500 to LPI-700 for improved thermal endurance. Add plasma cleaning step before solder mask application. Update IPC-SM-840 class T qualification records.",
     assignedEmployeeIds: ["emp-5", "emp-8"],
+  },
+];
+
+export const seedMaintenanceContracts: MaintenanceContract[] = [
+  {
+    id: "mc-1",
+    equipmentId: "mach-5",
+    vendor: "Atotech GmbH",
+    contractNumber: "ATO-SVC-2025-0042",
+    startDate: "2025-01-15",
+    endDate: "2027-01-14",
+    description:
+      "Full-service maintenance agreement covering all Atotech plating line equipment. Includes quarterly on-site preventive maintenance, emergency call-out within 24 hours, and all replacement parts for pumps, filters, and heating elements.",
+    summary:
+      "Covers electroless and electrolytic copper lines. 4 PM visits per year, unlimited emergency calls. Parts included up to $15k/year. Chemistry optimization consulting included.",
+    companyLeadId: "emp-4",
+    contactName: "Klaus Weber",
+    contactEmail: "k.weber@atotech.com",
+    contactPhone: "+49-30-349-850",
+  },
+  {
+    id: "mc-2",
+    equipmentId: "mach-1",
+    vendor: "Schmoll Maschinen GmbH",
+    contractNumber: "SCH-PM-2024-1187",
+    startDate: "2024-04-20",
+    endDate: "2026-04-19",
+    description:
+      "Preventive maintenance contract for Schmoll CNC drilling equipment. Covers annual spindle rebuilds, semi-annual axis calibration, and software updates.",
+    summary:
+      "2 PM cycles per year. Spindle rebuild every 5000 hours included. Calibration certificates provided. Software updates for drill optimization included. Does not cover consumables (drill bits, pressure feet).",
+    companyLeadId: "emp-7",
+    contactName: "Thomas Reiter",
+    contactEmail: "t.reiter@schmoll.com",
+    contactPhone: "+49-6074-4098-0",
+  },
+  {
+    id: "mc-3",
+    equipmentId: "mach-3",
+    vendor: "Orbotech (KLA)",
+    contractNumber: "KLA-ORB-2025-0891",
+    startDate: "2025-06-01",
+    endDate: "2028-05-31",
+    description:
+      "Premium service contract for Orbotech Nuvogo 800 LDI system. Includes bi-annual laser source calibration, DMD chip inspection, optics cleaning, and 24/7 remote diagnostics support.",
+    summary:
+      "Covers laser source replacement (1 per contract term), 2 on-site PM visits/year, 24/7 remote support with 4-hour response SLA. Firmware upgrades included. Annual optics refurbishment.",
+    companyLeadId: "emp-2",
+    contactName: "Sarah Chen",
+    contactEmail: "sarah.chen@kla.com",
+    contactPhone: "408-555-0234",
   },
 ];
 

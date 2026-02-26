@@ -68,6 +68,21 @@ export interface ECN {
   assignedEmployeeIds: string[];
 }
 
+export interface MaintenanceContract {
+  id: string;
+  equipmentId: string;
+  vendor: string;
+  contractNumber: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+  summary: string;
+  companyLeadId: string;
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string;
+}
+
 export interface MaintenanceTicket {
   id: string;
   equipmentId: string;

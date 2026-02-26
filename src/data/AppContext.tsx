@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceTicket } from "@/types";
+import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceContract, MaintenanceTicket } from "@/types";
 
 import {
   seedAreas,
@@ -9,6 +9,7 @@ import {
   seedEmployees,
   seedEquipment,
   seedICARs,
+  seedMaintenanceContracts,
   seedMaintenanceTickets,
 } from "./seed";
 
@@ -41,6 +42,10 @@ interface AppContextValue {
   addMaintenanceTicket: (ticket: MaintenanceTicket) => void;
   updateMaintenanceTicket: (ticket: MaintenanceTicket) => void;
   deleteMaintenanceTicket: (id: string) => void;
+  maintenanceContracts: MaintenanceContract[];
+  addMaintenanceContract: (contract: MaintenanceContract) => void;
+  updateMaintenanceContract: (contract: MaintenanceContract) => void;
+  deleteMaintenanceContract: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -60,6 +65,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [ecns, setECNs] = useState<ECN[]>(seedECNs);
   const [icars, setICARs] = useState<ICAR[]>(seedICARs);
   const [maintenanceTickets, setMaintenanceTickets] = useState<MaintenanceTicket[]>(seedMaintenanceTickets);
+  const [maintenanceContracts, setMaintenanceContracts] = useState<MaintenanceContract[]>(seedMaintenanceContracts);
 
   const addEquipment = (item: Equipment) => setEquipment((prev) => [...prev, item]);
   const updateEquipment = (item: Equipment) =>
@@ -102,6 +108,13 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const deleteMaintenanceTicket = (id: string) =>
     setMaintenanceTickets((prev) => prev.filter((t) => t.id !== id));
 
+  const addMaintenanceContract = (contract: MaintenanceContract) =>
+    setMaintenanceContracts((prev) => [...prev, contract]);
+  const updateMaintenanceContract = (contract: MaintenanceContract) =>
+    setMaintenanceContracts((prev) => prev.map((c) => (c.id === contract.id ? contract : c)));
+  const deleteMaintenanceContract = (id: string) =>
+    setMaintenanceContracts((prev) => prev.filter((c) => c.id !== id));
+
   return (
     <AppContext.Provider
       value={{
@@ -133,6 +146,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         addMaintenanceTicket,
         updateMaintenanceTicket,
         deleteMaintenanceTicket,
+        maintenanceContracts,
+        addMaintenanceContract,
+        updateMaintenanceContract,
+        deleteMaintenanceContract,
       }}
     >
       {children}
