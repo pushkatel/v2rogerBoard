@@ -61,6 +61,8 @@ export const Quality = () => {
       jobNumber: "",
       status: "draft" as ECNStatus,
       priority: "medium" as Priority,
+      reason: "",
+      correctiveChanges: "",
       assignedEmployeeIds: [] as string[],
     },
   });
@@ -74,6 +76,8 @@ export const Quality = () => {
         jobNumber: editing.jobNumber,
         status: editing.status,
         priority: editing.priority,
+        reason: editing.reason,
+        correctiveChanges: editing.correctiveChanges,
         assignedEmployeeIds: editing.assignedEmployeeIds,
       });
     } else {
@@ -115,6 +119,7 @@ export const Quality = () => {
           modalTitle={editing ? "Edit ECN" : "New ECN"}
           opened={opened}
           onClose={handleClose}
+          modalSize="lg"
           content={
             <ECNForm
               form={form}

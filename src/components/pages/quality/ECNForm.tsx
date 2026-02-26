@@ -1,4 +1,4 @@
-import { Button, Select, Stack, TextInput } from "@mantine/core";
+import { Button, Select, Stack, Textarea, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import type { FormEventHandler } from "react";
 
@@ -14,6 +14,8 @@ interface ECNFormProps {
     jobNumber: string;
     status: ECNStatus;
     priority: Priority;
+    reason: string;
+    correctiveChanges: string;
     assignedEmployeeIds: string[];
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
@@ -55,6 +57,18 @@ export const ECNForm = ({ form, onSubmit, editing }: ECNFormProps) => (
         required
         data={priorityOptions}
         {...form.getInputProps("priority")}
+      />
+      <Textarea
+        label="ECN Reason"
+        autosize
+        minRows={3}
+        {...form.getInputProps("reason")}
+      />
+      <Textarea
+        label="Corrective Changes"
+        autosize
+        minRows={3}
+        {...form.getInputProps("correctiveChanges")}
       />
       <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
       <Button type="submit">{editing ? "Update" : "Create"}</Button>

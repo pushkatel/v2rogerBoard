@@ -57,5 +57,7 @@ export interface ECN {
   jobNumber: string;
   status: ECNStatus;
   priority: Priority;
+  reason: string;
+  correctiveChanges: string;
   assignedEmployeeIds: string[];
 }

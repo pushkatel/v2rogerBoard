@@ -347,6 +347,10 @@ export const seedECNs: ECN[] = [
     jobNumber: "JOB-8820",
     status: "open",
     priority: "critical",
+    reason:
+      "Impedance control spec on 8-layer stackup out of tolerance. Dielectric thickness measured at 3.8 mil vs. 4.5 mil target, causing characteristic impedance to fall outside ±10% window.",
+    correctiveChanges:
+      "Update lamination press profile to increase prepreg flow. Revise stackup drawing DWG-8820-REV-C to specify 1080 prepreg instead of 2116. Re-qualify with TDR measurements on coupon.",
     assignedEmployeeIds: ["emp-5", "emp-2"],
   },
   {
@@ -357,6 +361,10 @@ export const seedECNs: ECN[] = [
     jobNumber: "JOB-8835",
     status: "in-review",
     priority: "medium",
+    reason:
+      "Customer requested change from ENIG to ENEPIG surface finish to support mixed-technology assembly with both gold wire bonding and solder reflow.",
+    correctiveChanges:
+      "Add electroless palladium step to surface finish line. Update process traveler and BOM for JOB-8835. Validate with solderability and wire bond pull tests.",
     assignedEmployeeIds: ["emp-6"],
   },
   {
@@ -367,6 +375,8 @@ export const seedECNs: ECN[] = [
     jobNumber: "JOB-8841",
     status: "draft",
     priority: "low",
+    reason: "",
+    correctiveChanges: "",
     assignedEmployeeIds: [],
   },
   {
@@ -377,6 +387,10 @@ export const seedECNs: ECN[] = [
     jobNumber: "JOB-8790",
     status: "approved",
     priority: "high",
+    reason:
+      "Solder mask adhesion failure on OSP-finished boards after thermal cycling. Delamination observed at via tenting locations on production lot #6450.",
+    correctiveChanges:
+      "Switch solder mask material from LPI-500 to LPI-700 for improved thermal endurance. Add plasma cleaning step before solder mask application. Update IPC-SM-840 class T qualification records.",
     assignedEmployeeIds: ["emp-5", "emp-8"],
   },
 ];
