@@ -1,4 +1,4 @@
-import type { Area, Department, ECN, Employee, Equipment, ICAR, Ticket } from "@/types";
+import type { Area, Department, ECN, Employee, Equipment, ICAR } from "@/types";
 
 export const seedDepartments: Department[] = [
   { id: "dept-1", name: "Engineering" },
@@ -236,105 +236,6 @@ export const seedEquipment: Equipment[] = [
     installDate: "2021-07-20",
     warrantyDate: "2026-07-20",
     maintenanceCycleNotes: "Monthly probe needle replacement. Quarterly XY accuracy verification. Annual full calibration with certification.",
-  },
-];
-
-export const seedTickets: Ticket[] = [
-  {
-    id: "tick-1",
-    title: "Drill bit breakage rate spike on MDI-6L",
-    description:
-      "0.3mm drill bit breakage increased from 0.1% to 0.8% over the past week. Suspect spindle bearing wear or incorrect hit count settings. Inspect spindle runout and review drill parameters.",
-    type: "engineering",
-    status: "open",
-    priority: "high",
-    assignedEmployeeIds: ["emp-3"],
-    relatedEquipmentId: "mach-1",
-    createdAt: "2026-02-22",
-  },
-  {
-    id: "tick-2",
-    title: "Electroless copper thickness below spec",
-    description:
-      "Plating thickness measured at 0.15 mil vs. 0.25 mil target on panel lot #6140. Chemistry analysis shows palladium activator concentration is low. Line is down for replenishment and re-qualification.",
-    type: "engineering",
-    status: "in-review",
-    priority: "critical",
-    assignedEmployeeIds: ["emp-4"],
-    relatedEquipmentId: "mach-5",
-    createdAt: "2026-02-20",
-  },
-  {
-    id: "tick-3",
-    title: "Customer complaint: solder mask misregistration",
-    description:
-      "Customer reported exposed copper pads on batch #7820 (50 panels). Solder mask shifted ~4 mil on the Y-axis. Root cause likely alignment drift on the coater. Quarantine remaining WIP from that run.",
-    type: "customer",
-    status: "open",
-    priority: "high",
-    assignedEmployeeIds: ["emp-5"],
-    relatedEquipmentId: "mach-8",
-    createdAt: "2026-02-23",
-  },
-  {
-    id: "tick-4",
-    title: "Multilayer press PM — temperature calibration",
-    description:
-      "Quarterly preventive maintenance on Burkle LAMV 125. Calibrate platen temperature sensors, inspect hydraulic pressure, and replace vacuum seals. Schedule for weekend to minimize production impact.",
-    type: "engineering",
-    status: "in-review",
-    priority: "medium",
-    assignedEmployeeIds: ["emp-7"],
-    relatedEquipmentId: "mach-7",
-    createdAt: "2026-02-18",
-  },
-  {
-    id: "tick-5",
-    title: "AOI false reject rate at 15%",
-    description:
-      "Orbotech Discovery II false call rate climbed from 5% to 15% after last software update. Operators spending excessive time on verification. Need to retrain the golden board library and adjust sensitivity thresholds.",
-    type: "engineering",
-    status: "open",
-    priority: "medium",
-    assignedEmployeeIds: ["emp-6"],
-    relatedEquipmentId: "mach-11",
-    createdAt: "2026-02-21",
-  },
-  {
-    id: "tick-6",
-    title: "Flying probe tester annual calibration",
-    description:
-      "Annual calibration of ATG A8 completed. All probe needles replaced, XY accuracy verified within ±0.5 mil. Calibration certificate filed.",
-    type: "engineering",
-    status: "closed",
-    priority: "low",
-    assignedEmployeeIds: ["emp-7"],
-    relatedEquipmentId: "mach-12",
-    createdAt: "2026-02-10",
-  },
-  {
-    id: "tick-7",
-    title: "Customer expedite: prototype order #2247",
-    description:
-      "Customer requested 48-hour turn on 6-layer prototype (qty 10). Standard lead time is 5 days. Need production planning to evaluate slot availability and approve overtime if needed.",
-    type: "customer",
-    status: "open",
-    priority: "medium",
-    assignedEmployeeIds: [],
-    relatedEquipmentId: null,
-    createdAt: "2026-02-24",
-  },
-  {
-    id: "tick-8",
-    title: "Etcher spray nozzle clogging",
-    description:
-      "Nozzles on Chemcut etcher zones 2 and 3 are partially clogged, causing uneven copper removal. Etch factor dropped below 3.0. Clean or replace nozzles and verify etchant specific gravity.",
-    type: "engineering",
-    status: "open",
-    priority: "medium",
-    assignedEmployeeIds: ["emp-7"],
-    relatedEquipmentId: "mach-4",
-    createdAt: "2026-02-23",
   },
 ];
 

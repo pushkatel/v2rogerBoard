@@ -2,7 +2,6 @@ import type {
   EquipmentStatus,
   Priority,
   TicketStatus,
-  TicketType,
 } from "./types";
 
 export const statusColor: Record<TicketStatus, string> = {
@@ -34,11 +33,6 @@ export const priorityOptions: { value: Priority; label: string }[] = [
   { value: "high", label: "High" },
   { value: "critical", label: "Critical" },
 ];
-
-export const ticketTypeColor: Record<TicketType, string> = {
-  engineering: "violet",
-  customer: "teal",
-};
 
 export const equipmentStatusColor: Record<EquipmentStatus, string> = {
   operational: "green",

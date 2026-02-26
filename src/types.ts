@@ -1,4 +1,3 @@
-export type TicketType = "engineering" | "customer";
 export type TicketStatus = "draft" | "open" | "in-review" | "approved" | "closed";
 export type Priority = "low" | "medium" | "high" | "critical";
 export type EquipmentStatus = "operational" | "maintenance" | "offline";
@@ -12,18 +11,6 @@ export interface Area {
   id: string;
   name: string;
   departmentId: string;
-}
-
-export interface Ticket {
-  id: string;
-  title: string;
-  description: string;
-  type: TicketType;
-  status: TicketStatus;
-  priority: Priority;
-  assignedEmployeeIds: string[];
-  relatedEquipmentId: string | null;
-  createdAt: string;
 }
 
 export interface Equipment {
