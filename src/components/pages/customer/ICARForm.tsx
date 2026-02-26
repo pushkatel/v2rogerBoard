@@ -2,6 +2,7 @@ import { Button, NumberInput, Select, Stack, Textarea, TextInput } from "@mantin
 import type { UseFormReturnType } from "@mantine/form";
 import type { FormEventHandler } from "react";
 
+import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
 import { useAppContext } from "@/data/AppContext";
 import type { Priority, TicketStatus } from "@/types";
 import { priorityOptions, statusOptions } from "@/utils";
@@ -21,6 +22,7 @@ interface ICARFormProps {
     containmentAction: string;
     status: TicketStatus;
     priority: Priority;
+    assignedEmployeeIds: string[];
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
@@ -110,6 +112,7 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
           minRows={3}
           {...form.getInputProps("containmentAction")}
         />
+        <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
         <Button type="submit">{editing ? "Update" : "Create"}</Button>
       </Stack>
     </form>

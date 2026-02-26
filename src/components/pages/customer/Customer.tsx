@@ -13,7 +13,7 @@ import { priorityColor, statusColor } from "@/utils";
 import { ICARForm } from "./ICARForm";
 
 export const Customer = () => {
-  const { icars, addICAR, updateICAR, deleteICAR } = useAppContext();
+  const { icars, employees, addICAR, updateICAR, deleteICAR } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<ICAR | null>(null);
 
@@ -38,8 +38,20 @@ export const Customer = () => {
       },
       { header: "Job #", accessor: "jobNumber" },
       { header: "Release #", accessor: "releaseNumber" },
+      {
+        header: "Assigned To",
+        accessor: (i) =>
+          i.assignedEmployeeIds
+            .map((id) => employees.find((emp) => emp.id === id)?.name)
+            .filter(Boolean)
+            .join(", ") || "—",
+        sortValue: (i) =>
+          i.assignedEmployeeIds
+            .map((id) => employees.find((emp) => emp.id === id)?.name ?? "")
+            .join(", "),
+      },
     ],
-    [],
+    [employees],
   );
 
   const form = useForm({
@@ -57,6 +69,7 @@ export const Customer = () => {
       containmentAction: "",
       status: "draft" as TicketStatus,
       priority: "medium" as Priority,
+      assignedEmployeeIds: [] as string[],
     },
   });
 
@@ -76,6 +89,7 @@ export const Customer = () => {
         containmentAction: editing.containmentAction,
         status: editing.status,
         priority: editing.priority,
+        assignedEmployeeIds: editing.assignedEmployeeIds,
       });
     } else {
       form.reset();

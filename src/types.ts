@@ -64,6 +64,7 @@ export interface ICAR {
   containmentAction: string;
   status: TicketStatus;
   priority: Priority;
+  assignedEmployeeIds: string[];
 }
 
 export interface ECN {

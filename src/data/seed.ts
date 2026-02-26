@@ -355,6 +355,7 @@ export const seedICARs: ICAR[] = [
     containmentAction: "Quarantined remaining panels from lot #6200. Increased desmear chemistry monitoring to every 4 hours. Re-processed affected panels through full desmear and re-plate cycle.",
     status: "open",
     priority: "critical",
+    assignedEmployeeIds: ["emp-4", "emp-2"],
   },
   {
     id: "icar-2",
@@ -372,6 +373,7 @@ export const seedICARs: ICAR[] = [
     containmentAction: "Switched to high-resolution LDI profile for all jobs with pad openings below 8 mil. Reworked affected panels with strip and re-coat.",
     status: "in-review",
     priority: "high",
+    assignedEmployeeIds: ["emp-5"],
   },
   {
     id: "icar-3",
@@ -389,6 +391,7 @@ export const seedICARs: ICAR[] = [
     containmentAction: "",
     status: "draft",
     priority: "high",
+    assignedEmployeeIds: [],
   },
   {
     id: "icar-4",
@@ -406,6 +409,7 @@ export const seedICARs: ICAR[] = [
     containmentAction: "Added incoming Dk verification step for all controlled-impedance jobs. Adjusted trace width compensation in CAM to account for material variation. Scrapped affected panels and re-fabricated.",
     status: "closed",
     priority: "medium",
+    assignedEmployeeIds: ["emp-5", "emp-1"],
   },
 ];
 
