@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-import type { Area, Department, ECN, Employee, Equipment, ICAR } from "@/types";
+import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceTicket } from "@/types";
 
 import {
   seedAreas,
@@ -9,6 +9,7 @@ import {
   seedEmployees,
   seedEquipment,
   seedICARs,
+  seedMaintenanceTickets,
 } from "./seed";
 
 interface AppContextValue {
@@ -36,6 +37,10 @@ interface AppContextValue {
   addICAR: (icar: ICAR) => void;
   updateICAR: (icar: ICAR) => void;
   deleteICAR: (id: string) => void;
+  maintenanceTickets: MaintenanceTicket[];
+  addMaintenanceTicket: (ticket: MaintenanceTicket) => void;
+  updateMaintenanceTicket: (ticket: MaintenanceTicket) => void;
+  deleteMaintenanceTicket: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -54,6 +59,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [areas, setAreas] = useState<Area[]>(seedAreas);
   const [ecns, setECNs] = useState<ECN[]>(seedECNs);
   const [icars, setICARs] = useState<ICAR[]>(seedICARs);
+  const [maintenanceTickets, setMaintenanceTickets] = useState<MaintenanceTicket[]>(seedMaintenanceTickets);
 
   const addEquipment = (item: Equipment) => setEquipment((prev) => [...prev, item]);
   const updateEquipment = (item: Equipment) =>
@@ -89,6 +95,13 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setICARs((prev) => prev.map((i) => (i.id === icar.id ? icar : i)));
   const deleteICAR = (id: string) => setICARs((prev) => prev.filter((i) => i.id !== id));
 
+  const addMaintenanceTicket = (ticket: MaintenanceTicket) =>
+    setMaintenanceTickets((prev) => [...prev, ticket]);
+  const updateMaintenanceTicket = (ticket: MaintenanceTicket) =>
+    setMaintenanceTickets((prev) => prev.map((t) => (t.id === ticket.id ? ticket : t)));
+  const deleteMaintenanceTicket = (id: string) =>
+    setMaintenanceTickets((prev) => prev.filter((t) => t.id !== id));
+
   return (
     <AppContext.Provider
       value={{
@@ -116,6 +129,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         addICAR,
         updateICAR,
         deleteICAR,
+        maintenanceTickets,
+        addMaintenanceTicket,
+        updateMaintenanceTicket,
+        deleteMaintenanceTicket,
       }}
     >
       {children}

@@ -1,5 +1,6 @@
 import type {
   EquipmentStatus,
+  MaintenanceCategory,
   Priority,
   TicketStatus,
 } from "./types";
@@ -47,5 +48,16 @@ export const equipmentStatusOptions: {
   { value: "operational", label: "Operational" },
   { value: "maintenance", label: "Maintenance" },
   { value: "offline", label: "Offline" },
+];
+
+export const maintenanceCategoryOptions: {
+  value: MaintenanceCategory;
+  label: string;
+}[] = [
+  { value: "electrical", label: "Electrical" },
+  { value: "mechanical", label: "Mechanical" },
+  { value: "software", label: "Software" },
+  { value: "calibration", label: "Calibration" },
+  { value: "other", label: "Other" },
 ];
 

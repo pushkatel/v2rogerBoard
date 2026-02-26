@@ -1,6 +1,7 @@
 export type TicketStatus = "draft" | "open" | "in-review" | "approved" | "closed";
 export type Priority = "low" | "medium" | "high" | "critical";
 export type EquipmentStatus = "operational" | "maintenance" | "offline";
+export type MaintenanceCategory = "electrical" | "mechanical" | "software" | "calibration" | "other";
 
 export interface Department {
   id: string;
@@ -64,5 +65,19 @@ export interface ECN {
   priority: Priority;
   reason: string;
   correctiveChanges: string;
+  assignedEmployeeIds: string[];
+}
+
+export interface MaintenanceTicket {
+  id: string;
+  equipmentId: string;
+  reportedBy: string;
+  dateReported: string;
+  category: MaintenanceCategory;
+  problemDescription: string;
+  priority: Priority;
+  status: TicketStatus;
+  resolutionNotes: string;
+  estimatedDowntime: string;
   assignedEmployeeIds: string[];
 }

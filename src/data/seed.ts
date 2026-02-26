@@ -1,4 +1,4 @@
-import type { Area, Department, ECN, Employee, Equipment, ICAR } from "@/types";
+import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceTicket } from "@/types";
 
 export const seedDepartments: Department[] = [
   { id: "dept-1", name: "Engineering" },
@@ -368,5 +368,64 @@ export const seedECNs: ECN[] = [
     correctiveChanges:
       "Switch solder mask material from LPI-500 to LPI-700 for improved thermal endurance. Add plasma cleaning step before solder mask application. Update IPC-SM-840 class T qualification records.",
     assignedEmployeeIds: ["emp-5", "emp-8"],
+  },
+];
+
+export const seedMaintenanceTickets: MaintenanceTicket[] = [
+  {
+    id: "mt-1",
+    equipmentId: "mach-5",
+    reportedBy: "emp-4",
+    dateReported: "2026-02-20",
+    category: "mechanical",
+    problemDescription:
+      "Electroless copper line showing uneven plating distribution. Filter housing gasket appears worn, causing micro-leaks and inconsistent flow rates across tank.",
+    priority: "high",
+    status: "open",
+    resolutionNotes: "",
+    estimatedDowntime: "8 hours",
+    assignedEmployeeIds: ["emp-7", "emp-4"],
+  },
+  {
+    id: "mt-2",
+    equipmentId: "mach-9",
+    reportedBy: "emp-7",
+    dateReported: "2026-02-18",
+    category: "electrical",
+    problemDescription:
+      "HASL machine solder pot temperature controller displaying erratic readings. Thermocouple wiring shows signs of corrosion near flux zone. Machine taken offline pending repair.",
+    priority: "critical",
+    status: "in-review",
+    resolutionNotes: "Ordered replacement thermocouple assembly. Scheduled install for Feb 28.",
+    estimatedDowntime: "3 days",
+    assignedEmployeeIds: ["emp-7"],
+  },
+  {
+    id: "mt-3",
+    equipmentId: "mach-11",
+    reportedBy: "emp-5",
+    dateReported: "2026-02-24",
+    category: "calibration",
+    problemDescription:
+      "AOI system flagging false defects on fine-pitch BGA patterns. Camera calibration drifted after recent facility vibration from HVAC installation.",
+    priority: "medium",
+    status: "draft",
+    resolutionNotes: "",
+    estimatedDowntime: "4 hours",
+    assignedEmployeeIds: [],
+  },
+  {
+    id: "mt-4",
+    equipmentId: "mach-1",
+    reportedBy: "emp-3",
+    dateReported: "2026-02-10",
+    category: "mechanical",
+    problemDescription:
+      "Spindle bearing noise detected during high-speed drilling cycles. Vibration analysis indicates bearing wear approaching replacement threshold.",
+    priority: "medium",
+    status: "closed",
+    resolutionNotes: "Replaced spindle bearings and performed full axis recalibration. Runout within spec.",
+    estimatedDowntime: "12 hours",
+    assignedEmployeeIds: ["emp-7", "emp-3"],
   },
 ];
