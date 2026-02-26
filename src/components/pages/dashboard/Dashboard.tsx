@@ -6,7 +6,7 @@ export const Dashboard = () => {
   const { tickets, equipment, employees } = useAppContext();
 
   const openTickets = tickets.filter((t) => t.status === "open").length;
-  const inProgressTickets = tickets.filter((t) => t.status === "in-progress").length;
+  const inReviewTickets = tickets.filter((t) => t.status === "in-review").length;
   const operational = equipment.filter((e) => e.status === "operational").length;
   const maintenance = equipment.filter((e) => e.status === "maintenance").length;
   const offline = equipment.filter((e) => e.status === "offline").length;
@@ -22,7 +22,7 @@ export const Dashboard = () => {
               <Text span fw={700}>{openTickets}</Text> open
             </Text>
             <Text>
-              <Text span fw={700}>{inProgressTickets}</Text> in progress
+              <Text span fw={700}>{inReviewTickets}</Text> in review
             </Text>
           </Group>
         </Card>

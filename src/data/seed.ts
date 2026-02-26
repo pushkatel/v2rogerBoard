@@ -258,7 +258,7 @@ export const seedTickets: Ticket[] = [
     description:
       "Plating thickness measured at 0.15 mil vs. 0.25 mil target on panel lot #6140. Chemistry analysis shows palladium activator concentration is low. Line is down for replenishment and re-qualification.",
     type: "engineering",
-    status: "in-progress",
+    status: "in-review",
     priority: "critical",
     assignedEmployeeIds: ["emp-4"],
     relatedEquipmentId: "mach-5",
@@ -282,7 +282,7 @@ export const seedTickets: Ticket[] = [
     description:
       "Quarterly preventive maintenance on Burkle LAMV 125. Calibrate platen temperature sensors, inspect hydraulic pressure, and replace vacuum seals. Schedule for weekend to minimize production impact.",
     type: "engineering",
-    status: "in-progress",
+    status: "in-review",
     priority: "medium",
     assignedEmployeeIds: ["emp-7"],
     relatedEquipmentId: "mach-7",

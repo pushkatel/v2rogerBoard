@@ -1,17 +1,25 @@
 import type {
-  ECNStatus,
   EquipmentStatus,
-  ICARStatus,
   Priority,
   TicketStatus,
   TicketType,
 } from "./types";
 
-export const ticketStatusColor: Record<TicketStatus, string> = {
+export const statusColor: Record<TicketStatus, string> = {
+  draft: "gray",
   open: "blue",
-  "in-progress": "yellow",
-  closed: "green",
+  "in-review": "yellow",
+  approved: "green",
+  closed: "red",
 };
+
+export const statusOptions: { value: TicketStatus; label: string }[] = [
+  { value: "draft", label: "Draft" },
+  { value: "open", label: "Open" },
+  { value: "in-review", label: "In Review" },
+  { value: "approved", label: "Approved" },
+  { value: "closed", label: "Closed" },
+];
 
 export const priorityColor: Record<Priority, string> = {
   low: "blue",
@@ -38,18 +46,3 @@ export const equipmentStatusColor: Record<EquipmentStatus, string> = {
   offline: "red",
 };
 
-export const ecnStatusColor: Record<ECNStatus, string> = {
-  draft: "gray",
-  open: "blue",
-  "in-review": "yellow",
-  approved: "green",
-  closed: "red",
-};
-
-export const icarStatusColor: Record<ICARStatus, string> = {
-  draft: "gray",
-  open: "blue",
-  "in-review": "yellow",
-  approved: "green",
-  closed: "red",
-};

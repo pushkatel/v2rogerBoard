@@ -1,5 +1,5 @@
 export type TicketType = "engineering" | "customer";
-export type TicketStatus = "open" | "in-progress" | "closed";
+export type TicketStatus = "draft" | "open" | "in-review" | "approved" | "closed";
 export type Priority = "low" | "medium" | "high" | "critical";
 export type EquipmentStatus = "operational" | "maintenance" | "offline";
 
@@ -48,8 +48,6 @@ export interface Employee {
   phone: string;
 }
 
-export type ECNStatus = "draft" | "open" | "in-review" | "approved" | "closed";
-export type ICARStatus = "draft" | "open" | "in-review" | "approved" | "closed";
 
 export interface ICAR {
   id: string;
@@ -64,7 +62,7 @@ export interface ICAR {
   whereOccurred: string;
   rootCause: string;
   containmentAction: string;
-  status: ICARStatus;
+  status: TicketStatus;
   priority: Priority;
 }
 
@@ -74,7 +72,7 @@ export interface ECN {
   openDate: string;
   releaseNumber: string;
   jobNumber: string;
-  status: ECNStatus;
+  status: TicketStatus;
   priority: Priority;
   reason: string;
   correctiveChanges: string;

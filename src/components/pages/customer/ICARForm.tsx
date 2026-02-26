@@ -3,8 +3,8 @@ import type { UseFormReturnType } from "@mantine/form";
 import type { FormEventHandler } from "react";
 
 import { useAppContext } from "@/data/AppContext";
-import type { ICARStatus, Priority } from "@/types";
-import { priorityOptions } from "@/utils";
+import type { Priority, TicketStatus } from "@/types";
+import { priorityOptions, statusOptions } from "@/utils";
 
 interface ICARFormProps {
   form: UseFormReturnType<{
@@ -19,7 +19,7 @@ interface ICARFormProps {
     whereOccurred: string;
     rootCause: string;
     containmentAction: string;
-    status: ICARStatus;
+    status: TicketStatus;
     priority: Priority;
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
@@ -51,7 +51,7 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
         <Select
           label="Status"
           required
-          data={icarStatusOptions}
+          data={statusOptions}
           {...form.getInputProps("status")}
         />
         <Select
@@ -116,10 +116,3 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
   );
 };
 
-const icarStatusOptions: { value: ICARStatus; label: string }[] = [
-  { value: "draft", label: "Draft" },
-  { value: "open", label: "Open" },
-  { value: "in-review", label: "In Review" },
-  { value: "approved", label: "Approved" },
-  { value: "closed", label: "Closed" },
-];

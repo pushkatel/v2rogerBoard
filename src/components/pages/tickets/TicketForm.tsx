@@ -4,7 +4,7 @@ import type { FormEventHandler } from "react";
 
 import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
 import type { Priority, TicketStatus, TicketType } from "@/types";
-import { priorityOptions } from "@/utils";
+import { priorityOptions, statusOptions } from "@/utils";
 
 interface TicketFormProps {
   form: UseFormReturnType<{
@@ -50,7 +50,7 @@ export const TicketForm = ({
       <Select
         label="Status"
         required
-        data={ticketStatusOptions}
+        data={statusOptions}
         {...form.getInputProps("status")}
       />
       <Select
@@ -76,9 +76,4 @@ const ticketTypeOptions: { value: TicketType; label: string }[] = [
   { value: "customer", label: "Customer" },
 ];
 
-const ticketStatusOptions: { value: TicketStatus; label: string }[] = [
-  { value: "open", label: "Open" },
-  { value: "in-progress", label: "In Progress" },
-  { value: "closed", label: "Closed" },
-];
 

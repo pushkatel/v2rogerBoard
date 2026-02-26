@@ -7,8 +7,8 @@ import type { Column } from "@/components/shared/DataTable";
 import { DataTable } from "@/components/shared/DataTable";
 import { ModalButton } from "@/components/shared/ModalButton";
 import { useAppContext } from "@/data/AppContext";
-import type { ICAR, ICARStatus, Priority } from "@/types";
-import { icarStatusColor, priorityColor } from "@/utils";
+import type { ICAR, Priority, TicketStatus } from "@/types";
+import { priorityColor, statusColor } from "@/utils";
 
 import { ICARForm } from "./ICARForm";
 
@@ -25,7 +25,7 @@ export const Customer = () => {
       {
         header: "Status",
         accessor: (i) => (
-          <Badge color={icarStatusColor[i.status]}>{i.status}</Badge>
+          <Badge color={statusColor[i.status]}>{i.status}</Badge>
         ),
         sortValue: (i) => i.status,
       },
@@ -55,7 +55,7 @@ export const Customer = () => {
       whereOccurred: "",
       rootCause: "",
       containmentAction: "",
-      status: "draft" as ICARStatus,
+      status: "draft" as TicketStatus,
       priority: "medium" as Priority,
     },
   });

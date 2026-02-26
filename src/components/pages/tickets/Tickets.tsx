@@ -8,7 +8,7 @@ import { DataTable } from "@/components/shared/DataTable";
 import { ModalButton } from "@/components/shared/ModalButton";
 import { useAppContext } from "@/data/AppContext";
 import type { Priority, Ticket, TicketStatus, TicketType } from "@/types";
-import { priorityColor, ticketStatusColor, ticketTypeColor } from "@/utils";
+import { priorityColor, statusColor, ticketTypeColor } from "@/utils";
 
 import { TicketForm } from "./TicketForm";
 
@@ -37,7 +37,7 @@ export const Tickets = () => {
       {
         header: "Status",
         accessor: (t) => (
-          <Badge color={ticketStatusColor[t.status]}>{t.status}</Badge>
+          <Badge color={statusColor[t.status]}>{t.status}</Badge>
         ),
         sortValue: (t) => t.status,
       },
