@@ -2,11 +2,19 @@ import {
   Button,
   NumberInput,
   Select,
+  SimpleGrid,
   Stack,
   Textarea,
   TextInput,
 } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
+import {
+  IconCalendar,
+  IconClock,
+  IconHash,
+  IconTool,
+  IconUser,
+} from "@tabler/icons-react";
 import type { FormEventHandler } from "react";
 
 import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
@@ -39,42 +47,53 @@ export const UsageLogForm = ({
 }: UsageLogFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack>
-      <EquipmentSelect
-        label="Equipment"
-        required
-        {...form.getInputProps("equipmentId")}
-      />
-      <EmployeeSelect
-        multiple={false}
-        label="Employee"
-        required
-        {...form.getInputProps("employeeId")}
-      />
-      <TextInput
-        label="Date"
-        type="date"
-        required
-        {...form.getInputProps("date")}
-      />
-      <Select
-        label="Usage Type"
-        required
-        data={usageTypeOptions}
-        {...form.getInputProps("usageType")}
-      />
-      <NumberInput
-        label="Quantity"
-        required
-        min={0}
-        {...form.getInputProps("quantity")}
-      />
+      <SimpleGrid cols={{ base: 1, sm: 2 }}>
+        <EquipmentSelect
+          label="Equipment"
+          required
+          leftSection={<IconTool size={16} />}
+          {...form.getInputProps("equipmentId")}
+        />
+        <EmployeeSelect
+          multiple={false}
+          label="Employee"
+          required
+          leftSection={<IconUser size={16} />}
+          {...form.getInputProps("employeeId")}
+        />
+      </SimpleGrid>
+      <SimpleGrid cols={{ base: 1, sm: 3 }}>
+        <TextInput
+          label="Date"
+          type="date"
+          required
+          leftSection={<IconCalendar size={16} />}
+          {...form.getInputProps("date")}
+        />
+        <Select
+          label="Usage Type"
+          required
+          data={usageTypeOptions}
+          leftSection={<IconClock size={16} />}
+          {...form.getInputProps("usageType")}
+        />
+        <NumberInput
+          label="Quantity"
+          required
+          min={0}
+          leftSection={<IconHash size={16} />}
+          {...form.getInputProps("quantity")}
+        />
+      </SimpleGrid>
       <Textarea
         label="Notes"
         autosize
         minRows={2}
         {...form.getInputProps("notes")}
       />
-      <Button type="submit">{editing ? "Update" : "Create"}</Button>
+      <Button type="submit" fullWidth>
+        {editing ? "Update" : "Create"}
+      </Button>
     </Stack>
   </form>
 );

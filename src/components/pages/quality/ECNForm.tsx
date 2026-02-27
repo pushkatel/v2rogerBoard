@@ -1,5 +1,20 @@
-import { Button, Select, Stack, Textarea, TextInput } from "@mantine/core";
+import {
+  Button,
+  Divider,
+  Select,
+  SimpleGrid,
+  Stack,
+  Textarea,
+  TextInput,
+} from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
+import {
+  IconCalendar,
+  IconFlag,
+  IconHash,
+  IconTag,
+  IconUser,
+} from "@tabler/icons-react";
 import type { FormEventHandler } from "react";
 
 import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
@@ -24,54 +39,75 @@ interface ECNFormProps {
 
 export const ECNForm = ({ form, onSubmit, editing }: ECNFormProps) => (
   <form onSubmit={onSubmit}>
-    <Stack>
-      <TextInput
-        label="Customer"
-        required
-        {...form.getInputProps("customer")}
-      />
-      <TextInput
-        label="Open Date"
-        type="date"
-        required
-        {...form.getInputProps("openDate")}
-      />
-      <TextInput
-        label="Release Number"
-        required
-        {...form.getInputProps("releaseNumber")}
-      />
-      <TextInput
-        label="Job Number"
-        required
-        {...form.getInputProps("jobNumber")}
-      />
-      <Select
-        label="Status"
-        required
-        data={statusOptions}
-        {...form.getInputProps("status")}
-      />
-      <Select
-        label="Priority"
-        required
-        data={priorityOptions}
-        {...form.getInputProps("priority")}
-      />
-      <Textarea
-        label="ECN Reason"
-        autosize
-        minRows={3}
-        {...form.getInputProps("reason")}
-      />
-      <Textarea
-        label="Corrective Changes"
-        autosize
-        minRows={3}
-        {...form.getInputProps("correctiveChanges")}
-      />
-      <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
-      <Button type="submit">{editing ? "Update" : "Create"}</Button>
+    <Stack gap="lg">
+      <Stack>
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
+          <TextInput
+            label="Customer"
+            required
+            leftSection={<IconUser size={16} />}
+            {...form.getInputProps("customer")}
+          />
+          <TextInput
+            label="Open Date"
+            type="date"
+            required
+            leftSection={<IconCalendar size={16} />}
+            {...form.getInputProps("openDate")}
+          />
+        </SimpleGrid>
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
+          <TextInput
+            label="Release Number"
+            required
+            leftSection={<IconTag size={16} />}
+            {...form.getInputProps("releaseNumber")}
+          />
+          <TextInput
+            label="Job Number"
+            required
+            leftSection={<IconHash size={16} />}
+            {...form.getInputProps("jobNumber")}
+          />
+        </SimpleGrid>
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
+          <Select
+            label="Status"
+            required
+            data={statusOptions}
+            {...form.getInputProps("status")}
+          />
+          <Select
+            label="Priority"
+            required
+            data={priorityOptions}
+            leftSection={<IconFlag size={16} />}
+            {...form.getInputProps("priority")}
+          />
+        </SimpleGrid>
+      </Stack>
+
+      <Divider label="Details" labelPosition="left" />
+
+      <Stack>
+        <Textarea
+          label="ECN Reason"
+          autosize
+          minRows={3}
+          {...form.getInputProps("reason")}
+        />
+        <Textarea
+          label="Corrective Changes"
+          autosize
+          minRows={3}
+          {...form.getInputProps("correctiveChanges")}
+        />
+        <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
+      </Stack>
+
+      <Button type="submit" fullWidth>
+        {editing ? "Update" : "Create"}
+      </Button>
     </Stack>
   </form>
 );

@@ -1,12 +1,22 @@
 import {
   Button,
+  Divider,
   NumberInput,
   Select,
+  SimpleGrid,
   Stack,
   Textarea,
   TextInput,
 } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
+import {
+  IconBuilding,
+  IconCalendar,
+  IconFlag,
+  IconHash,
+  IconTag,
+  IconUser,
+} from "@tabler/icons-react";
 import type { FormEventHandler } from "react";
 
 import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
@@ -45,82 +55,108 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Stack>
-        <TextInput
-          label="Customer"
-          required
-          {...form.getInputProps("customer")}
-        />
-        <TextInput
-          label="Open Date"
-          type="date"
-          required
-          {...form.getInputProps("openDate")}
-        />
-        <Select
-          label="Status"
-          required
-          data={statusOptions}
-          {...form.getInputProps("status")}
-        />
-        <Select
-          label="Priority"
-          required
-          data={priorityOptions}
-          {...form.getInputProps("priority")}
-        />
-        <TextInput
-          label="Job Number"
-          required
-          {...form.getInputProps("jobNumber")}
-        />
-        <TextInput
-          label="Release Number"
-          required
-          {...form.getInputProps("releaseNumber")}
-        />
-        <NumberInput
-          label="Panels Affected"
-          required
-          min={0}
-          {...form.getInputProps("panelsAffected")}
-        />
-        <Select
-          label="Department"
-          data={departmentOptions}
-          {...form.getInputProps("departmentId")}
-        />
-        <TextInput
-          label="Problem Title"
-          required
-          {...form.getInputProps("problemTitle")}
-        />
-        <Textarea
-          label="Problem Description"
-          autosize
-          minRows={3}
-          {...form.getInputProps("problemDescription")}
-        />
-        <Textarea
-          label="Where Occurred"
-          autosize
-          minRows={3}
-          {...form.getInputProps("whereOccurred")}
-        />
-        <Textarea
-          label="Root Cause"
-          autosize
-          minRows={3}
-          {...form.getInputProps("rootCause")}
-        />
-        <Textarea
-          label="Containment Action"
-          autosize
-          minRows={3}
-          {...form.getInputProps("containmentAction")}
-        />
-        <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
-        <Button type="submit">{editing ? "Update" : "Create"}</Button>
+      <Stack gap="lg">
+        <Stack>
+          <Divider label="Details" labelPosition="left" />
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
+            <TextInput
+              label="Customer"
+              required
+              leftSection={<IconUser size={16} />}
+              {...form.getInputProps("customer")}
+            />
+            <TextInput
+              label="Open Date"
+              type="date"
+              required
+              leftSection={<IconCalendar size={16} />}
+              {...form.getInputProps("openDate")}
+            />
+          </SimpleGrid>
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
+            <TextInput
+              label="Job Number"
+              required
+              leftSection={<IconHash size={16} />}
+              {...form.getInputProps("jobNumber")}
+            />
+            <TextInput
+              label="Release Number"
+              required
+              leftSection={<IconTag size={16} />}
+              {...form.getInputProps("releaseNumber")}
+            />
+          </SimpleGrid>
+          <SimpleGrid cols={{ base: 1, sm: 3 }}>
+            <Select
+              label="Status"
+              required
+              data={statusOptions}
+              {...form.getInputProps("status")}
+            />
+            <Select
+              label="Priority"
+              required
+              data={priorityOptions}
+              leftSection={<IconFlag size={16} />}
+              {...form.getInputProps("priority")}
+            />
+            <NumberInput
+              label="Panels Affected"
+              required
+              min={0}
+              {...form.getInputProps("panelsAffected")}
+            />
+          </SimpleGrid>
+          <Select
+            label="Department"
+            data={departmentOptions}
+            leftSection={<IconBuilding size={16} />}
+            {...form.getInputProps("departmentId")}
+          />
+        </Stack>
+
+        <Stack>
+          <Divider label="Problem" labelPosition="left" />
+          <TextInput
+            label="Problem Title"
+            required
+            {...form.getInputProps("problemTitle")}
+          />
+          <Textarea
+            label="Problem Description"
+            autosize
+            minRows={3}
+            {...form.getInputProps("problemDescription")}
+          />
+          <Textarea
+            label="Where Occurred"
+            autosize
+            minRows={3}
+            {...form.getInputProps("whereOccurred")}
+          />
+        </Stack>
+
+        <Stack>
+          <Divider label="Resolution" labelPosition="left" />
+          <Textarea
+            label="Root Cause"
+            autosize
+            minRows={3}
+            {...form.getInputProps("rootCause")}
+          />
+          <Textarea
+            label="Containment Action"
+            autosize
+            minRows={3}
+            {...form.getInputProps("containmentAction")}
+          />
+          <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
+        </Stack>
+
+        <Button type="submit" fullWidth>
+          {editing ? "Update" : "Create"}
+        </Button>
       </Stack>
     </form>
   );

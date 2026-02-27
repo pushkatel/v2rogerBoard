@@ -3,12 +3,20 @@ import {
   type ComboboxData,
   List,
   Select,
+  SimpleGrid,
   Stack,
   Text,
   Textarea,
   TextInput,
 } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
+import {
+  IconBarcode,
+  IconCalendar,
+  IconCategory,
+  IconMapPin,
+  IconTool,
+} from "@tabler/icons-react";
 import type { FormEventHandler } from "react";
 
 import type { EquipmentStatus, MaintenanceContract } from "@/types";
@@ -40,45 +48,62 @@ export const EquipmentForm = ({
 }: EquipmentFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack>
-      <TextInput label="Name" required {...form.getInputProps("name")} />
-      <TextInput
-        label="Serial Number"
-        required
-        {...form.getInputProps("serialNumber")}
-      />
-      <TextInput
-        label="Category"
-        required
-        {...form.getInputProps("category")}
-      />
-      <Select
-        label="Area"
-        required
-        data={areaOptions}
-        searchable
-        {...form.getInputProps("areaId")}
-      />
+      <SimpleGrid cols={{ base: 1, sm: 2 }}>
+        <TextInput
+          label="Name"
+          required
+          leftSection={<IconTool size={16} />}
+          {...form.getInputProps("name")}
+        />
+        <TextInput
+          label="Serial Number"
+          required
+          leftSection={<IconBarcode size={16} />}
+          {...form.getInputProps("serialNumber")}
+        />
+      </SimpleGrid>
+      <SimpleGrid cols={{ base: 1, sm: 2 }}>
+        <TextInput
+          label="Category"
+          required
+          leftSection={<IconCategory size={16} />}
+          {...form.getInputProps("category")}
+        />
+        <Select
+          label="Area"
+          required
+          data={areaOptions}
+          searchable
+          leftSection={<IconMapPin size={16} />}
+          {...form.getInputProps("areaId")}
+        />
+      </SimpleGrid>
       <Select
         label="Status"
         required
         data={equipmentStatusOptions}
         {...form.getInputProps("status")}
       />
-      <TextInput
-        label="Purchase Date"
-        type="date"
-        {...form.getInputProps("purchaseDate")}
-      />
-      <TextInput
-        label="Installation Date"
-        type="date"
-        {...form.getInputProps("installDate")}
-      />
-      <TextInput
-        label="Warranty Expiry Date"
-        type="date"
-        {...form.getInputProps("warrantyDate")}
-      />
+      <SimpleGrid cols={{ base: 1, sm: 3 }}>
+        <TextInput
+          label="Purchase Date"
+          type="date"
+          leftSection={<IconCalendar size={16} />}
+          {...form.getInputProps("purchaseDate")}
+        />
+        <TextInput
+          label="Installation Date"
+          type="date"
+          leftSection={<IconCalendar size={16} />}
+          {...form.getInputProps("installDate")}
+        />
+        <TextInput
+          label="Warranty Expiration"
+          type="date"
+          leftSection={<IconCalendar size={16} />}
+          {...form.getInputProps("warrantyDate")}
+        />
+      </SimpleGrid>
       <Textarea
         label="Maintenance Cycle Details"
         autosize
@@ -99,7 +124,9 @@ export const EquipmentForm = ({
           </List>
         </div>
       )}
-      <Button type="submit">{editing ? "Update" : "Create"}</Button>
+      <Button type="submit" fullWidth>
+        {editing ? "Update" : "Create"}
+      </Button>
     </Stack>
   </form>
 );

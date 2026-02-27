@@ -113,6 +113,7 @@ export const EquipmentTab = () => {
           modalTitle={editing ? "Edit Equipment" : "Add Equipment"}
           opened={opened}
           onClose={handleClose}
+          modalSize="lg"
           content={
             <EquipmentForm
               form={form}

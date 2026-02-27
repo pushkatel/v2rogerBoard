@@ -1,5 +1,12 @@
-import { Button, Select, Stack, TextInput } from "@mantine/core";
+import { Button, Select, SimpleGrid, Stack, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
+import {
+  IconAt,
+  IconBriefcase,
+  IconBuilding,
+  IconPhone,
+  IconUser,
+} from "@tabler/icons-react";
 import type { FormEventHandler } from "react";
 
 interface EmployeeFormProps {
@@ -23,17 +30,44 @@ export const EmployeeForm = ({
 }: EmployeeFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack>
-      <TextInput label="Name" required {...form.getInputProps("name")} />
-      <TextInput label="Role" required {...form.getInputProps("role")} />
+      <SimpleGrid cols={{ base: 1, sm: 2 }}>
+        <TextInput
+          label="Name"
+          required
+          leftSection={<IconUser size={16} />}
+          {...form.getInputProps("name")}
+        />
+        <TextInput
+          label="Role"
+          required
+          leftSection={<IconBriefcase size={16} />}
+          {...form.getInputProps("role")}
+        />
+      </SimpleGrid>
       <Select
         label="Department"
         required
         data={deptOptions}
+        leftSection={<IconBuilding size={16} />}
         {...form.getInputProps("departmentId")}
       />
-      <TextInput label="Email" required {...form.getInputProps("email")} />
-      <TextInput label="Phone" required {...form.getInputProps("phone")} />
-      <Button type="submit">{editing ? "Update" : "Create"}</Button>
+      <SimpleGrid cols={{ base: 1, sm: 2 }}>
+        <TextInput
+          label="Email"
+          required
+          leftSection={<IconAt size={16} />}
+          {...form.getInputProps("email")}
+        />
+        <TextInput
+          label="Phone"
+          required
+          leftSection={<IconPhone size={16} />}
+          {...form.getInputProps("phone")}
+        />
+      </SimpleGrid>
+      <Button type="submit" fullWidth>
+        {editing ? "Update" : "Create"}
+      </Button>
     </Stack>
   </form>
 );
