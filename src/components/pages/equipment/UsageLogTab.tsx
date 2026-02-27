@@ -105,6 +105,7 @@ export const UsageLogTab = () => {
           modalTitle={editing ? "Edit Usage Entry" : "Log Usage"}
           opened={opened}
           onClose={handleClose}
+          modalSize="lg"
           content={
             <UsageLogForm
               form={form}
