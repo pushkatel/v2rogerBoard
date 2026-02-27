@@ -19,9 +19,9 @@ export const Quality = () => {
 
   const columns: Column<ECN>[] = useMemo(
     () => [
+      { header: "Title", accessor: "title" },
       { header: "Customer", accessor: "customer" },
       { header: "Open Date", accessor: "openDate" },
-      { header: "Release #", accessor: "releaseNumber" },
       { header: "Job #", accessor: "jobNumber" },
       {
         header: "Status",
@@ -55,6 +55,7 @@ export const Quality = () => {
 
   const form = useForm({
     initialValues: {
+      title: "",
       customer: "",
       openDate: new Date().toISOString().slice(0, 10),
       releaseNumber: "",
@@ -70,6 +71,7 @@ export const Quality = () => {
   useEffect(() => {
     if (editing) {
       form.setValues({
+        title: editing.title,
         customer: editing.customer,
         openDate: editing.openDate,
         releaseNumber: editing.releaseNumber,

@@ -66,6 +66,7 @@ export interface ICAR {
 
 export interface ECN {
   id: string;
+  title: string;
   customer: string;
   openDate: string;
   releaseNumber: string;

@@ -23,6 +23,7 @@ import { priorityOptions, statusOptions } from "@/utils";
 
 interface ECNFormProps {
   form: UseFormReturnType<{
+    title: string;
     customer: string;
     openDate: string;
     releaseNumber: string;
@@ -41,6 +42,7 @@ export const ECNForm = ({ form, onSubmit, editing }: ECNFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack gap="lg">
       <Stack>
+        <TextInput label="Title" required {...form.getInputProps("title")} />
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
             label="Customer"

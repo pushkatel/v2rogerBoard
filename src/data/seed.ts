@@ -345,6 +345,7 @@ export const seedICARs: ICAR[] = [
 export const seedECNs: ECN[] = [
   {
     id: "ecn-1",
+    title: "Impedance out of spec on 8-layer stackup",
     customer: "Northrop Grumman",
     openDate: "2026-02-10",
     releaseNumber: "REL-2026-0041",
@@ -359,6 +360,7 @@ export const seedECNs: ECN[] = [
   },
   {
     id: "ecn-2",
+    title: "Surface finish change ENIG to ENEPIG",
     customer: "Raytheon Technologies",
     openDate: "2026-02-15",
     releaseNumber: "REL-2026-0053",
@@ -373,6 +375,7 @@ export const seedECNs: ECN[] = [
   },
   {
     id: "ecn-3",
+    title: "Pending review — L3Harris routing update",
     customer: "L3Harris",
     openDate: "2026-02-18",
     releaseNumber: "REL-2026-0060",
@@ -385,6 +388,7 @@ export const seedECNs: ECN[] = [
   },
   {
     id: "ecn-4",
+    title: "Solder mask adhesion failure after thermal cycling",
     customer: "BAE Systems",
     openDate: "2026-01-28",
     releaseNumber: "REL-2026-0029",
