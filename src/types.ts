@@ -84,7 +84,6 @@ export interface MaintenanceContract {
   contractNumber: string;
   startDate: string;
   endDate: string;
-  description: string;
   summary: string;
   companyLeadId: string;
   contactName: string;

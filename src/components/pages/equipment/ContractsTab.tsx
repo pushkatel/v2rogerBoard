@@ -52,7 +52,6 @@ export const ContractsTab = () => {
       contractNumber: "",
       startDate: "",
       endDate: "",
-      description: "",
       summary: "",
       companyLeadId: "",
       contactName: "",
@@ -69,7 +68,6 @@ export const ContractsTab = () => {
         contractNumber: editing.contractNumber,
         startDate: editing.startDate,
         endDate: editing.endDate,
-        description: editing.description,
         summary: editing.summary,
         companyLeadId: editing.companyLeadId,
         contactName: editing.contactName,
@@ -114,6 +112,7 @@ export const ContractsTab = () => {
           }
           opened={opened}
           onClose={handleClose}
+          modalSize="lg"
           content={
             <ContractForm
               form={form}

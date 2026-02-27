@@ -28,7 +28,6 @@ interface ContractFormProps {
     contractNumber: string;
     startDate: string;
     endDate: string;
-    description: string;
     summary: string;
     companyLeadId: string;
     contactName: string;
@@ -85,13 +84,6 @@ export const ContractForm = ({
           />
         </SimpleGrid>
         <Textarea
-          label="Contract Details"
-          required
-          autosize
-          minRows={2}
-          {...form.getInputProps("description")}
-        />
-        <Textarea
           label="Contract Summary"
           description="Summarize coverage scope, maintenance cycles, key terms, etc."
           autosize
@@ -102,13 +94,6 @@ export const ContractForm = ({
 
       <Stack>
         <Divider label="Contact" labelPosition="left" />
-        <EmployeeSelect
-          multiple={false}
-          label="Company Lead"
-          required
-          leftSection={<IconUser size={16} />}
-          {...form.getInputProps("companyLeadId")}
-        />
         <SimpleGrid cols={{ base: 1, sm: 3 }}>
           <TextInput
             label="Contact Name"
@@ -131,6 +116,13 @@ export const ContractForm = ({
             {...form.getInputProps("contactPhone")}
           />
         </SimpleGrid>
+        <EmployeeSelect
+          multiple={false}
+          label="Company Lead"
+          required
+          leftSection={<IconUser size={16} />}
+          {...form.getInputProps("companyLeadId")}
+        />
       </Stack>
 
       <Button type="submit" fullWidth>
