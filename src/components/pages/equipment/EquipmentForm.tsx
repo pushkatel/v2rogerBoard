@@ -1,15 +1,17 @@
 import {
   Button,
   type ComboboxData,
+  List,
   Select,
   Stack,
+  Text,
   Textarea,
   TextInput,
 } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import type { FormEventHandler } from "react";
 
-import type { EquipmentStatus } from "@/types";
+import type { EquipmentStatus, MaintenanceContract } from "@/types";
 
 interface EquipmentFormProps {
   form: UseFormReturnType<{
@@ -26,6 +28,7 @@ interface EquipmentFormProps {
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
   areaOptions: ComboboxData;
+  relatedContracts?: MaintenanceContract[];
 }
 
 export const EquipmentForm = ({
@@ -33,6 +36,7 @@ export const EquipmentForm = ({
   onSubmit,
   editing,
   areaOptions,
+  relatedContracts,
 }: EquipmentFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack>
@@ -81,6 +85,20 @@ export const EquipmentForm = ({
         minRows={2}
         {...form.getInputProps("maintenanceCycleNotes")}
       />
+      {relatedContracts && relatedContracts.length > 0 && (
+        <div>
+          <Text fw={500} size="sm" mb={4}>
+            Related Contracts
+          </Text>
+          <List size="sm">
+            {relatedContracts.map((c) => (
+              <List.Item key={c.id}>
+                {c.vendor} — {c.contractNumber}
+              </List.Item>
+            ))}
+          </List>
+        </div>
+      )}
       <Button type="submit">{editing ? "Update" : "Create"}</Button>
     </Stack>
   </form>

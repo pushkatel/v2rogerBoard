@@ -13,8 +13,15 @@ import { equipmentStatusColor } from "@/utils";
 import { EquipmentForm } from "./EquipmentForm";
 
 export const EquipmentTab = () => {
-  const { areas, departments, equipment, addEquipment, updateEquipment, deleteEquipment } =
-    useAppContext();
+  const {
+    areas,
+    departments,
+    equipment,
+    maintenanceContracts,
+    addEquipment,
+    updateEquipment,
+    deleteEquipment,
+  } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<Equipment | null>(null);
 
@@ -112,6 +119,13 @@ export const EquipmentTab = () => {
               onSubmit={form.onSubmit(handleSubmit)}
               editing={!!editing}
               areaOptions={areaOptions}
+              relatedContracts={
+                editing
+                  ? maintenanceContracts.filter(
+                      (c) => c.equipmentId === editing.id,
+                    )
+                  : undefined
+              }
             />
           }
         />
