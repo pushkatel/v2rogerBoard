@@ -57,6 +57,11 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
     <form onSubmit={onSubmit}>
       <Stack gap="lg">
         <Stack>
+          <TextInput
+            label="Title"
+            required
+            {...form.getInputProps("problemTitle")}
+          />
           <Divider label="Details" labelPosition="left" />
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <TextInput
@@ -108,21 +113,19 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
               {...form.getInputProps("panelsAffected")}
             />
           </SimpleGrid>
-          <Select
-            label="Department"
-            data={departmentOptions}
-            leftSection={<IconBuilding size={16} />}
-            {...form.getInputProps("departmentId")}
-          />
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
+            <Select
+              label="Department"
+              data={departmentOptions}
+              leftSection={<IconBuilding size={16} />}
+              {...form.getInputProps("departmentId")}
+            />
+            <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
+          </SimpleGrid>
         </Stack>
 
         <Stack>
           <Divider label="Problem" labelPosition="left" />
-          <TextInput
-            label="Problem Title"
-            required
-            {...form.getInputProps("problemTitle")}
-          />
           <Textarea
             label="Problem Description"
             autosize
@@ -151,7 +154,6 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
             minRows={3}
             {...form.getInputProps("containmentAction")}
           />
-          <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
         </Stack>
 
         <Button type="submit" fullWidth>

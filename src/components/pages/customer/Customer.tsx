@@ -37,7 +37,6 @@ export const Customer = () => {
         sortValue: (i) => i.priority,
       },
       { header: "Job #", accessor: "jobNumber" },
-      { header: "Release #", accessor: "releaseNumber" },
       {
         header: "Assigned To",
         accessor: (i) =>
