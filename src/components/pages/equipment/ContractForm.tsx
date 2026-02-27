@@ -35,11 +35,7 @@ export const ContractForm = ({
         required
         {...form.getInputProps("equipmentId")}
       />
-      <TextInput
-        label="Vendor"
-        required
-        {...form.getInputProps("vendor")}
-      />
+      <TextInput label="Vendor" required {...form.getInputProps("vendor")} />
       <TextInput
         label="Contract Number"
         required
