@@ -1,6 +1,7 @@
 import {
   Button,
   Divider,
+  Group,
   SimpleGrid,
   Stack,
   Textarea,
@@ -36,12 +37,16 @@ interface ContractFormProps {
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
+  readOnly?: boolean;
+  onCancel?: () => void;
 }
 
 export const ContractForm = ({
   form,
   onSubmit,
   editing,
+  readOnly,
+  onCancel,
 }: ContractFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack gap="lg">
@@ -50,6 +55,7 @@ export const ContractForm = ({
         <EquipmentSelect
           label="Equipment"
           required
+          disabled={readOnly}
           leftSection={<IconTool size={16} />}
           {...form.getInputProps("equipmentId")}
         />
@@ -57,12 +63,14 @@ export const ContractForm = ({
           <TextInput
             label="Vendor"
             required
+            readOnly={readOnly}
             leftSection={<IconBuildingStore size={16} />}
             {...form.getInputProps("vendor")}
           />
           <TextInput
             label="Contract Number"
             required
+            readOnly={readOnly}
             leftSection={<IconHash size={16} />}
             {...form.getInputProps("contractNumber")}
           />
@@ -72,6 +80,7 @@ export const ContractForm = ({
             label="Start Date"
             type="date"
             required
+            readOnly={readOnly}
             leftSection={<IconCalendar size={16} />}
             {...form.getInputProps("startDate")}
           />
@@ -79,6 +88,7 @@ export const ContractForm = ({
             label="End Date"
             type="date"
             required
+            readOnly={readOnly}
             leftSection={<IconCalendar size={16} />}
             {...form.getInputProps("endDate")}
           />
@@ -88,6 +98,7 @@ export const ContractForm = ({
           description="Summarize coverage scope, maintenance cycles, key terms, etc."
           autosize
           minRows={3}
+          readOnly={readOnly}
           {...form.getInputProps("summary")}
         />
       </Stack>
@@ -98,6 +109,7 @@ export const ContractForm = ({
           <TextInput
             label="Contact Name"
             required
+            readOnly={readOnly}
             leftSection={<IconUser size={16} />}
             {...form.getInputProps("contactName")}
           />
@@ -105,6 +117,7 @@ export const ContractForm = ({
             label="Contact Email"
             type="email"
             required
+            readOnly={readOnly}
             leftSection={<IconAt size={16} />}
             {...form.getInputProps("contactEmail")}
           />
@@ -112,6 +125,7 @@ export const ContractForm = ({
             label="Contact Phone"
             type="tel"
             required
+            readOnly={readOnly}
             leftSection={<IconPhone size={16} />}
             {...form.getInputProps("contactPhone")}
           />
@@ -120,14 +134,25 @@ export const ContractForm = ({
           multiple={false}
           label="Company Lead"
           required
+          disabled={readOnly}
           leftSection={<IconUser size={16} />}
           {...form.getInputProps("companyLeadId")}
         />
       </Stack>
 
-      <Button type="submit" fullWidth>
-        {editing ? "Update" : "Create"}
-      </Button>
+      {!readOnly &&
+        (onCancel ? (
+          <Group justify="flex-end">
+            <Button variant="subtle" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button type="submit">{editing ? "Update" : "Create"}</Button>
+          </Group>
+        ) : (
+          <Button type="submit" fullWidth>
+            {editing ? "Update" : "Create"}
+          </Button>
+        ))}
     </Stack>
   </form>
 );

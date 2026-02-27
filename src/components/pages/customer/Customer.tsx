@@ -1,4 +1,4 @@
-import { Badge, Group, Stack, Title } from "@mantine/core";
+import { Badge, Button, Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useMemo, useState } from "react";
@@ -16,6 +16,7 @@ export const Customer = () => {
   const { icars, employees, addICAR, updateICAR, deleteICAR } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<ICAR | null>(null);
+  const [readOnly, setReadOnly] = useState(false);
 
   const columns: Column<ICAR>[] = useMemo(
     () => [
@@ -98,12 +99,14 @@ export const Customer = () => {
 
   const handleOpen = (icar?: ICAR) => {
     setEditing(icar ?? null);
+    setReadOnly(!!icar);
     open();
   };
 
   const handleClose = () => {
     close();
     setEditing(null);
+    setReadOnly(false);
     form.reset();
   };
 
@@ -119,6 +122,12 @@ export const Customer = () => {
     handleClose();
   };
 
+  const modalTitle = readOnly
+    ? "View ICAR"
+    : editing
+      ? "Edit ICAR"
+      : "New ICAR";
+
   return (
     <Stack>
       <Group justify="space-between">
@@ -126,25 +135,41 @@ export const Customer = () => {
         <ModalButton
           label="New ICAR"
           onClick={() => handleOpen()}
-          modalTitle={editing ? "Edit ICAR" : "New ICAR"}
+          modalTitle={modalTitle}
           opened={opened}
           onClose={handleClose}
           modalSize="lg"
           content={
-            <ICARForm
-              form={form}
-              onSubmit={form.onSubmit(handleSubmit)}
-              editing={!!editing}
-            />
+            <>
+              <ICARForm
+                form={form}
+                onSubmit={form.onSubmit(handleSubmit)}
+                editing={!!editing}
+                readOnly={readOnly}
+                onCancel={editing ? () => setReadOnly(true) : undefined}
+              />
+              {readOnly && editing && (
+                <Group mt="md" justify="flex-end">
+                  <Button variant="outline" onClick={() => setReadOnly(false)}>
+                    Edit
+                  </Button>
+                  <Button
+                    color="red"
+                    variant="outline"
+                    onClick={() => {
+                      deleteICAR(editing.id);
+                      handleClose();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Group>
+              )}
+            </>
           }
         />
       </Group>
-      <DataTable
-        columns={columns}
-        data={icars}
-        onEdit={handleOpen}
-        onDelete={deleteICAR}
-      />
+      <DataTable columns={columns} data={icars} onEdit={handleOpen} />
     </Stack>
   );
 };

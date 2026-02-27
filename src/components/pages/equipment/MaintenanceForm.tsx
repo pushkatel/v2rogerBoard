@@ -1,6 +1,7 @@
 import {
   Button,
   Divider,
+  Group,
   Select,
   SimpleGrid,
   Stack,
@@ -43,21 +44,31 @@ interface MaintenanceFormProps {
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
+  readOnly?: boolean;
+  onCancel?: () => void;
 }
 
 export const MaintenanceForm = ({
   form,
   onSubmit,
   editing,
+  readOnly,
+  onCancel,
 }: MaintenanceFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack gap="lg">
       <Stack>
-        <TextInput label="Title" required {...form.getInputProps("title")} />
+        <TextInput
+          label="Title"
+          required
+          readOnly={readOnly}
+          {...form.getInputProps("title")}
+        />
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <EquipmentSelect
             label="Equipment"
             required
+            disabled={readOnly}
             leftSection={<IconTool size={16} />}
             {...form.getInputProps("equipmentId")}
           />
@@ -65,6 +76,7 @@ export const MaintenanceForm = ({
             multiple={false}
             label="Reported By"
             required
+            disabled={readOnly}
             leftSection={<IconUser size={16} />}
             {...form.getInputProps("reportedBy")}
           />
@@ -74,11 +86,13 @@ export const MaintenanceForm = ({
             label="Date Reported"
             type="date"
             required
+            readOnly={readOnly}
             leftSection={<IconCalendar size={16} />}
             {...form.getInputProps("dateReported")}
           />
           <TextInput
             label="Estimated Downtime"
+            readOnly={readOnly}
             leftSection={<IconClock size={16} />}
             {...form.getInputProps("estimatedDowntime")}
           />
@@ -88,6 +102,7 @@ export const MaintenanceForm = ({
             label="Category"
             required
             data={maintenanceCategoryOptions}
+            disabled={readOnly}
             leftSection={<IconCategory size={16} />}
             {...form.getInputProps("category")}
           />
@@ -95,6 +110,7 @@ export const MaintenanceForm = ({
             label="Priority"
             required
             data={priorityOptions}
+            disabled={readOnly}
             leftSection={<IconFlag size={16} />}
             {...form.getInputProps("priority")}
           />
@@ -102,6 +118,7 @@ export const MaintenanceForm = ({
             label="Status"
             required
             data={statusOptions}
+            disabled={readOnly}
             {...form.getInputProps("status")}
           />
         </SimpleGrid>
@@ -115,20 +132,35 @@ export const MaintenanceForm = ({
           required
           autosize
           minRows={2}
+          readOnly={readOnly}
           {...form.getInputProps("problemDescription")}
         />
         <Textarea
           label="Resolution Notes"
           autosize
           minRows={2}
+          readOnly={readOnly}
           {...form.getInputProps("resolutionNotes")}
         />
-        <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
+        <EmployeeSelect
+          disabled={readOnly}
+          {...form.getInputProps("assignedEmployeeIds")}
+        />
       </Stack>
 
-      <Button type="submit" fullWidth>
-        {editing ? "Update" : "Create"}
-      </Button>
+      {!readOnly &&
+        (onCancel ? (
+          <Group justify="flex-end">
+            <Button variant="subtle" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button type="submit">{editing ? "Update" : "Create"}</Button>
+          </Group>
+        ) : (
+          <Button type="submit" fullWidth>
+            {editing ? "Update" : "Create"}
+          </Button>
+        ))}
     </Stack>
   </form>
 );

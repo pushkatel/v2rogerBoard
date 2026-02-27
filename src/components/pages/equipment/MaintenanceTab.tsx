@@ -1,4 +1,4 @@
-import { Badge, Group, Stack, Title } from "@mantine/core";
+import { Badge, Button, Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
@@ -28,6 +28,7 @@ export const MaintenanceTab = () => {
   } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<MaintenanceTicket | null>(null);
+  const [readOnly, setReadOnly] = useState(false);
 
   const columns: Column<MaintenanceTicket>[] = [
     { header: "Title", accessor: "title" },
@@ -100,12 +101,14 @@ export const MaintenanceTab = () => {
 
   const handleOpen = (ticket?: MaintenanceTicket) => {
     setEditing(ticket ?? null);
+    setReadOnly(!!ticket);
     open();
   };
 
   const handleClose = () => {
     close();
     setEditing(null);
+    setReadOnly(false);
     form.reset();
   };
 
@@ -118,6 +121,12 @@ export const MaintenanceTab = () => {
     handleClose();
   };
 
+  const modalTitle = readOnly
+    ? "View Maintenance Ticket"
+    : editing
+      ? "Edit Maintenance Ticket"
+      : "Add Maintenance Ticket";
+
   return (
     <Stack>
       <Group justify="space-between">
@@ -125,18 +134,37 @@ export const MaintenanceTab = () => {
         <ModalButton
           label="Add Ticket"
           onClick={() => handleOpen()}
-          modalTitle={
-            editing ? "Edit Maintenance Ticket" : "Add Maintenance Ticket"
-          }
+          modalTitle={modalTitle}
           opened={opened}
           onClose={handleClose}
           modalSize="lg"
           content={
-            <MaintenanceForm
-              form={form}
-              onSubmit={form.onSubmit(handleSubmit)}
-              editing={!!editing}
-            />
+            <>
+              <MaintenanceForm
+                form={form}
+                onSubmit={form.onSubmit(handleSubmit)}
+                editing={!!editing}
+                readOnly={readOnly}
+                onCancel={editing ? () => setReadOnly(true) : undefined}
+              />
+              {readOnly && editing && (
+                <Group mt="md" justify="flex-end">
+                  <Button variant="outline" onClick={() => setReadOnly(false)}>
+                    Edit
+                  </Button>
+                  <Button
+                    color="red"
+                    variant="outline"
+                    onClick={() => {
+                      deleteMaintenanceTicket(editing.id);
+                      handleClose();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Group>
+              )}
+            </>
           }
         />
       </Group>
@@ -144,7 +172,6 @@ export const MaintenanceTab = () => {
         columns={columns}
         data={maintenanceTickets}
         onEdit={handleOpen}
-        onDelete={deleteMaintenanceTicket}
       />
     </Stack>
   );

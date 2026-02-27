@@ -1,4 +1,4 @@
-import { Group, Stack, Title } from "@mantine/core";
+import { Button, Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
@@ -22,6 +22,7 @@ export const ContractsTab = () => {
   } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<MaintenanceContract | null>(null);
+  const [readOnly, setReadOnly] = useState(false);
 
   const columns: Column<MaintenanceContract>[] = [
     {
@@ -82,12 +83,14 @@ export const ContractsTab = () => {
 
   const handleOpen = (contract?: MaintenanceContract) => {
     setEditing(contract ?? null);
+    setReadOnly(!!contract);
     open();
   };
 
   const handleClose = () => {
     close();
     setEditing(null);
+    setReadOnly(false);
     form.reset();
   };
 
@@ -100,6 +103,12 @@ export const ContractsTab = () => {
     handleClose();
   };
 
+  const modalTitle = readOnly
+    ? "View Maintenance Contract"
+    : editing
+      ? "Edit Maintenance Contract"
+      : "Add Maintenance Contract";
+
   return (
     <Stack>
       <Group justify="space-between">
@@ -107,18 +116,37 @@ export const ContractsTab = () => {
         <ModalButton
           label="Add Contract"
           onClick={() => handleOpen()}
-          modalTitle={
-            editing ? "Edit Maintenance Contract" : "Add Maintenance Contract"
-          }
+          modalTitle={modalTitle}
           opened={opened}
           onClose={handleClose}
           modalSize="lg"
           content={
-            <ContractForm
-              form={form}
-              onSubmit={form.onSubmit(handleSubmit)}
-              editing={!!editing}
-            />
+            <>
+              <ContractForm
+                form={form}
+                onSubmit={form.onSubmit(handleSubmit)}
+                editing={!!editing}
+                readOnly={readOnly}
+                onCancel={editing ? () => setReadOnly(true) : undefined}
+              />
+              {readOnly && editing && (
+                <Group mt="md" justify="flex-end">
+                  <Button variant="outline" onClick={() => setReadOnly(false)}>
+                    Edit
+                  </Button>
+                  <Button
+                    color="red"
+                    variant="outline"
+                    onClick={() => {
+                      deleteMaintenanceContract(editing.id);
+                      handleClose();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Group>
+              )}
+            </>
           }
         />
       </Group>
@@ -126,7 +154,6 @@ export const ContractsTab = () => {
         columns={columns}
         data={maintenanceContracts}
         onEdit={handleOpen}
-        onDelete={deleteMaintenanceContract}
       />
     </Stack>
   );

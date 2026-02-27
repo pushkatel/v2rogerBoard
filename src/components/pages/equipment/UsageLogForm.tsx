@@ -1,5 +1,6 @@
 import {
   Button,
+  Group,
   NumberInput,
   Select,
   SimpleGrid,
@@ -38,12 +39,16 @@ interface UsageLogFormProps {
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
+  readOnly?: boolean;
+  onCancel?: () => void;
 }
 
 export const UsageLogForm = ({
   form,
   onSubmit,
   editing,
+  readOnly,
+  onCancel,
 }: UsageLogFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack>
@@ -51,6 +56,7 @@ export const UsageLogForm = ({
         <EquipmentSelect
           label="Equipment"
           required
+          disabled={readOnly}
           leftSection={<IconTool size={16} />}
           {...form.getInputProps("equipmentId")}
         />
@@ -58,6 +64,7 @@ export const UsageLogForm = ({
           multiple={false}
           label="Employee"
           required
+          disabled={readOnly}
           leftSection={<IconUser size={16} />}
           {...form.getInputProps("employeeId")}
         />
@@ -67,6 +74,7 @@ export const UsageLogForm = ({
           label="Date"
           type="date"
           required
+          readOnly={readOnly}
           leftSection={<IconCalendar size={16} />}
           {...form.getInputProps("date")}
         />
@@ -74,6 +82,7 @@ export const UsageLogForm = ({
           label="Usage Type"
           required
           data={usageTypeOptions}
+          disabled={readOnly}
           leftSection={<IconClock size={16} />}
           {...form.getInputProps("usageType")}
         />
@@ -81,6 +90,7 @@ export const UsageLogForm = ({
           label="Quantity"
           required
           min={0}
+          readOnly={readOnly}
           leftSection={<IconHash size={16} />}
           {...form.getInputProps("quantity")}
         />
@@ -89,11 +99,22 @@ export const UsageLogForm = ({
         label="Notes"
         autosize
         minRows={2}
+        readOnly={readOnly}
         {...form.getInputProps("notes")}
       />
-      <Button type="submit" fullWidth>
-        {editing ? "Update" : "Create"}
-      </Button>
+      {!readOnly &&
+        (onCancel ? (
+          <Group justify="flex-end">
+            <Button variant="subtle" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button type="submit">{editing ? "Update" : "Create"}</Button>
+          </Group>
+        ) : (
+          <Button type="submit" fullWidth>
+            {editing ? "Update" : "Create"}
+          </Button>
+        ))}
     </Stack>
   </form>
 );

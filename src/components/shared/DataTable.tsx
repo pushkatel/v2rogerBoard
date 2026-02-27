@@ -1,5 +1,9 @@
-import { ActionIcon, Center, Group, Table, UnstyledButton } from "@mantine/core";
-import { IconChevronDown, IconChevronUp, IconSelector } from "@tabler/icons-react";
+import { Center, Group, Table, UnstyledButton } from "@mantine/core";
+import {
+  IconChevronDown,
+  IconChevronUp,
+  IconSelector,
+} from "@tabler/icons-react";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 
@@ -14,7 +18,6 @@ interface DataTableProps<T extends { id: string }> {
   columns: Column<T>[];
   data: T[];
   onEdit?: (row: T) => void;
-  onDelete?: (id: string) => void;
 }
 
 type SortDir = "asc" | "desc";
@@ -25,7 +28,6 @@ export const DataTable = <T extends { id: string }>({
   columns,
   data,
   onEdit,
-  onDelete,
 }: DataTableProps<T>) => {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDir, setSortDir] = useState<SortDir>("asc");
@@ -81,8 +83,6 @@ export const DataTable = <T extends { id: string }>({
     return row[col.accessor] as ReactNode;
   };
 
-  const showActions = onEdit || onDelete;
-
   return (
     <Table striped highlightOnHover>
       <Table.Thead>
@@ -103,35 +103,18 @@ export const DataTable = <T extends { id: string }>({
               )}
             </Table.Th>
           ))}
-          {showActions && <Table.Th>Actions</Table.Th>}
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>
         {sortedData.map((row) => (
-          <Table.Tr key={row.id}>
+          <Table.Tr
+            key={row.id}
+            onClick={onEdit ? () => onEdit(row) : undefined}
+            style={onEdit ? { cursor: "pointer" } : undefined}
+          >
             {columns.map((col) => (
               <Table.Td key={col.header}>{renderCell(row, col)}</Table.Td>
             ))}
-            {showActions && (
-              <Table.Td>
-                <Group gap="xs">
-                  {onEdit && (
-                    <ActionIcon variant="subtle" onClick={() => onEdit(row)}>
-                      Edit
-                    </ActionIcon>
-                  )}
-                  {onDelete && (
-                    <ActionIcon
-                      variant="subtle"
-                      color="red"
-                      onClick={() => onDelete(row.id)}
-                    >
-                      Del
-                    </ActionIcon>
-                  )}
-                </Group>
-              </Table.Td>
-            )}
           </Table.Tr>
         ))}
       </Table.Tbody>

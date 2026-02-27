@@ -1,4 +1,11 @@
-import { Button, Select, SimpleGrid, Stack, TextInput } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Select,
+  SimpleGrid,
+  Stack,
+  TextInput,
+} from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import {
   IconAt,
@@ -20,6 +27,8 @@ interface EmployeeFormProps {
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
   deptOptions: { value: string; label: string }[];
+  readOnly?: boolean;
+  onCancel?: () => void;
 }
 
 export const EmployeeForm = ({
@@ -27,6 +36,8 @@ export const EmployeeForm = ({
   onSubmit,
   editing,
   deptOptions,
+  readOnly,
+  onCancel,
 }: EmployeeFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack>
@@ -34,12 +45,14 @@ export const EmployeeForm = ({
         <TextInput
           label="Name"
           required
+          readOnly={readOnly}
           leftSection={<IconUser size={16} />}
           {...form.getInputProps("name")}
         />
         <TextInput
           label="Role"
           required
+          readOnly={readOnly}
           leftSection={<IconBriefcase size={16} />}
           {...form.getInputProps("role")}
         />
@@ -48,6 +61,7 @@ export const EmployeeForm = ({
         label="Department"
         required
         data={deptOptions}
+        disabled={readOnly}
         leftSection={<IconBuilding size={16} />}
         {...form.getInputProps("departmentId")}
       />
@@ -55,19 +69,31 @@ export const EmployeeForm = ({
         <TextInput
           label="Email"
           required
+          readOnly={readOnly}
           leftSection={<IconAt size={16} />}
           {...form.getInputProps("email")}
         />
         <TextInput
           label="Phone"
           required
+          readOnly={readOnly}
           leftSection={<IconPhone size={16} />}
           {...form.getInputProps("phone")}
         />
       </SimpleGrid>
-      <Button type="submit" fullWidth>
-        {editing ? "Update" : "Create"}
-      </Button>
+      {!readOnly &&
+        (onCancel ? (
+          <Group justify="flex-end">
+            <Button variant="subtle" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button type="submit">{editing ? "Update" : "Create"}</Button>
+          </Group>
+        ) : (
+          <Button type="submit" fullWidth>
+            {editing ? "Update" : "Create"}
+          </Button>
+        ))}
     </Stack>
   </form>
 );

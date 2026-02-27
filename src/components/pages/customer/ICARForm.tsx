@@ -1,6 +1,7 @@
 import {
   Button,
   Divider,
+  Group,
   NumberInput,
   Select,
   SimpleGrid,
@@ -43,9 +44,17 @@ interface ICARFormProps {
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
+  readOnly?: boolean;
+  onCancel?: () => void;
 }
 
-export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
+export const ICARForm = ({
+  form,
+  onSubmit,
+  editing,
+  readOnly,
+  onCancel,
+}: ICARFormProps) => {
   const { departments } = useAppContext();
 
   const departmentOptions = departments.map((d) => ({
@@ -60,6 +69,7 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
           <TextInput
             label="Title"
             required
+            readOnly={readOnly}
             {...form.getInputProps("problemTitle")}
           />
           <Divider label="Details" labelPosition="left" />
@@ -67,6 +77,7 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
             <TextInput
               label="Customer"
               required
+              readOnly={readOnly}
               leftSection={<IconUser size={16} />}
               {...form.getInputProps("customer")}
             />
@@ -74,6 +85,7 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
               label="Open Date"
               type="date"
               required
+              readOnly={readOnly}
               leftSection={<IconCalendar size={16} />}
               {...form.getInputProps("openDate")}
             />
@@ -82,12 +94,14 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
             <TextInput
               label="Job Number"
               required
+              readOnly={readOnly}
               leftSection={<IconHash size={16} />}
               {...form.getInputProps("jobNumber")}
             />
             <TextInput
               label="Release Number"
               required
+              readOnly={readOnly}
               leftSection={<IconTag size={16} />}
               {...form.getInputProps("releaseNumber")}
             />
@@ -97,12 +111,14 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
               label="Status"
               required
               data={statusOptions}
+              disabled={readOnly}
               {...form.getInputProps("status")}
             />
             <Select
               label="Priority"
               required
               data={priorityOptions}
+              disabled={readOnly}
               leftSection={<IconFlag size={16} />}
               {...form.getInputProps("priority")}
             />
@@ -110,6 +126,7 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
               label="Panels Affected"
               required
               min={0}
+              readOnly={readOnly}
               {...form.getInputProps("panelsAffected")}
             />
           </SimpleGrid>
@@ -117,10 +134,14 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
             <Select
               label="Department"
               data={departmentOptions}
+              disabled={readOnly}
               leftSection={<IconBuilding size={16} />}
               {...form.getInputProps("departmentId")}
             />
-            <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
+            <EmployeeSelect
+              disabled={readOnly}
+              {...form.getInputProps("assignedEmployeeIds")}
+            />
           </SimpleGrid>
         </Stack>
 
@@ -130,12 +151,14 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
             label="Problem Description"
             autosize
             minRows={3}
+            readOnly={readOnly}
             {...form.getInputProps("problemDescription")}
           />
           <Textarea
             label="Where Occurred"
             autosize
             minRows={3}
+            readOnly={readOnly}
             {...form.getInputProps("whereOccurred")}
           />
         </Stack>
@@ -146,19 +169,31 @@ export const ICARForm = ({ form, onSubmit, editing }: ICARFormProps) => {
             label="Root Cause"
             autosize
             minRows={3}
+            readOnly={readOnly}
             {...form.getInputProps("rootCause")}
           />
           <Textarea
             label="Containment Action"
             autosize
             minRows={3}
+            readOnly={readOnly}
             {...form.getInputProps("containmentAction")}
           />
         </Stack>
 
-        <Button type="submit" fullWidth>
-          {editing ? "Update" : "Create"}
-        </Button>
+        {!readOnly &&
+          (onCancel ? (
+            <Group justify="flex-end">
+              <Button variant="subtle" onClick={onCancel}>
+                Cancel
+              </Button>
+              <Button type="submit">{editing ? "Update" : "Create"}</Button>
+            </Group>
+          ) : (
+            <Button type="submit" fullWidth>
+              {editing ? "Update" : "Create"}
+            </Button>
+          ))}
       </Stack>
     </form>
   );

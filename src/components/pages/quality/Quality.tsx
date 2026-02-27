@@ -1,4 +1,4 @@
-import { Badge, Group, Stack, Title } from "@mantine/core";
+import { Badge, Button, Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useMemo, useState } from "react";
@@ -16,6 +16,7 @@ export const Quality = () => {
   const { ecns, employees, addECN, updateECN, deleteECN } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<ECN | null>(null);
+  const [readOnly, setReadOnly] = useState(false);
 
   const columns: Column<ECN>[] = useMemo(
     () => [
@@ -90,12 +91,14 @@ export const Quality = () => {
 
   const handleOpen = (ecn?: ECN) => {
     setEditing(ecn ?? null);
+    setReadOnly(!!ecn);
     open();
   };
 
   const handleClose = () => {
     close();
     setEditing(null);
+    setReadOnly(false);
     form.reset();
   };
 
@@ -111,6 +114,8 @@ export const Quality = () => {
     handleClose();
   };
 
+  const modalTitle = readOnly ? "View ECN" : editing ? "Edit ECN" : "New ECN";
+
   return (
     <Stack>
       <Group justify="space-between">
@@ -118,25 +123,41 @@ export const Quality = () => {
         <ModalButton
           label="New ECN"
           onClick={() => handleOpen()}
-          modalTitle={editing ? "Edit ECN" : "New ECN"}
+          modalTitle={modalTitle}
           opened={opened}
           onClose={handleClose}
           modalSize="lg"
           content={
-            <ECNForm
-              form={form}
-              onSubmit={form.onSubmit(handleSubmit)}
-              editing={!!editing}
-            />
+            <>
+              <ECNForm
+                form={form}
+                onSubmit={form.onSubmit(handleSubmit)}
+                editing={!!editing}
+                readOnly={readOnly}
+                onCancel={editing ? () => setReadOnly(true) : undefined}
+              />
+              {readOnly && editing && (
+                <Group mt="md" justify="flex-end">
+                  <Button variant="outline" onClick={() => setReadOnly(false)}>
+                    Edit
+                  </Button>
+                  <Button
+                    color="red"
+                    variant="outline"
+                    onClick={() => {
+                      deleteECN(editing.id);
+                      handleClose();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Group>
+              )}
+            </>
           }
         />
       </Group>
-      <DataTable
-        columns={columns}
-        data={ecns}
-        onEdit={handleOpen}
-        onDelete={deleteECN}
-      />
+      <DataTable columns={columns} data={ecns} onEdit={handleOpen} />
     </Stack>
   );
 };

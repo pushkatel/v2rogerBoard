@@ -1,4 +1,4 @@
-import { Badge, Group, Stack, Title } from "@mantine/core";
+import { Badge, Button, Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
@@ -24,6 +24,7 @@ export const EquipmentTab = () => {
   } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<Equipment | null>(null);
+  const [readOnly, setReadOnly] = useState(false);
 
   const columns: Column<Equipment>[] = [
     { header: "Name", accessor: "name" },
@@ -85,12 +86,14 @@ export const EquipmentTab = () => {
 
   const handleOpen = (item?: Equipment) => {
     setEditing(item ?? null);
+    setReadOnly(!!item);
     open();
   };
 
   const handleClose = () => {
     close();
     setEditing(null);
+    setReadOnly(false);
     form.reset();
   };
 
@@ -103,6 +106,12 @@ export const EquipmentTab = () => {
     handleClose();
   };
 
+  const modalTitle = readOnly
+    ? "View Equipment"
+    : editing
+      ? "Edit Equipment"
+      : "Add Equipment";
+
   return (
     <Stack>
       <Group justify="space-between">
@@ -110,33 +119,49 @@ export const EquipmentTab = () => {
         <ModalButton
           label="Add Equipment"
           onClick={() => handleOpen()}
-          modalTitle={editing ? "Edit Equipment" : "Add Equipment"}
+          modalTitle={modalTitle}
           opened={opened}
           onClose={handleClose}
           modalSize="lg"
           content={
-            <EquipmentForm
-              form={form}
-              onSubmit={form.onSubmit(handleSubmit)}
-              editing={!!editing}
-              areaOptions={areaOptions}
-              relatedContracts={
-                editing
-                  ? maintenanceContracts.filter(
-                      (c) => c.equipmentId === editing.id,
-                    )
-                  : undefined
-              }
-            />
+            <>
+              <EquipmentForm
+                form={form}
+                onSubmit={form.onSubmit(handleSubmit)}
+                editing={!!editing}
+                areaOptions={areaOptions}
+                relatedContracts={
+                  editing
+                    ? maintenanceContracts.filter(
+                        (c) => c.equipmentId === editing.id,
+                      )
+                    : undefined
+                }
+                readOnly={readOnly}
+                onCancel={editing ? () => setReadOnly(true) : undefined}
+              />
+              {readOnly && editing && (
+                <Group mt="md" justify="flex-end">
+                  <Button variant="outline" onClick={() => setReadOnly(false)}>
+                    Edit
+                  </Button>
+                  <Button
+                    color="red"
+                    variant="outline"
+                    onClick={() => {
+                      deleteEquipment(editing.id);
+                      handleClose();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Group>
+              )}
+            </>
           }
         />
       </Group>
-      <DataTable
-        columns={columns}
-        data={equipment}
-        onEdit={handleOpen}
-        onDelete={deleteEquipment}
-      />
+      <DataTable columns={columns} data={equipment} onEdit={handleOpen} />
     </Stack>
   );
 };

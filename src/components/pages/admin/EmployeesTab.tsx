@@ -1,4 +1,4 @@
-import { Group, Stack, Title } from "@mantine/core";
+import { Button, Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
@@ -21,6 +21,7 @@ export const EmployeesTab = () => {
   } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<Employee | null>(null);
+  const [readOnly, setReadOnly] = useState(false);
 
   const columns: Column<Employee>[] = [
     { header: "Name", accessor: "name" },
@@ -67,12 +68,14 @@ export const EmployeesTab = () => {
 
   const handleOpen = (employee?: Employee) => {
     setEditing(employee ?? null);
+    setReadOnly(!!employee);
     open();
   };
 
   const handleClose = () => {
     close();
     setEditing(null);
+    setReadOnly(false);
     form.reset();
   };
 
@@ -87,6 +90,12 @@ export const EmployeesTab = () => {
 
   const deptOptions = departments.map((d) => ({ value: d.id, label: d.name }));
 
+  const modalTitle = readOnly
+    ? "View Employee"
+    : editing
+      ? "Edit Employee"
+      : "Add Employee";
+
   return (
     <Stack>
       <Group justify="space-between">
@@ -94,25 +103,41 @@ export const EmployeesTab = () => {
         <ModalButton
           label="Add Employee"
           onClick={() => handleOpen()}
-          modalTitle={editing ? "Edit Employee" : "Add Employee"}
+          modalTitle={modalTitle}
           opened={opened}
           onClose={handleClose}
           content={
-            <EmployeeForm
-              form={form}
-              onSubmit={form.onSubmit(handleSubmit)}
-              editing={!!editing}
-              deptOptions={deptOptions}
-            />
+            <>
+              <EmployeeForm
+                form={form}
+                onSubmit={form.onSubmit(handleSubmit)}
+                editing={!!editing}
+                deptOptions={deptOptions}
+                readOnly={readOnly}
+                onCancel={editing ? () => setReadOnly(true) : undefined}
+              />
+              {readOnly && editing && (
+                <Group mt="md" justify="flex-end">
+                  <Button variant="outline" onClick={() => setReadOnly(false)}>
+                    Edit
+                  </Button>
+                  <Button
+                    color="red"
+                    variant="outline"
+                    onClick={() => {
+                      deleteEmployee(editing.id);
+                      handleClose();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Group>
+              )}
+            </>
           }
         />
       </Group>
-      <DataTable
-        columns={columns}
-        data={employees}
-        onEdit={handleOpen}
-        onDelete={deleteEmployee}
-      />
+      <DataTable columns={columns} data={employees} onEdit={handleOpen} />
     </Stack>
   );
 };

@@ -1,4 +1,4 @@
-import { Group, Stack, Title } from "@mantine/core";
+import { Button, Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
@@ -22,6 +22,7 @@ export const UsageLogTab = () => {
   } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<UsageLog | null>(null);
+  const [readOnly, setReadOnly] = useState(false);
 
   const columns: Column<UsageLog>[] = [
     {
@@ -77,12 +78,14 @@ export const UsageLogTab = () => {
 
   const handleOpen = (log?: UsageLog) => {
     setEditing(log ?? null);
+    setReadOnly(!!log);
     open();
   };
 
   const handleClose = () => {
     close();
     setEditing(null);
+    setReadOnly(false);
     form.reset();
   };
 
@@ -95,6 +98,12 @@ export const UsageLogTab = () => {
     handleClose();
   };
 
+  const modalTitle = readOnly
+    ? "View Usage Entry"
+    : editing
+      ? "Edit Usage Entry"
+      : "Log Usage";
+
   return (
     <Stack>
       <Group justify="space-between">
@@ -102,25 +111,41 @@ export const UsageLogTab = () => {
         <ModalButton
           label="Log Usage"
           onClick={() => handleOpen()}
-          modalTitle={editing ? "Edit Usage Entry" : "Log Usage"}
+          modalTitle={modalTitle}
           opened={opened}
           onClose={handleClose}
           modalSize="lg"
           content={
-            <UsageLogForm
-              form={form}
-              onSubmit={form.onSubmit(handleSubmit)}
-              editing={!!editing}
-            />
+            <>
+              <UsageLogForm
+                form={form}
+                onSubmit={form.onSubmit(handleSubmit)}
+                editing={!!editing}
+                readOnly={readOnly}
+                onCancel={editing ? () => setReadOnly(true) : undefined}
+              />
+              {readOnly && editing && (
+                <Group mt="md" justify="flex-end">
+                  <Button variant="outline" onClick={() => setReadOnly(false)}>
+                    Edit
+                  </Button>
+                  <Button
+                    color="red"
+                    variant="outline"
+                    onClick={() => {
+                      deleteUsageLog(editing.id);
+                      handleClose();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Group>
+              )}
+            </>
           }
         />
       </Group>
-      <DataTable
-        columns={columns}
-        data={usageLogs}
-        onEdit={handleOpen}
-        onDelete={deleteUsageLog}
-      />
+      <DataTable columns={columns} data={usageLogs} onEdit={handleOpen} />
     </Stack>
   );
 };

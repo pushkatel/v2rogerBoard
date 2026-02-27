@@ -1,6 +1,7 @@
 import {
   Button,
   Divider,
+  Group,
   Select,
   SimpleGrid,
   Stack,
@@ -36,17 +37,31 @@ interface ECNFormProps {
   }>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   editing: boolean;
+  readOnly?: boolean;
+  onCancel?: () => void;
 }
 
-export const ECNForm = ({ form, onSubmit, editing }: ECNFormProps) => (
+export const ECNForm = ({
+  form,
+  onSubmit,
+  editing,
+  readOnly,
+  onCancel,
+}: ECNFormProps) => (
   <form onSubmit={onSubmit}>
     <Stack gap="lg">
       <Stack>
-        <TextInput label="Title" required {...form.getInputProps("title")} />
+        <TextInput
+          label="Title"
+          required
+          readOnly={readOnly}
+          {...form.getInputProps("title")}
+        />
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
             label="Customer"
             required
+            readOnly={readOnly}
             leftSection={<IconUser size={16} />}
             {...form.getInputProps("customer")}
           />
@@ -54,6 +69,7 @@ export const ECNForm = ({ form, onSubmit, editing }: ECNFormProps) => (
             label="Open Date"
             type="date"
             required
+            readOnly={readOnly}
             leftSection={<IconCalendar size={16} />}
             {...form.getInputProps("openDate")}
           />
@@ -62,12 +78,14 @@ export const ECNForm = ({ form, onSubmit, editing }: ECNFormProps) => (
           <TextInput
             label="Release Number"
             required
+            readOnly={readOnly}
             leftSection={<IconTag size={16} />}
             {...form.getInputProps("releaseNumber")}
           />
           <TextInput
             label="Job Number"
             required
+            readOnly={readOnly}
             leftSection={<IconHash size={16} />}
             {...form.getInputProps("jobNumber")}
           />
@@ -77,12 +95,14 @@ export const ECNForm = ({ form, onSubmit, editing }: ECNFormProps) => (
             label="Status"
             required
             data={statusOptions}
+            disabled={readOnly}
             {...form.getInputProps("status")}
           />
           <Select
             label="Priority"
             required
             data={priorityOptions}
+            disabled={readOnly}
             leftSection={<IconFlag size={16} />}
             {...form.getInputProps("priority")}
           />
@@ -96,20 +116,35 @@ export const ECNForm = ({ form, onSubmit, editing }: ECNFormProps) => (
           label="ECN Reason"
           autosize
           minRows={3}
+          readOnly={readOnly}
           {...form.getInputProps("reason")}
         />
         <Textarea
           label="Corrective Changes"
           autosize
           minRows={3}
+          readOnly={readOnly}
           {...form.getInputProps("correctiveChanges")}
         />
-        <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
+        <EmployeeSelect
+          disabled={readOnly}
+          {...form.getInputProps("assignedEmployeeIds")}
+        />
       </Stack>
 
-      <Button type="submit" fullWidth>
-        {editing ? "Update" : "Create"}
-      </Button>
+      {!readOnly &&
+        (onCancel ? (
+          <Group justify="flex-end">
+            <Button variant="subtle" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button type="submit">{editing ? "Update" : "Create"}</Button>
+          </Group>
+        ) : (
+          <Button type="submit" fullWidth>
+            {editing ? "Update" : "Create"}
+          </Button>
+        ))}
     </Stack>
   </form>
 );

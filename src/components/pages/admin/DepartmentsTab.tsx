@@ -1,4 +1,4 @@
-import { Badge, Group, Stack, Title } from "@mantine/core";
+import { Badge, Button, Group, Stack, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
@@ -23,6 +23,7 @@ export const DepartmentsTab = () => {
   } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<Department | null>(null);
+  const [readOnly, setReadOnly] = useState(false);
 
   const columns: Column<Department>[] = [
     { header: "Name", accessor: "name" },
@@ -64,12 +65,14 @@ export const DepartmentsTab = () => {
 
   const handleOpen = (dept?: Department) => {
     setEditing(dept ?? null);
+    setReadOnly(!!dept);
     open();
   };
 
   const handleClose = () => {
     close();
     setEditing(null);
+    setReadOnly(false);
     form.reset();
   };
 
@@ -103,6 +106,12 @@ export const DepartmentsTab = () => {
     handleClose();
   };
 
+  const modalTitle = readOnly
+    ? "View Department"
+    : editing
+      ? "Edit Department"
+      : "Add Department";
+
   return (
     <Stack>
       <Group justify="space-between">
@@ -110,24 +119,40 @@ export const DepartmentsTab = () => {
         <ModalButton
           label="Add Department"
           onClick={() => handleOpen()}
-          modalTitle={editing ? "Edit Department" : "Add Department"}
+          modalTitle={modalTitle}
           opened={opened}
           onClose={handleClose}
           content={
-            <DepartmentForm
-              form={form}
-              onSubmit={form.onSubmit(handleSubmit)}
-              editing={!!editing}
-            />
+            <>
+              <DepartmentForm
+                form={form}
+                onSubmit={form.onSubmit(handleSubmit)}
+                editing={!!editing}
+                readOnly={readOnly}
+                onCancel={editing ? () => setReadOnly(true) : undefined}
+              />
+              {readOnly && editing && (
+                <Group mt="md" justify="flex-end">
+                  <Button variant="outline" onClick={() => setReadOnly(false)}>
+                    Edit
+                  </Button>
+                  <Button
+                    color="red"
+                    variant="outline"
+                    onClick={() => {
+                      deleteDepartment(editing.id);
+                      handleClose();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Group>
+              )}
+            </>
           }
         />
       </Group>
-      <DataTable
-        columns={columns}
-        data={departments}
-        onEdit={handleOpen}
-        onDelete={deleteDepartment}
-      />
+      <DataTable columns={columns} data={departments} onEdit={handleOpen} />
     </Stack>
   );
 };
