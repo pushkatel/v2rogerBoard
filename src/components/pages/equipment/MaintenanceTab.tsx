@@ -30,6 +30,7 @@ export const MaintenanceTab = () => {
   const [editing, setEditing] = useState<MaintenanceTicket | null>(null);
 
   const columns: Column<MaintenanceTicket>[] = [
+    { header: "Title", accessor: "title" },
     {
       header: "Equipment",
       accessor: (t) =>
@@ -62,6 +63,7 @@ export const MaintenanceTab = () => {
 
   const form = useForm({
     initialValues: {
+      title: "",
       equipmentId: "",
       reportedBy: "",
       dateReported: "",
@@ -78,6 +80,7 @@ export const MaintenanceTab = () => {
   useEffect(() => {
     if (editing) {
       form.setValues({
+        title: editing.title,
         equipmentId: editing.equipmentId,
         reportedBy: editing.reportedBy,
         dateReported: editing.dateReported,
@@ -127,6 +130,7 @@ export const MaintenanceTab = () => {
           }
           opened={opened}
           onClose={handleClose}
+          modalSize="lg"
           content={
             <MaintenanceForm
               form={form}

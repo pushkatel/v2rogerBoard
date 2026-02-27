@@ -29,6 +29,7 @@ import {
 
 interface MaintenanceFormProps {
   form: UseFormReturnType<{
+    title: string;
     equipmentId: string;
     reportedBy: string;
     dateReported: string;
@@ -52,13 +53,14 @@ export const MaintenanceForm = ({
   <form onSubmit={onSubmit}>
     <Stack gap="lg">
       <Stack>
-        <EquipmentSelect
-          label="Equipment"
-          required
-          leftSection={<IconTool size={16} />}
-          {...form.getInputProps("equipmentId")}
-        />
+        <TextInput label="Title" required {...form.getInputProps("title")} />
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
+          <EquipmentSelect
+            label="Equipment"
+            required
+            leftSection={<IconTool size={16} />}
+            {...form.getInputProps("equipmentId")}
+          />
           <EmployeeSelect
             multiple={false}
             label="Reported By"
@@ -66,12 +68,19 @@ export const MaintenanceForm = ({
             leftSection={<IconUser size={16} />}
             {...form.getInputProps("reportedBy")}
           />
+        </SimpleGrid>
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
             label="Date Reported"
             type="date"
             required
             leftSection={<IconCalendar size={16} />}
             {...form.getInputProps("dateReported")}
+          />
+          <TextInput
+            label="Estimated Downtime"
+            leftSection={<IconClock size={16} />}
+            {...form.getInputProps("estimatedDowntime")}
           />
         </SimpleGrid>
         <SimpleGrid cols={{ base: 1, sm: 3 }}>
@@ -113,11 +122,6 @@ export const MaintenanceForm = ({
           autosize
           minRows={2}
           {...form.getInputProps("resolutionNotes")}
-        />
-        <TextInput
-          label="Estimated Downtime"
-          leftSection={<IconClock size={16} />}
-          {...form.getInputProps("estimatedDowntime")}
         />
         <EmployeeSelect {...form.getInputProps("assignedEmployeeIds")} />
       </Stack>

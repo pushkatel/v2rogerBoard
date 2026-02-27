@@ -27,6 +27,7 @@ export const ModalButton = ({
       onClose={onClose}
       title={modalTitle}
       size={modalSize}
+      padding="xl"
     >
       {content}
     </Modal>

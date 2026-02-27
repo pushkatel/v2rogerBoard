@@ -493,6 +493,7 @@ export const seedMaintenanceContracts: MaintenanceContract[] = [
 export const seedMaintenanceTickets: MaintenanceTicket[] = [
   {
     id: "mt-1",
+    title: "Uneven plating on electroless Cu line",
     equipmentId: "mach-5",
     reportedBy: "emp-4",
     dateReported: "2026-02-20",
@@ -507,6 +508,7 @@ export const seedMaintenanceTickets: MaintenanceTicket[] = [
   },
   {
     id: "mt-2",
+    title: "Erratic temp readings on HASL solder pot",
     equipmentId: "mach-9",
     reportedBy: "emp-7",
     dateReported: "2026-02-18",
@@ -522,6 +524,7 @@ export const seedMaintenanceTickets: MaintenanceTicket[] = [
   },
   {
     id: "mt-3",
+    title: "AOI false defects on fine-pitch BGA",
     equipmentId: "mach-11",
     reportedBy: "emp-5",
     dateReported: "2026-02-24",
@@ -536,6 +539,7 @@ export const seedMaintenanceTickets: MaintenanceTicket[] = [
   },
   {
     id: "mt-4",
+    title: "Spindle bearing noise during drilling",
     equipmentId: "mach-1",
     reportedBy: "emp-3",
     dateReported: "2026-02-10",

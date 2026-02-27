@@ -106,6 +106,7 @@ export interface UsageLog {
 
 export interface MaintenanceTicket {
   id: string;
+  title: string;
   equipmentId: string;
   reportedBy: string;
   dateReported: string;
