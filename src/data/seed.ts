@@ -1,4 +1,4 @@
-import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceContract, MaintenanceTicket } from "@/types";
+import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceContract, MaintenanceTicket, UsageLog } from "@/types";
 
 export const seedDepartments: Department[] = [
   { id: "dept-1", name: "Engineering" },
@@ -368,6 +368,45 @@ export const seedECNs: ECN[] = [
     correctiveChanges:
       "Switch solder mask material from LPI-500 to LPI-700 for improved thermal endurance. Add plasma cleaning step before solder mask application. Update IPC-SM-840 class T qualification records.",
     assignedEmployeeIds: ["emp-5", "emp-8"],
+  },
+];
+
+export const seedUsageLogs: UsageLog[] = [
+  {
+    id: "ul-1",
+    equipmentId: "mach-1",
+    employeeId: "emp-3",
+    date: "2026-02-24",
+    usageType: "hours",
+    quantity: 8,
+    notes: "Full shift drilling run on JOB-8841. 6-layer stackup, 0.3mm vias.",
+  },
+  {
+    id: "ul-2",
+    equipmentId: "mach-1",
+    employeeId: "emp-3",
+    date: "2026-02-25",
+    usageType: "cycles",
+    quantity: 14200,
+    notes: "High-speed drill cycles across 3 panels. Bit change at 10k hits.",
+  },
+  {
+    id: "ul-3",
+    equipmentId: "mach-5",
+    employeeId: "emp-4",
+    date: "2026-02-23",
+    usageType: "hours",
+    quantity: 6,
+    notes: "Electroless copper deposition run. Chemistry within spec.",
+  },
+  {
+    id: "ul-4",
+    equipmentId: "mach-3",
+    employeeId: "emp-8",
+    date: "2026-02-25",
+    usageType: "units",
+    quantity: 48,
+    notes: "LDI exposure on 48 panels for JOB-8835. High-resolution profile used.",
   },
 ];
 

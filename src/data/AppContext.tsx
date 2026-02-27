@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceContract, MaintenanceTicket } from "@/types";
+import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceContract, MaintenanceTicket, UsageLog } from "@/types";
 
 import {
   seedAreas,
@@ -11,6 +11,7 @@ import {
   seedICARs,
   seedMaintenanceContracts,
   seedMaintenanceTickets,
+  seedUsageLogs,
 } from "./seed";
 
 interface AppContextValue {
@@ -46,6 +47,10 @@ interface AppContextValue {
   addMaintenanceContract: (contract: MaintenanceContract) => void;
   updateMaintenanceContract: (contract: MaintenanceContract) => void;
   deleteMaintenanceContract: (id: string) => void;
+  usageLogs: UsageLog[];
+  addUsageLog: (log: UsageLog) => void;
+  updateUsageLog: (log: UsageLog) => void;
+  deleteUsageLog: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -66,6 +71,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [icars, setICARs] = useState<ICAR[]>(seedICARs);
   const [maintenanceTickets, setMaintenanceTickets] = useState<MaintenanceTicket[]>(seedMaintenanceTickets);
   const [maintenanceContracts, setMaintenanceContracts] = useState<MaintenanceContract[]>(seedMaintenanceContracts);
+  const [usageLogs, setUsageLogs] = useState<UsageLog[]>(seedUsageLogs);
 
   const addEquipment = (item: Equipment) => setEquipment((prev) => [...prev, item]);
   const updateEquipment = (item: Equipment) =>
@@ -115,6 +121,13 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const deleteMaintenanceContract = (id: string) =>
     setMaintenanceContracts((prev) => prev.filter((c) => c.id !== id));
 
+  const addUsageLog = (log: UsageLog) =>
+    setUsageLogs((prev) => [...prev, log]);
+  const updateUsageLog = (log: UsageLog) =>
+    setUsageLogs((prev) => prev.map((l) => (l.id === log.id ? log : l)));
+  const deleteUsageLog = (id: string) =>
+    setUsageLogs((prev) => prev.filter((l) => l.id !== id));
+
   return (
     <AppContext.Provider
       value={{
@@ -150,6 +163,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         addMaintenanceContract,
         updateMaintenanceContract,
         deleteMaintenanceContract,
+        usageLogs,
+        addUsageLog,
+        updateUsageLog,
+        deleteUsageLog,
       }}
     >
       {children}

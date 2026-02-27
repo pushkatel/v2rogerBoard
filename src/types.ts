@@ -83,6 +83,18 @@ export interface MaintenanceContract {
   contactPhone: string;
 }
 
+export type UsageType = "hours" | "cycles" | "units";
+
+export interface UsageLog {
+  id: string;
+  equipmentId: string;
+  employeeId: string;
+  date: string;
+  usageType: UsageType;
+  quantity: number;
+  notes: string;
+}
+
 export interface MaintenanceTicket {
   id: string;
   equipmentId: string;
