@@ -1,4 +1,11 @@
-import { Button, NumberInput, Select, Stack, Textarea, TextInput } from "@mantine/core";
+import {
+  Button,
+  NumberInput,
+  Select,
+  Stack,
+  Textarea,
+  TextInput,
+} from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import type { FormEventHandler } from "react";
 

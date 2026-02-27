@@ -1,4 +1,14 @@
-import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceContract, MaintenanceTicket, UsageLog } from "@/types";
+import type {
+  Area,
+  Department,
+  ECN,
+  Employee,
+  Equipment,
+  ICAR,
+  MaintenanceContract,
+  MaintenanceTicket,
+  UsageLog,
+} from "@/types";
 
 export const seedDepartments: Department[] = [
   { id: "dept-1", name: "Engineering" },
@@ -103,7 +113,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2021-03-15",
     installDate: "2021-04-20",
     warrantyDate: "2026-04-20",
-    maintenanceCycleNotes: "Spindle bearing inspection every 2000 hours. Full PM every 5000 hours including collet replacement and axis calibration.",
+    maintenanceCycleNotes:
+      "Spindle bearing inspection every 2000 hours. Full PM every 5000 hours including collet replacement and axis calibration.",
   },
   {
     id: "mach-2",
@@ -115,7 +126,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2019-08-10",
     installDate: "2019-09-05",
     warrantyDate: "2024-09-05",
-    maintenanceCycleNotes: "Quarterly spindle runout check. Annual pressure foot and air bearing service.",
+    maintenanceCycleNotes:
+      "Quarterly spindle runout check. Annual pressure foot and air bearing service.",
   },
   {
     id: "mach-3",
@@ -127,7 +139,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2022-01-20",
     installDate: "2022-03-01",
     warrantyDate: "2027-03-01",
-    maintenanceCycleNotes: "Monthly optics cleaning. Semi-annual laser source calibration and DMD chip inspection.",
+    maintenanceCycleNotes:
+      "Monthly optics cleaning. Semi-annual laser source calibration and DMD chip inspection.",
   },
   {
     id: "mach-4",
@@ -139,7 +152,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2020-06-01",
     installDate: "2020-07-15",
     warrantyDate: "2025-07-15",
-    maintenanceCycleNotes: "Weekly nozzle inspection and cleaning. Monthly etchant specific gravity check. Quarterly conveyor roller replacement.",
+    maintenanceCycleNotes:
+      "Weekly nozzle inspection and cleaning. Monthly etchant specific gravity check. Quarterly conveyor roller replacement.",
   },
   {
     id: "mach-5",
@@ -151,7 +165,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2021-11-10",
     installDate: "2022-01-15",
     warrantyDate: "2027-01-15",
-    maintenanceCycleNotes: "Daily chemistry titration. Weekly filter change. Monthly tank cleaning and anode inspection.",
+    maintenanceCycleNotes:
+      "Daily chemistry titration. Weekly filter change. Monthly tank cleaning and anode inspection.",
   },
   {
     id: "mach-6",
@@ -163,7 +178,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2021-11-10",
     installDate: "2022-01-20",
     warrantyDate: "2027-01-20",
-    maintenanceCycleNotes: "Daily rectifier current check. Weekly anode basket refill. Monthly Hull cell test and carbon treatment.",
+    maintenanceCycleNotes:
+      "Daily rectifier current check. Weekly anode basket refill. Monthly Hull cell test and carbon treatment.",
   },
   {
     id: "mach-7",
@@ -175,7 +191,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2020-02-28",
     installDate: "2020-04-10",
     warrantyDate: "2025-04-10",
-    maintenanceCycleNotes: "Quarterly platen temperature sensor calibration. Semi-annual hydraulic seal and vacuum gasket replacement.",
+    maintenanceCycleNotes:
+      "Quarterly platen temperature sensor calibration. Semi-annual hydraulic seal and vacuum gasket replacement.",
   },
   {
     id: "mach-8",
@@ -187,7 +204,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2023-05-15",
     installDate: "2023-06-20",
     warrantyDate: "2028-06-20",
-    maintenanceCycleNotes: "Weekly curtain blade inspection. Monthly alignment verification and conveyor speed calibration.",
+    maintenanceCycleNotes:
+      "Weekly curtain blade inspection. Monthly alignment verification and conveyor speed calibration.",
   },
   {
     id: "mach-9",
@@ -199,7 +217,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2018-09-01",
     installDate: "2018-10-15",
     warrantyDate: "2023-10-15",
-    maintenanceCycleNotes: "Weekly solder pot dross removal. Monthly air knife calibration. Quarterly full drain and solder replenishment.",
+    maintenanceCycleNotes:
+      "Weekly solder pot dross removal. Monthly air knife calibration. Quarterly full drain and solder replenishment.",
   },
   {
     id: "mach-10",
@@ -211,7 +230,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2022-07-20",
     installDate: "2022-08-25",
     warrantyDate: "2027-08-25",
-    maintenanceCycleNotes: "Weekly vacuum table seal check. Monthly spindle bearing inspection. Router bit replacement per hit count limits.",
+    maintenanceCycleNotes:
+      "Weekly vacuum table seal check. Monthly spindle bearing inspection. Router bit replacement per hit count limits.",
   },
   {
     id: "mach-11",
@@ -223,7 +243,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2023-02-01",
     installDate: "2023-03-10",
     warrantyDate: "2028-03-10",
-    maintenanceCycleNotes: "Monthly camera calibration and golden board library update. Quarterly full optical path cleaning.",
+    maintenanceCycleNotes:
+      "Monthly camera calibration and golden board library update. Quarterly full optical path cleaning.",
   },
   {
     id: "mach-12",
@@ -235,7 +256,8 @@ export const seedEquipment: Equipment[] = [
     purchaseDate: "2021-06-15",
     installDate: "2021-07-20",
     warrantyDate: "2026-07-20",
-    maintenanceCycleNotes: "Monthly probe needle replacement. Quarterly XY accuracy verification. Annual full calibration with certification.",
+    maintenanceCycleNotes:
+      "Monthly probe needle replacement. Quarterly XY accuracy verification. Annual full calibration with certification.",
   },
 ];
 
@@ -252,8 +274,10 @@ export const seedICARs: ICAR[] = [
     problemDescription:
       "Customer reported intermittent open circuits on inner layer 3. Cross-section analysis revealed copper plating voids at barrel wall, likely caused by insufficient cleaning before electroless copper deposition.",
     whereOccurred: "Plating Line",
-    rootCause: "Desmear process underperforming — permanganate concentration dropped below minimum threshold between replenishment cycles.",
-    containmentAction: "Quarantined remaining panels from lot #6200. Increased desmear chemistry monitoring to every 4 hours. Re-processed affected panels through full desmear and re-plate cycle.",
+    rootCause:
+      "Desmear process underperforming — permanganate concentration dropped below minimum threshold between replenishment cycles.",
+    containmentAction:
+      "Quarantined remaining panels from lot #6200. Increased desmear chemistry monitoring to every 4 hours. Re-processed affected panels through full desmear and re-plate cycle.",
     status: "open",
     priority: "critical",
     assignedEmployeeIds: ["emp-4", "emp-2"],
@@ -270,8 +294,10 @@ export const seedICARs: ICAR[] = [
     problemDescription:
       "Solder mask bleeding into 6-mil pad openings on QFN footprint. Customer assembly house unable to achieve reliable solder paste deposition.",
     whereOccurred: "Solder Mask Line",
-    rootCause: "Exposure energy too low for the fine-pitch feature resolution required. LDI settings were using standard recipe instead of high-resolution profile.",
-    containmentAction: "Switched to high-resolution LDI profile for all jobs with pad openings below 8 mil. Reworked affected panels with strip and re-coat.",
+    rootCause:
+      "Exposure energy too low for the fine-pitch feature resolution required. LDI settings were using standard recipe instead of high-resolution profile.",
+    containmentAction:
+      "Switched to high-resolution LDI profile for all jobs with pad openings below 8 mil. Reworked affected panels with strip and re-coat.",
     status: "in-review",
     priority: "high",
     assignedEmployeeIds: ["emp-5"],
@@ -306,8 +332,10 @@ export const seedICARs: ICAR[] = [
     problemDescription:
       "TDR measurements on controlled impedance coupons showed 53 ohms vs. 50 ±5% target on differential pairs. Affected lot #6450.",
     whereOccurred: "Test Lab",
-    rootCause: "Prepreg resin content variation between material lots caused dielectric constant shift. Incoming material inspection did not flag the deviation.",
-    containmentAction: "Added incoming Dk verification step for all controlled-impedance jobs. Adjusted trace width compensation in CAM to account for material variation. Scrapped affected panels and re-fabricated.",
+    rootCause:
+      "Prepreg resin content variation between material lots caused dielectric constant shift. Incoming material inspection did not flag the deviation.",
+    containmentAction:
+      "Added incoming Dk verification step for all controlled-impedance jobs. Adjusted trace width compensation in CAM to account for material variation. Scrapped affected panels and re-fabricated.",
     status: "closed",
     priority: "medium",
     assignedEmployeeIds: ["emp-5", "emp-1"],
@@ -406,7 +434,8 @@ export const seedUsageLogs: UsageLog[] = [
     date: "2026-02-25",
     usageType: "units",
     quantity: 48,
-    notes: "LDI exposure on 48 panels for JOB-8835. High-resolution profile used.",
+    notes:
+      "LDI exposure on 48 panels for JOB-8835. High-resolution profile used.",
   },
 ];
 
@@ -486,7 +515,8 @@ export const seedMaintenanceTickets: MaintenanceTicket[] = [
       "HASL machine solder pot temperature controller displaying erratic readings. Thermocouple wiring shows signs of corrosion near flux zone. Machine taken offline pending repair.",
     priority: "critical",
     status: "in-review",
-    resolutionNotes: "Ordered replacement thermocouple assembly. Scheduled install for Feb 28.",
+    resolutionNotes:
+      "Ordered replacement thermocouple assembly. Scheduled install for Feb 28.",
     estimatedDowntime: "3 days",
     assignedEmployeeIds: ["emp-7"],
   },
@@ -514,7 +544,8 @@ export const seedMaintenanceTickets: MaintenanceTicket[] = [
       "Spindle bearing noise detected during high-speed drilling cycles. Vibration analysis indicates bearing wear approaching replacement threshold.",
     priority: "medium",
     status: "closed",
-    resolutionNotes: "Replaced spindle bearings and performed full axis recalibration. Runout within spec.",
+    resolutionNotes:
+      "Replaced spindle bearings and performed full axis recalibration. Runout within spec.",
     estimatedDowntime: "12 hours",
     assignedEmployeeIds: ["emp-7", "emp-3"],
   },

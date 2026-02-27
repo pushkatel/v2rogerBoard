@@ -30,8 +30,9 @@ export const EmployeeSelect = ({ multiple, ...rest }: EmployeeSelectProps) => {
     for (const emp of employees) {
       const dept = departments.find((d) => d.id === emp.departmentId);
       const group = dept?.name ?? "Other";
-      if (!grouped.has(group)) grouped.set(group, []);
-      grouped.get(group)!.push({ value: emp.id, label: emp.name });
+      const items = grouped.get(group) ?? [];
+      if (!grouped.has(group)) grouped.set(group, items);
+      items.push({ value: emp.id, label: emp.name });
     }
     return Array.from(grouped, ([group, items]) => ({ group, items }));
   }, [employees, departments]);

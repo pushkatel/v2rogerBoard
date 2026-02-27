@@ -1,7 +1,17 @@
-export type TicketStatus = "draft" | "open" | "in-review" | "approved" | "closed";
+export type TicketStatus =
+  | "draft"
+  | "open"
+  | "in-review"
+  | "approved"
+  | "closed";
 export type Priority = "low" | "medium" | "high" | "critical";
 export type EquipmentStatus = "operational" | "maintenance" | "offline";
-export type MaintenanceCategory = "electrical" | "mechanical" | "software" | "calibration" | "other";
+export type MaintenanceCategory =
+  | "electrical"
+  | "mechanical"
+  | "software"
+  | "calibration"
+  | "other";
 
 export interface Department {
   id: string;
@@ -35,7 +45,6 @@ export interface Employee {
   email: string;
   phone: string;
 }
-
 
 export interface ICAR {
   id: string;

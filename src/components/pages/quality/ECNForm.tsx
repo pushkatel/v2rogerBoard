@@ -75,4 +75,3 @@ export const ECNForm = ({ form, onSubmit, editing }: ECNFormProps) => (
     </Stack>
   </form>
 );
-

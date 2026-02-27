@@ -19,11 +19,10 @@ export const EquipmentSelect = (props: Omit<SelectProps, "data">) => {
       const dept = area
         ? departments.find((d) => d.id === area.departmentId)
         : undefined;
-      const group = area
-        ? `${dept?.name ?? "Other"} — ${area.name}`
-        : "Other";
-      if (!grouped.has(group)) grouped.set(group, []);
-      grouped.get(group)!.push({ value: eq.id, label: eq.name });
+      const group = area ? `${dept?.name ?? "Other"} — ${area.name}` : "Other";
+      const items = grouped.get(group) ?? [];
+      if (!grouped.has(group)) grouped.set(group, items);
+      items.push({ value: eq.id, label: eq.name });
     }
     return Array.from(grouped, ([group, items]) => ({ group, items }));
   }, [equipment, areas, departments]);

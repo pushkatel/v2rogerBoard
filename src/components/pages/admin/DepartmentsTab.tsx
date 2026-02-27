@@ -12,8 +12,15 @@ import type { Department } from "@/types";
 import { DepartmentForm } from "./DepartmentForm";
 
 export const DepartmentsTab = () => {
-  const { departments, areas, addDepartment, updateDepartment, deleteDepartment, addArea, deleteArea } =
-    useAppContext();
+  const {
+    departments,
+    areas,
+    addDepartment,
+    updateDepartment,
+    deleteDepartment,
+    addArea,
+    deleteArea,
+  } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<Department | null>(null);
 
@@ -86,7 +93,11 @@ export const DepartmentsTab = () => {
     values.areaNames
       .filter((n) => !existingNames.includes(n))
       .forEach((n, i) =>
-        addArea({ id: `area-${Date.now()}-${i}`, name: n, departmentId: deptId }),
+        addArea({
+          id: `area-${Date.now()}-${i}`,
+          name: n,
+          departmentId: deptId,
+        }),
       );
 
     handleClose();

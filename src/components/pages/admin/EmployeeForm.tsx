@@ -31,11 +31,7 @@ export const EmployeeForm = ({
         data={deptOptions}
         {...form.getInputProps("departmentId")}
       />
-      <TextInput
-        label="Email"
-        required
-        {...form.getInputProps("email")}
-      />
+      <TextInput label="Email" required {...form.getInputProps("email")} />
       <TextInput label="Phone" required {...form.getInputProps("phone")} />
       <Button type="submit">{editing ? "Update" : "Create"}</Button>
     </Stack>

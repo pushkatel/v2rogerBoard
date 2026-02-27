@@ -22,7 +22,12 @@ export const ModalButton = ({
 }: ModalButtonProps) => (
   <>
     <Button onClick={onClick}>{label}</Button>
-    <Modal opened={opened} onClose={onClose} title={modalTitle} size={modalSize}>
+    <Modal
+      opened={opened}
+      onClose={onClose}
+      title={modalTitle}
+      size={modalSize}
+    >
       {content}
     </Modal>
   </>

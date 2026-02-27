@@ -12,8 +12,13 @@ import type { Employee } from "@/types";
 import { EmployeeForm } from "./EmployeeForm";
 
 export const EmployeesTab = () => {
-  const { departments, employees, addEmployee, updateEmployee, deleteEmployee } =
-    useAppContext();
+  const {
+    departments,
+    employees,
+    addEmployee,
+    updateEmployee,
+    deleteEmployee,
+  } = useAppContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<Employee | null>(null);
 

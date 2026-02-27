@@ -60,4 +60,3 @@ export const maintenanceCategoryOptions: {
   { value: "calibration", label: "Calibration" },
   { value: "other", label: "Other" },
 ];
-

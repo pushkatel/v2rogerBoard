@@ -1,6 +1,16 @@
 import { createContext, useContext, useState } from "react";
 
-import type { Area, Department, ECN, Employee, Equipment, ICAR, MaintenanceContract, MaintenanceTicket, UsageLog } from "@/types";
+import type {
+  Area,
+  Department,
+  ECN,
+  Employee,
+  Equipment,
+  ICAR,
+  MaintenanceContract,
+  MaintenanceTicket,
+  UsageLog,
+} from "@/types";
 
 import {
   seedAreas,
@@ -69,60 +79,76 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [areas, setAreas] = useState<Area[]>(seedAreas);
   const [ecns, setECNs] = useState<ECN[]>(seedECNs);
   const [icars, setICARs] = useState<ICAR[]>(seedICARs);
-  const [maintenanceTickets, setMaintenanceTickets] = useState<MaintenanceTicket[]>(seedMaintenanceTickets);
-  const [maintenanceContracts, setMaintenanceContracts] = useState<MaintenanceContract[]>(seedMaintenanceContracts);
+  const [maintenanceTickets, setMaintenanceTickets] = useState<
+    MaintenanceTicket[]
+  >(seedMaintenanceTickets);
+  const [maintenanceContracts, setMaintenanceContracts] = useState<
+    MaintenanceContract[]
+  >(seedMaintenanceContracts);
   const [usageLogs, setUsageLogs] = useState<UsageLog[]>(seedUsageLogs);
 
-  const addEquipment = (item: Equipment) => setEquipment((prev) => [...prev, item]);
+  const addEquipment = (item: Equipment) =>
+    setEquipment((prev) => [...prev, item]);
   const updateEquipment = (item: Equipment) =>
     setEquipment((prev) => prev.map((e) => (e.id === item.id ? item : e)));
   const deleteEquipment = (id: string) =>
     setEquipment((prev) => prev.filter((e) => e.id !== id));
 
-  const addEmployee = (employee: Employee) => setEmployees((prev) => [...prev, employee]);
+  const addEmployee = (employee: Employee) =>
+    setEmployees((prev) => [...prev, employee]);
   const updateEmployee = (employee: Employee) =>
-    setEmployees((prev) => prev.map((e) => (e.id === employee.id ? employee : e)));
+    setEmployees((prev) =>
+      prev.map((e) => (e.id === employee.id ? employee : e)),
+    );
   const deleteEmployee = (id: string) =>
     setEmployees((prev) => prev.filter((e) => e.id !== id));
 
   const addDepartment = (department: Department) =>
     setDepartments((prev) => [...prev, department]);
   const updateDepartment = (department: Department) =>
-    setDepartments((prev) => prev.map((d) => (d.id === department.id ? department : d)));
+    setDepartments((prev) =>
+      prev.map((d) => (d.id === department.id ? department : d)),
+    );
   const deleteDepartment = (id: string) =>
     setDepartments((prev) => prev.filter((d) => d.id !== id));
 
   const addArea = (area: Area) => setAreas((prev) => [...prev, area]);
   const updateArea = (area: Area) =>
     setAreas((prev) => prev.map((a) => (a.id === area.id ? area : a)));
-  const deleteArea = (id: string) => setAreas((prev) => prev.filter((a) => a.id !== id));
+  const deleteArea = (id: string) =>
+    setAreas((prev) => prev.filter((a) => a.id !== id));
 
   const addECN = (ecn: ECN) => setECNs((prev) => [...prev, ecn]);
   const updateECN = (ecn: ECN) =>
     setECNs((prev) => prev.map((e) => (e.id === ecn.id ? ecn : e)));
-  const deleteECN = (id: string) => setECNs((prev) => prev.filter((e) => e.id !== id));
+  const deleteECN = (id: string) =>
+    setECNs((prev) => prev.filter((e) => e.id !== id));
 
   const addICAR = (icar: ICAR) => setICARs((prev) => [...prev, icar]);
   const updateICAR = (icar: ICAR) =>
     setICARs((prev) => prev.map((i) => (i.id === icar.id ? icar : i)));
-  const deleteICAR = (id: string) => setICARs((prev) => prev.filter((i) => i.id !== id));
+  const deleteICAR = (id: string) =>
+    setICARs((prev) => prev.filter((i) => i.id !== id));
 
   const addMaintenanceTicket = (ticket: MaintenanceTicket) =>
     setMaintenanceTickets((prev) => [...prev, ticket]);
   const updateMaintenanceTicket = (ticket: MaintenanceTicket) =>
-    setMaintenanceTickets((prev) => prev.map((t) => (t.id === ticket.id ? ticket : t)));
+    setMaintenanceTickets((prev) =>
+      prev.map((t) => (t.id === ticket.id ? ticket : t)),
+    );
   const deleteMaintenanceTicket = (id: string) =>
     setMaintenanceTickets((prev) => prev.filter((t) => t.id !== id));
 
   const addMaintenanceContract = (contract: MaintenanceContract) =>
     setMaintenanceContracts((prev) => [...prev, contract]);
   const updateMaintenanceContract = (contract: MaintenanceContract) =>
-    setMaintenanceContracts((prev) => prev.map((c) => (c.id === contract.id ? contract : c)));
+    setMaintenanceContracts((prev) =>
+      prev.map((c) => (c.id === contract.id ? contract : c)),
+    );
   const deleteMaintenanceContract = (id: string) =>
     setMaintenanceContracts((prev) => prev.filter((c) => c.id !== id));
 
-  const addUsageLog = (log: UsageLog) =>
-    setUsageLogs((prev) => [...prev, log]);
+  const addUsageLog = (log: UsageLog) => setUsageLogs((prev) => [...prev, log]);
   const updateUsageLog = (log: UsageLog) =>
     setUsageLogs((prev) => prev.map((l) => (l.id === log.id ? log : l)));
   const deleteUsageLog = (id: string) =>

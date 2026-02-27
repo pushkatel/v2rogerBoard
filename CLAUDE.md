@@ -8,6 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run build` — Type-check with `tsc -b` then build with Vite
 - `npm run lint` — Run ESLint across the project
 - `npm run knip` — Find unused imports, exports, and dependencies
+- `npm run format` — Format all source files with Prettier
 - `npm run preview` — Preview the production build locally
 
 ## Architecture
@@ -50,18 +51,28 @@ React 19 + TypeScript app scaffolded with Vite 7.
 ## Linting & Code Quality
 
 ESLint 9 flat config (`eslint.config.js`) with:
-- `typescript-eslint` recommended rules
+- `typescript-eslint` strict rules
+- `eslint-plugin-react` (jsx-key, no-direct-mutation-state, no-unescaped-entities)
 - `eslint-plugin-react-hooks` (recommended)
 - `eslint-plugin-react-refresh` (Vite)
 - `eslint-plugin-simple-import-sort` — auto-sorts imports/exports
+- `@typescript-eslint/consistent-type-imports` — enforces `import type`
+- `no-console: warn`
+- `eslint-config-prettier` — disables ESLint rules that conflict with Prettier
 - Only lints `**/*.{ts,tsx}` files; `dist/` is ignored
+
+**Prettier** (`.prettierrc`) formats all source files. Config: 80 char width, double quotes, semicolons, trailing commas, 2-space indent.
 
 **Knip** (`npm run knip`) detects unused imports, exports, and dependencies. Config in `package.json` under `"knip"`.
 
 ## Pre-commit Hooks
 
 Husky + lint-staged run automatically on every commit:
-1. **lint-staged**: runs `eslint --fix` on staged `*.{ts,tsx}` files (sorts imports, fixes lint errors)
+1. **lint-staged**: runs `prettier --write` then `eslint --fix` on staged `*.{ts,tsx}` files
 2. **knip**: checks the full project for unused imports, exports, and dependencies
 
 If either check fails, the commit is blocked.
+
+## Claude Code Workflow
+
+Before committing, always run `npx prettier --write` and `npx eslint --fix` on all new/modified `.ts`/`.tsx` files to ensure code matches the project's formatting and lint rules. Do not rely solely on the pre-commit hook — fix issues before staging.

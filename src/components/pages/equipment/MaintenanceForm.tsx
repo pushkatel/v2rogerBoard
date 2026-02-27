@@ -5,7 +5,11 @@ import type { FormEventHandler } from "react";
 import { EmployeeSelect } from "@/components/shared/form-fields/EmployeeSelect";
 import { EquipmentSelect } from "@/components/shared/form-fields/EquipmentSelect";
 import type { MaintenanceCategory, Priority, TicketStatus } from "@/types";
-import { maintenanceCategoryOptions, priorityOptions, statusOptions } from "@/utils";
+import {
+  maintenanceCategoryOptions,
+  priorityOptions,
+  statusOptions,
+} from "@/utils";
 
 interface MaintenanceFormProps {
   form: UseFormReturnType<{
