@@ -7,7 +7,12 @@ import type { Column } from "@/components/shared/DataTable";
 import { DataTable } from "@/components/shared/DataTable";
 import { ModalButton } from "@/components/shared/ModalButton";
 import { useAppContext } from "@/data/AppContext";
-import type { MaintenanceCategory, MaintenanceTicket, Priority, TicketStatus } from "@/types";
+import type {
+  MaintenanceCategory,
+  MaintenanceTicket,
+  Priority,
+  TicketStatus,
+} from "@/types";
 import { priorityColor, statusColor } from "@/utils";
 
 import { MaintenanceForm } from "./MaintenanceForm";
@@ -27,19 +32,25 @@ export const MaintenanceTab = () => {
   const columns: Column<MaintenanceTicket>[] = [
     {
       header: "Equipment",
-      accessor: (t) => equipment.find((e) => e.id === t.equipmentId)?.name ?? "—",
-      sortValue: (t) => equipment.find((e) => e.id === t.equipmentId)?.name ?? "",
+      accessor: (t) =>
+        equipment.find((e) => e.id === t.equipmentId)?.name ?? "—",
+      sortValue: (t) =>
+        equipment.find((e) => e.id === t.equipmentId)?.name ?? "",
     },
     {
       header: "Reported By",
-      accessor: (t) => employees.find((e) => e.id === t.reportedBy)?.name ?? "—",
-      sortValue: (t) => employees.find((e) => e.id === t.reportedBy)?.name ?? "",
+      accessor: (t) =>
+        employees.find((e) => e.id === t.reportedBy)?.name ?? "—",
+      sortValue: (t) =>
+        employees.find((e) => e.id === t.reportedBy)?.name ?? "",
     },
     { header: "Date", accessor: "dateReported" },
     { header: "Category", accessor: "category" },
     {
       header: "Priority",
-      accessor: (t) => <Badge color={priorityColor[t.priority]}>{t.priority}</Badge>,
+      accessor: (t) => (
+        <Badge color={priorityColor[t.priority]}>{t.priority}</Badge>
+      ),
       sortValue: (t) => t.priority,
     },
     {
@@ -111,7 +122,9 @@ export const MaintenanceTab = () => {
         <ModalButton
           label="Add Ticket"
           onClick={() => handleOpen()}
-          modalTitle={editing ? "Edit Maintenance Ticket" : "Add Maintenance Ticket"}
+          modalTitle={
+            editing ? "Edit Maintenance Ticket" : "Add Maintenance Ticket"
+          }
           opened={opened}
           onClose={handleClose}
           content={

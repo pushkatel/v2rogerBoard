@@ -49,7 +49,12 @@ export const EmployeeSelect = ({ multiple, ...rest }: EmployeeSelectProps) => {
       searchable
       renderOption={({ option, checked }) => (
         <Group gap="sm">
-          <Checkbox checked={checked} onChange={() => {}} tabIndex={-1} readOnly />
+          <Checkbox
+            checked={checked}
+            onChange={() => {}}
+            tabIndex={-1}
+            readOnly
+          />
           {option.label}
         </Group>
       )}

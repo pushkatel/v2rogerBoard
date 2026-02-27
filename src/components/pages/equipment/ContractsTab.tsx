@@ -26,8 +26,10 @@ export const ContractsTab = () => {
   const columns: Column<MaintenanceContract>[] = [
     {
       header: "Equipment",
-      accessor: (c) => equipment.find((e) => e.id === c.equipmentId)?.name ?? "—",
-      sortValue: (c) => equipment.find((e) => e.id === c.equipmentId)?.name ?? "",
+      accessor: (c) =>
+        equipment.find((e) => e.id === c.equipmentId)?.name ?? "—",
+      sortValue: (c) =>
+        equipment.find((e) => e.id === c.equipmentId)?.name ?? "",
     },
     { header: "Vendor", accessor: "vendor" },
     { header: "Contract #", accessor: "contractNumber" },
@@ -35,8 +37,10 @@ export const ContractsTab = () => {
     { header: "End Date", accessor: "endDate" },
     {
       header: "Company Lead",
-      accessor: (c) => employees.find((e) => e.id === c.companyLeadId)?.name ?? "—",
-      sortValue: (c) => employees.find((e) => e.id === c.companyLeadId)?.name ?? "",
+      accessor: (c) =>
+        employees.find((e) => e.id === c.companyLeadId)?.name ?? "—",
+      sortValue: (c) =>
+        employees.find((e) => e.id === c.companyLeadId)?.name ?? "",
     },
     { header: "Contact", accessor: "contactName" },
   ];
@@ -105,7 +109,9 @@ export const ContractsTab = () => {
         <ModalButton
           label="Add Contract"
           onClick={() => handleOpen()}
-          modalTitle={editing ? "Edit Maintenance Contract" : "Add Maintenance Contract"}
+          modalTitle={
+            editing ? "Edit Maintenance Contract" : "Add Maintenance Contract"
+          }
           opened={opened}
           onClose={handleClose}
           content={
